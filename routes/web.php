@@ -13,6 +13,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::resource('/form', \App\Http\Controllers\FormController::class);
+Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);
+Route::get('/', [\App\Http\Controllers\FormController::class, 'index']);
