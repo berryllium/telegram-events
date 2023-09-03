@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,6 +14,12 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::resource('/form', \App\Http\Controllers\FormController::class);
-Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);
-Route::get('/', [\App\Http\Controllers\FormController::class, 'index']);
+Auth::routes();
+
+Route::middleware('auth')->group(function(){
+    Route::resource('/form', \App\Http\Controllers\FormController::class);
+    Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);
+    Route::get('/', [\App\Http\Controllers\FormController::class, 'index']);
+});
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
