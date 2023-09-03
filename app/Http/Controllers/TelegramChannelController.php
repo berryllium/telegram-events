@@ -34,7 +34,7 @@ class TelegramChannelController extends Controller
             'tg_id' => 'required|int',
             'description' => 'max:1000',
         ]));
-        return redirect(route('channel.index'))->with('success', 'Форма успешно создана!');
+        return redirect(route('channel.index'))->with('success', 'Канал успешно создан!');
     }
 
     /**
@@ -65,7 +65,7 @@ class TelegramChannelController extends Controller
             'tg_id' => 'required|int',
             'description' => 'max:1000',
         ]));
-        return redirect(route('channel.index'))->with('success', 'Форма успешно обновлена!');
+        return redirect(route('channel.index'))->with('success', 'Канал успешно обновлен!');
     }
 
     /**
@@ -74,6 +74,6 @@ class TelegramChannelController extends Controller
     public function destroy(TelegramChannel $channel)
     {
         $channel->delete();
-        return redirect(route('channel.index'))->with('success', 'Форма успешно удалена!');
+        return redirect(route('channel.index'))->with('success', 'Канал успешно удален!');
     }
 }
