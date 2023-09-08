@@ -8,7 +8,7 @@
         </li>
     @endsection
 @section('messages')
-    <div class="col-12 col-lg-10">
+    <div class="col-12">
         @if ($message = Session::get('success'))
             <div class="alert alert-success">{{ $message }}</div>
         @endif
