@@ -17,7 +17,7 @@ class DatabaseSeeder extends Seeder
          $this->call([
              UserSeeder::class,
              FormSeeder::class,
-             TelegramChannel::class
+             TelegramChannelSeeder::class
          ]);
     }
 }

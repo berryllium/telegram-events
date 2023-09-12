@@ -7,7 +7,9 @@
 // Bootstrap
 @import "bootstrap";
 @import "bootstrap-icons/font/bootstrap-icons.css";
+@import 'select2/dist/css/select2.css';
+@import 'bootstrap-select/dist/css/bootstrap-select.min.css';
 
-.action-cell {
-  width: 100px;
+:root {
+  --bs-body-bg: white;
 }

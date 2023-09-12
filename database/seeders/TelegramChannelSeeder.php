@@ -3,10 +3,9 @@
 namespace Database\Seeders;
 
 use App\Models\TelegramChannel;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class TelegramChannelFactory extends Seeder
+class TelegramChannelSeeder extends Seeder
 {
     /**
      * Run the database seeds.
