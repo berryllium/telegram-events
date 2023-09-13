@@ -15,7 +15,8 @@ class TelegramChannelSeeder extends Seeder
         TelegramChannel::factory()->create([
             'tg_id' => 6043059350,
             'name' => 'Test Channel',
-            'description' => 'Test channel to check functionality'
+            'description' => 'Test channel to check functionality',
+            'form_id' => 1
         ]);
     }
 }

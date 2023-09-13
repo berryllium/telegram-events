@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Form;
 use App\Models\TelegramChannel;
 use Illuminate\Http\Request;
 
@@ -29,11 +30,20 @@ class TelegramChannelController extends Controller
      */
     public function store(Request $request)
     {
-        TelegramChannel::create($request->validate([
+        $data = $request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'description' => 'max:1000',
-        ]));
+            'form' => ''
+        ]);
+
+       if($data['form']) {
+           $form = Form::find($data['form']);
+           $form->channels()->create($data);
+       } else {
+           TelegramChannel::create($data);
+       }
+
         return redirect(route('channel.index'))->with('success', 'Канал успешно создан!');
     }
 
@@ -60,6 +70,7 @@ class TelegramChannelController extends Controller
      */
     public function update(Request $request, TelegramChannel $channel)
     {
+        $channel->form_id = $request->get('form');
         $channel->update($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',

@@ -49,6 +49,26 @@
                             </select>
                         </div>
                         @break
+                    @case('place')
+                        <div class="form-group mb-3">
+                            <label for="field-{{ $k }}" >{{ $field->name }}</label>
+                            <select class="form-control" id="field-{{ $k }}" data-select="2" data-live-search="true">
+                                @foreach($places as $place)
+                                    <option value="{{ $place->id }}">{{ $place->name }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @break
+                    @case('address')
+                        <div class="form-group mb-3">
+                            <label for="field-{{ $k }}" >{{ $field->name }}</label>
+                            <select class="form-control" id="field-{{ $k }}" data-select="2" data-live-search="true">
+                                @foreach($places as $place)
+                                    <option value="{{ $place->id }}">{{ $place->address }}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        @break
                 @endswitch
         @endforeach
     </form>

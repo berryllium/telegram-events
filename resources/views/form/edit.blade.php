@@ -2,6 +2,7 @@
 @section('title', 'Редактирование веб-формы')
 @section('content')
     <form method="post" action="{{ route('form.update', [$form]) }}">
+        <input type="hidden" name="tg_channel" value="1">
         @csrf
         @method('put')
         <div class="mb-3">

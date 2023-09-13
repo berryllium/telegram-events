@@ -22,7 +22,9 @@ class Field extends Model
         'date' => 'Дата',
         'checkbox' => 'Флажок',
         'radio' => 'Переключатель',
-        'select' => 'Выпадающий список'
+        'select' => 'Выпадающий список',
+        'place' => 'Место',
+        'address' => 'Адрес',
     ];
 
     public function form(): BelongsTo

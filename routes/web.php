@@ -20,9 +20,9 @@ Route::middleware('auth')->group(function(){
     Route::resource('/form', \App\Http\Controllers\FormController::class);
     Route::resource('/form/{form}/field', \App\Http\Controllers\FieldController::class);
     Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);
-    Route::resource('/shop', \App\Http\Controllers\ShopController::class);
+    Route::resource('/place', \App\Http\Controllers\PlaceController::class);
     Route::get('/', [\App\Http\Controllers\FormController::class, 'index']);
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/telegram/webapp/{form}', [\App\Http\Controllers\TelegramWebAppController::class, 'index']);
+Route::get('/telegram/webapp/{telegram_channel}', [\App\Http\Controllers\TelegramWebAppController::class, 'index']);

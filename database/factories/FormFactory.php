@@ -2,6 +2,8 @@
 
 namespace Database\Factories;
 
+use App\Models\Field;
+use App\Models\Form;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -17,8 +19,20 @@ class FormFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->title(),
-            'description' => fake()->text()
+            'name' => fake()->word(),
+            'description' => fake()->text(),
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Form $form) {
+            for($i = 0; $i < fake()->numberBetween(3, 8); $i++) {
+                $form->fields()->create([
+                    'name' => fake()->word(),
+                    'type' => fake()->randomElement(array_keys(Field::$types)),
+                ]);
+            }
+        });
     }
 }

@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', 'Список полей форм')
+@section('title', 'Список полей формы ' . $form->name )
 @section('content')
 
     <a href="{{ route('field.create', $form) }}" class="btn btn-primary mb-4">Создать новое поле формы</a>

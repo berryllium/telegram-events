@@ -1,13 +1,20 @@
 @extends('base')
-@section('title', 'Создание веб-формы')
+@section('title', 'Создание места')
 @section('content')
-    <form method="post" action="{{ route('form.store') }}">
+    <form method="post" action="{{ route('place.store') }}">
         @csrf
         <div class="mb-3">
-            <label for="name" class="form-label">Название формы</label>
+            <label for="name" class="form-label">Название места</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="address" class="form-label">Адрес</label>
+            <input type="text" class="form-control" id="address" name="address" value="{{ old('address') }}">
+            @error('address')
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">

@@ -6,6 +6,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('channel.index') }}">Каналы</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('place.index') }}">Места</a>
+        </li>
     @endsection
 @section('messages')
     <div class="col-12">

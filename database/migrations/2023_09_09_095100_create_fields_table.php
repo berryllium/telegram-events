@@ -15,7 +15,7 @@ return new class extends Migration
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->enum('type', ['string', 'text', 'number', 'date', 'checkbox', 'radio', 'select']);
+            $table->enum('type', ['string', 'text', 'number', 'date', 'checkbox', 'radio', 'select', 'place', 'address']);
             $table->foreignIdFor(Form::class);
             $table->timestamps();
         });
