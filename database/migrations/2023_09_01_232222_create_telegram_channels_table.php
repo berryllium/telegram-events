@@ -16,7 +16,6 @@ return new class extends Migration
             $table->bigInteger('tg_id')->comment('ID телеграм канала');
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignIdFor(\App\Models\Form::class)->nullable();
             $table->timestamps();
         });
     }

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('address');
             $table->text('description')->nullable();
+            $table->foreignIdFor(\App\Models\Form::class);
             $table->timestamps();
         });
     }

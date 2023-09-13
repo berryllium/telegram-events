@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Place extends Model
 {
@@ -12,6 +13,10 @@ class Place extends Model
     protected $fillable = [
         'name',
         'address',
-        'description'
+        'description',
     ];
+
+    public function form() : BelongsTo {
+        return $this->belongsTo(Form::class);
+    }
 }

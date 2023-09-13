@@ -9,7 +9,7 @@
     @foreach($entities['value'] as $entity)
         <tr>
             @foreach($fields as $field)
-                <td>{{ $entity->$field }}</td>
+                <td>{{ is_object($entity->$field) ? $entity->$field->name : $entity->$field }}</td>
             @endforeach
             <td class="align-middle text-nowrap">
                 <a href="{{ route($entities['name'] . '.edit', $entity) }}" class="btn btn-primary m-1">

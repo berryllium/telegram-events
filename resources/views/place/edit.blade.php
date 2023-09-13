@@ -19,6 +19,18 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="form" class="form-label">Форма WebApp</label>
+            <select class="form-select" id="form" name="form">
+                <option value=""></option>
+                @foreach(\App\Models\Form::all() as $form)
+                    <option value="{{ $form->id }}" {{ $form->id == $place->form_id ? 'selected' : ''}}>{{ $form->name }}</option>
+                @endforeach
+            </select>
+            @error('form')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">Описание</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $place->description }}</textarea>
             @error('description')

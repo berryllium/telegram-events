@@ -4,10 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Form extends Model
 {
@@ -23,7 +20,7 @@ class Form extends Model
         return $this->hasMany(Field::class);
     }
 
-    public function channels() : HasMany {
-        return $this->hasMany(TelegramChannel::class);
+    public function places() : HasMany {
+        return $this->hasMany(Place::class);
     }
 }

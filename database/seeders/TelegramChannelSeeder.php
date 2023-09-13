@@ -16,7 +16,6 @@ class TelegramChannelSeeder extends Seeder
             'tg_id' => 6043059350,
             'name' => 'Test Channel',
             'description' => 'Test channel to check functionality',
-            'form_id' => 1
         ]);
     }
 }

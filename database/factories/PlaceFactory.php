@@ -19,7 +19,8 @@ class PlaceFactory extends Factory
         return [
             'name' => fake()->word(),
             'address' => fake()->address(),
-            'description' => fake()->text()
+            'description' => fake()->text(),
+            'form_id' => 1
         ];
     }
 }

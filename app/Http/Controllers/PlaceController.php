@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Form;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -29,11 +30,15 @@ class PlaceController extends Controller
      */
     public function store(Request $request)
     {
-        Place::create($request->validate([
+        $data = $request->validate([
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
-        ]));
+            'form' => 'int'
+        ]);
+
+        Form::find($data['form'])->places()->create($data);
+
         return redirect(route('place.index'))->with('success', 'Объект успешно создан!');
     }
 
@@ -60,6 +65,7 @@ class PlaceController extends Controller
      */
     public function update(Request $request, Place $place)
     {
+        $place->form_id = $request->get('form');
         $place->update($request->validate([
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
