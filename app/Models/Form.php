@@ -23,4 +23,8 @@ class Form extends Model
     public function places() : HasMany {
         return $this->hasMany(Place::class);
     }
+
+    public function bots() : HasMany {
+        return $this->hasMany(TelegramBot::class);
+    }
 }

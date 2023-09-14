@@ -71,5 +71,8 @@
                         @break
                 @endswitch
         @endforeach
+        <div class="buttons">
+            <button class="btn btn-primary w-100">Отправить</button>
+        </div>
     </form>
 @endsection
