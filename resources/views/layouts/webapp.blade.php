@@ -16,7 +16,8 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="/css/webapp.css">
-    <script src="/js/webapp.js"></script>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <script src="/js/webapp.js?ver={{ rand(1, 100) }}"></script>
 </head>
 <body>
 <div id="webapp" class="container">

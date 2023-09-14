@@ -20,19 +20,19 @@ class TelegramRequestHandler
     public function handle(Request $request) {
         $data = $request->toArray();
         $token = $request->header('X-Telegram-Bot-Api-Secret-Token');
-
-        $bot = TelegramBot::query()->where('code', $token)->first();
-
         Log::info('Сообщение от телеграм ', $data);
 
-
+        $bot = TelegramBot::query()->where('code', $token)->first();
         $chat_id = $data['message']['chat']['id'];
         $name = $data['message']['from']['first_name'];
-        if($data['message']['text'] == '/start') {
-            $this->sendButton($chat_id, $bot['id']);
-        }
+        $text = $data['message']['text'] ?? false;
+        $web_app_data = $data['message']['web_app_data']['data'] ?? false;
 
-        $this->client->sendMessage($chat_id, "Привет, $name!");
+        if($text == '/start') {
+            $this->sendButton($chat_id, $bot['id']);
+        } elseif($web_app_data) {
+            $this->client->sendMessage($chat_id, "Ваше сообщение принято! " . $web_app_data);
+        }
 
         return response()->json(['status' => 'ok']);
     }
@@ -45,10 +45,7 @@ class TelegramRequestHandler
                 ]
             ]
         ]);
-        $this->client->sendMessage($chat_id, 'Приветствую!', null, false, null, $keyboard);
+        $this->client->sendMessage($chat_id, 'Приветствую! Воспользуйтесь кнопкой для заполнения формы!', null, false, null, $keyboard);
     }
-
-
-
 
 }
