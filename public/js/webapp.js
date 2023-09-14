@@ -11,7 +11,7 @@ window.addEventListener('load', () => {
             type: 'POST',
             data: new FormData(form[0]),
             success: function (response) {
-                webApp.sendData(response.data)
+                webApp.sendData(JSON.stringify(response))
             },
             cache: false,
             contentType: false,

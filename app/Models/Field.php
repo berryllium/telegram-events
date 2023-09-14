@@ -12,6 +12,7 @@ class Field extends Model
 
     protected $fillable = [
         'name',
+        'code',
         'type'
     ];
 

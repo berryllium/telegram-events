@@ -26,6 +26,13 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="moderation_group" class="form-label">Группа модерации</label>
+            <input type="text" class="form-control" id="moderation_group" name="moderation_group" value="{{ $bot->moderation_group }}">
+            @error('moderation_group')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="form" class="form-label">Форма WebApp</label>
             <select class="form-select" id="form" name="form">
                 <option value=""></option>

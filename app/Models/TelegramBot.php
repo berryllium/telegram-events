@@ -14,11 +14,16 @@ class TelegramBot extends Model
         'name',
         'code',
         'api_token',
+        'moderation_group',
         'description'
     ];
 
     public function form() : BelongsTo {
         return $this->belongsTo(Form::class);
+    }
+
+    public function messages() {
+        return $this->hasMany(Message::class);
     }
 
 }

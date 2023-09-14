@@ -19,7 +19,7 @@ class FormFactory extends Factory
     public function definition(): array
     {
         return [
-            'name' => fake()->word(),
+            'name' => 'Форма ' . fake()->numberBetween(1, 500),
             'description' => fake()->text(),
         ];
     }
@@ -30,6 +30,7 @@ class FormFactory extends Factory
             for($i = 0; $i < fake()->numberBetween(3, 8); $i++) {
                 $form->fields()->create([
                     'name' => fake()->word(),
+                    'code' => fake()->uuid(),
                     'type' => fake()->randomElement(array_keys(Field::$types)),
                 ]);
             }
