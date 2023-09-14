@@ -48,7 +48,7 @@ class TelegramBotController extends Controller
 
         $botApi = new BotApi($data['api_token']);
         $res = $botApi->setWebhook(
-            'https://telegram.chekhov-events.ru/api/telegram',
+            route('api.telegram'),
             null,
             null,
             40,
@@ -56,7 +56,7 @@ class TelegramBotController extends Controller
             false,
             $data['code']);
 
-        return redirect(route('bot.index'))->with('success', 'Бот успешно создан! ' .print_r($res, true));
+        return redirect(route('bot.index'))->with('success', 'Бот успешно создан!');
     }
 
     /**
@@ -92,16 +92,19 @@ class TelegramBotController extends Controller
         ]));
 
         $botApi = new BotApi($bot->api_token);
-        $res = $botApi->setWebhook(
-            'https://telegram.chekhov-events.ru/api/telegram',
+        if($botApi->setWebhook(
+            route('api.telegram'),
             null,
             null,
             40,
             null,
             false,
-            $request->get('code'));
+            $request->get('code'))) {
+            return redirect(route('bot.index'))->with('success', 'Бот успешно обновлен!');
+        }
 
-        return redirect(route('bot.index'))->with('success', 'Бот успешно обновлен!');
+        return redirect()->back->with('error', 'Не удалось привязать бота, проверьте токен!');
+
     }
 
     /**

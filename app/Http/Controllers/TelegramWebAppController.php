@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Telegram\TelegramRequestHandler;
-use App\Models\Form;
+use App\Models\TelegramBot;
 
 class TelegramWebAppController extends Controller
 {
-    public function index(Form $form) {
+    public function index(TelegramBot $telegramBot) {
         return view('telegram.webapp.index', [
-            'form' => $form,
+            'bot' => $telegramBot,
+            'form' => $telegramBot->form
         ]);
     }
 }

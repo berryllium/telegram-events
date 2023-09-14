@@ -26,4 +26,4 @@ Route::middleware('auth')->group(function(){
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-Route::get('/telegram/webapp/{form}', [\App\Http\Controllers\TelegramWebAppController::class, 'index']);
+Route::get('/telegram/webapp/{telegram_bot}', [\App\Http\Controllers\TelegramWebAppController::class, 'index'])->name('webapp');

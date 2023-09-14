@@ -6,8 +6,8 @@
 
     @include('component.table', [
         'entities' => ['name' => 'bot', 'value' => $bots],
-        'headers' => ['Название', 'Описание', 'Телеграм ID'],
-        'fields' => ['name', 'description', 'tg_id']
+        'headers' => ['Название', 'Описание'],
+        'fields' => ['name', 'description']
     ])
 
 @endsection
