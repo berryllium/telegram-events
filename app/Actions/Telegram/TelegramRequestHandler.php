@@ -44,7 +44,7 @@ class TelegramRequestHandler
                     $author->name = $sender['first_name'];
                     $author->username = $sender['username'];
                     $author->tg_id = $sender['id'];
-                    $author->premium = false;
+                    $author->premium = $sender['is_premium'];
                     $author->save();
                 }
                 $message->author_id = $author->id;

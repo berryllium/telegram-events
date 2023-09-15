@@ -34,6 +34,7 @@ class FieldController extends Controller
             Field::make(
                 $request->validate([
                     'name' => 'required',
+                    'code' => 'required',
                     'type' => 'required|in:' . implode(',', array_keys(Field::$types))
                 ])
             )
@@ -67,6 +68,7 @@ class FieldController extends Controller
     {
         $field->update($request->validate([
             'name' => 'required|min:2',
+            'code' => 'required',
             'type' => 'required',
         ]));
         return redirect(route('field.index', ['form' => $form]))->with('success', 'Поле успешно обновлено!');

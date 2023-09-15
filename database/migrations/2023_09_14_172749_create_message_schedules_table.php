@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('message_schedules', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('template')->nullable();
-            $table->text('description')->nullable();
+            $table->foreignIdFor(\App\Models\Message::class);
+            $table->dateTime('sending_date');
+            $table->char('status', 20);
+            $table->text('error_text');
+            $table->comment('messages to send');
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('message_schedules');
     }
 };

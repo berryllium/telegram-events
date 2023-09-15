@@ -17,6 +17,13 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="template" class="form-label">Шаблон сообщения</label>
+            <textarea class="form-control" id="template" name="template" rows="5">{{ old('template') }}</textarea>
+            @error('template')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">Создать</button>
     </form>
 @endsection

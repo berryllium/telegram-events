@@ -29,7 +29,7 @@ class FormFactory extends Factory
         return $this->afterCreating(function (Form $form) {
             for($i = 0; $i < fake()->numberBetween(3, 8); $i++) {
                 $form->fields()->create([
-                    'name' => fake()->word(),
+                    'name' => fake('ru_RU')->word(),
                     'code' => fake()->uuid(),
                     'type' => fake()->randomElement(array_keys(Field::$types)),
                 ]);

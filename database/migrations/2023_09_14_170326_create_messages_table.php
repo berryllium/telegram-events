@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('messages', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('template')->nullable();
-            $table->text('description')->nullable();
+            $table->text('data');
+            $table->text('text');
+            $table->boolean('allowed');
+            $table->foreignIdFor(\App\Models\Author::class)->nullable()->default(null);
+            $table->foreignIdFor(\App\Models\TelegramBot::class);
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('messages');
     }
 };

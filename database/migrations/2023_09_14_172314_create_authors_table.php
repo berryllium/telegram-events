@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('authors', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('template')->nullable();
-            $table->text('description')->nullable();
+            $table->bigInteger('tg_id');
+            $table->string('name')->nullable();
+            $table->string('username')->nullable();
+            $table->boolean('premium')->default(false);
             $table->timestamps();
         });
     }
@@ -25,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('authors');
     }
 };

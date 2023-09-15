@@ -61,6 +61,7 @@ class FormController extends Controller
     {
         $form->update($request->validate([
             'name' => 'required|min:2',
+            'template' => 'max:1000',
             'description' => 'max:1000',
         ]));
         return redirect(route('form.index'))->with('success', 'Форма успешно обновлена!');

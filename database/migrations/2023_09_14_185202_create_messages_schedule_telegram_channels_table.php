@@ -11,11 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('forms', function (Blueprint $table) {
+        Schema::create('message_schedules_telegram_channels', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->text('template')->nullable();
-            $table->text('description')->nullable();
+            $table->foreignIdFor(\App\Models\MessageSchedule::class);
+            $table->foreignIdFor(\App\Models\TelegramChannel::class);
             $table->timestamps();
         });
     }
@@ -25,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('forms');
+        Schema::dropIfExists('message_schedules_telegram_channels');
     }
 };
