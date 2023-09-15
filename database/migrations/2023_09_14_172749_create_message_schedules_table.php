@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('message_schedules', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(\App\Models\Message::class);
-            $table->dateTime('sending_date');
-            $table->char('status', 20);
-            $table->text('error_text');
+            $table->dateTime('sending_date')->default(now());
+            $table->char('status', 20)->default('wait');
+            $table->text('error_text')->nullable();
             $table->comment('messages to send');
             $table->timestamps();
         });

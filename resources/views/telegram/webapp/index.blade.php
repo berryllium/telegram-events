@@ -71,5 +71,11 @@
                         @break
                 @endswitch
         @endforeach
+
+        <div class="form-group mb-3">
+            <label for="schedule" >Время публикации поста</label>
+            <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
+        </div>
+
     </form>
 @endsection

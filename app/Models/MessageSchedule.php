@@ -9,6 +9,12 @@ class MessageSchedule extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'sending_date',
+        'status',
+        'error_text'
+    ];
+
     public function telegram_channels() {
         return $this->belongsToMany(TelegramChannel::class, 'message_schedules_telegram_channels');
     }

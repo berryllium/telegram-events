@@ -15,6 +15,11 @@ class Message extends Model
         'allowed'
     ];
 
+    public function getDataAttribute($value)
+    {
+        return json_decode($value);
+    }
+
     public function telegram_bot() {
         return $this->belongsTo(TelegramBot::class);
     }

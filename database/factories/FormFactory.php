@@ -20,6 +20,7 @@ class FormFactory extends Factory
     {
         return [
             'name' => 'Форма ' . fake()->numberBetween(1, 500),
+            'template' => '<b>{{ $string }}</b> <code>{{ $place }}</code> <i>{{ $address }}</i>',
             'description' => fake()->text(),
         ];
     }
@@ -27,11 +28,11 @@ class FormFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Form $form) {
-            for($i = 0; $i < fake()->numberBetween(3, 8); $i++) {
+            foreach(array_keys(Field::$types) as $type) {
                 $form->fields()->create([
-                    'name' => fake('ru_RU')->word(),
-                    'code' => fake()->uuid(),
-                    'type' => fake()->randomElement(array_keys(Field::$types)),
+                    'name' => $type,
+                    'code' => $type,
+                    'type' => $type,
                 ]);
             }
         });

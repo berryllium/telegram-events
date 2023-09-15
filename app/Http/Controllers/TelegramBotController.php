@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\TechBotFacade;
 use App\Models\Form;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
@@ -14,7 +15,6 @@ class TelegramBotController extends Controller
      */
     public function index()
     {
-
         return view('bot/index', ['bots' => TelegramBot::paginate(20)]);
     }
 
