@@ -15,7 +15,7 @@ class TelegramBotController extends Controller
      */
     public function index()
     {
-        return view('bot/index', ['bots' => TelegramBot::paginate(20)]);
+        return view('bot/index', ['bots' => TelegramBot::with('form')->paginate(20)]);
     }
 
     /**
