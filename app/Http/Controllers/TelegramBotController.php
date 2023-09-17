@@ -38,7 +38,7 @@ class TelegramBotController extends Controller
             'form' => ''
         ]);
 
-        if($data['form']) {
+        if(isset($data['form']) && $data['form']) {
             $form = Form::find($data['form']);
             $form->bots()->create($data);
         } else {
@@ -99,7 +99,7 @@ class TelegramBotController extends Controller
             null,
             false,
             $request->get('code'))) {
-            return redirect(route('bot.index'))->with('success', 'Бот успешно обновлен!');
+            return back()->with('success', 'Бот успешно обновлен!');
         }
 
         return redirect()->back->with('error', 'Не удалось привязать бота, проверьте токен!');

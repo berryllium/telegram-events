@@ -26,7 +26,7 @@ TEMPLATE;
 
         return [
             'name' => 'Форма ' . fake()->numberBetween(1, 500),
-            'description' => fake()->text(),
+            'description' => fake()->realText(),
             'template' => $template,
         ];
     }

@@ -27,7 +27,7 @@ class MessageSchedule extends Model
     }
 
     public function telegram_channels() {
-        return $this->belongsToMany(TelegramChannel::class, 'message_schedules_telegram_channels');
+        return $this->belongsToMany(TelegramChannel::class);
     }
 
     public function message() {

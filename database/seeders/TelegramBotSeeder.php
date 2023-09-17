@@ -17,7 +17,7 @@ class TelegramBotSeeder extends Seeder
             'name' => 'Мой бот',
             'code' => 'dimabot',
             'api_token' => '6693099766:AAF45rcSrSzvUapg7IUpazpkIKhUABbUwho',
-            'moderation_group' => 168827230,
+            'moderation_group' => env('SERVICE_BOT_CHANNEL'),
             'description' => 'My bot',
             'form_id' => 1
         ]);

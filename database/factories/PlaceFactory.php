@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -19,8 +20,15 @@ class PlaceFactory extends Factory
         return [
             'name' => fake()->word(),
             'address' => fake()->address(),
-            'description' => fake()->text(),
+            'description' => fake()->realText(),
             'form_id' => 1
         ];
+    }
+
+    public function configure()
+    {
+        return $this->afterCreating(function (Place $place) {
+            $place->telegram_channels()->sync([1]);
+        });
     }
 }

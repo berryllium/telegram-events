@@ -6,6 +6,7 @@ use App\Facades\TechBotFacade;
 use App\Models\Author;
 use App\Models\Message;
 use App\Models\MessageSchedule;
+use App\Models\Place;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -46,12 +47,16 @@ class TelegramRequestHandler
                 }
                 $message->author_id = $author->id;
                 $message->save();
+
+                $place = Place::find($message->data->place);
+                $channels = $place->telegram_channels;
+
                 foreach ($message->data->schedule as $date) {
                     /** @var MessageSchedule $messageSchedule */
                     $messageSchedule = $message->message_schedules()->create([
                         'sending_date' => $date ? Carbon::parse($date) : now()
                     ]);
-                    $messageSchedule->telegram_channels()->attach(1);
+                    $messageSchedule->telegram_channels()->attach($channels);
                 }
 
                 $botApi = new BotApi($bot->api_token);

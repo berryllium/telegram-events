@@ -64,7 +64,7 @@ class FormController extends Controller
             'template' => 'max:1000',
             'description' => 'max:1000',
         ]));
-        return redirect(route('form.index'))->with('success', 'Форма успешно обновлена!');
+        return back()->with('success', 'Форма успешно обновлена!');
     }
 
     /**

@@ -30,20 +30,11 @@ class TelegramChannelController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        TelegramChannel::create($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
-            'description' => 'max:1000',
-            'form' => ''
-        ]);
-
-       if($data['form']) {
-           $form = Form::find($data['form']);
-           $form->channels()->create($data);
-       } else {
-           TelegramChannel::create($data);
-       }
-
+            'description' => 'max:1000'
+        ]));
         return redirect(route('channel.index'))->with('success', 'Канал успешно создан!');
     }
 
@@ -70,13 +61,12 @@ class TelegramChannelController extends Controller
      */
     public function update(Request $request, TelegramChannel $channel)
     {
-        $channel->form_id = $request->get('form');
         $channel->update($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'description' => 'max:1000',
         ]));
-        return redirect(route('channel.index'))->with('success', 'Канал успешно обновлен!');
+        return back()->with('success', 'Канал успешно обновлен!');
     }
 
     /**

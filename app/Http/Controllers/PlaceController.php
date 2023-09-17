@@ -37,7 +37,7 @@ class PlaceController extends Controller
             'form' => 'int'
         ]);
 
-        Form::find($data['form'])->places()->create($data);
+        $place = Form::find($data['form'])->places()->create($data);
 
         return redirect(route('place.index'))->with('success', 'Объект успешно создан!');
     }
@@ -70,8 +70,10 @@ class PlaceController extends Controller
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
+            'form' => 'int'
         ]));
-        return redirect(route('place.index'))->with('success', 'Объект успешно обновлен!');
+        $place->telegram_channels()->sync($request->input('channels'));
+        return back()->with('success', 'Объект успешно обновлен!');
     }
 
     /**

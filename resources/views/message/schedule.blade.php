@@ -13,7 +13,7 @@
         <tr>
             <td>{{ $counter ++ }}</td>
             <td>{{ $schedule->sending_date }}</td>
-            <td>{{ $schedule->date_update }}</td>
+            <td>{{ $schedule->status == 'success' ? $schedule->updated_at : '' }}</td>
             <td>{{ $schedule->status_name }}</td>
             <td>
                 @foreach($schedule->telegram_channels as $channel)

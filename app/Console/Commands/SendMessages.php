@@ -63,7 +63,7 @@ class SendMessages extends Command
                 $messageSchedule->status = 'error';
                 $messageSchedule->error_text = $error;
                 $messageSchedule->save();
-                $this->mainBot->sendMessage(168827230,  $exception->getMessage());
+                $this->mainBot->sendMessage(env('SERVICE_BOT_CHANNEL'),  $exception->getMessage());
             }
         }
     }

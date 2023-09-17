@@ -20,7 +20,7 @@ class TelegramBotFactory extends Factory
             'name' => 'Bot ' . fake()->numberBetween(1, 100),
             'code' => fake()->uuid(),
             'api_token' => fake()->iosMobileToken,
-            'description' => fake()->text(),
+            'description' => fake()->realText(),
             'moderation_group' => fake()->numberBetween(1, 1000000),
             'form_id' => 1
         ];

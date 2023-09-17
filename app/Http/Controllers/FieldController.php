@@ -71,7 +71,7 @@ class FieldController extends Controller
             'code' => 'required',
             'type' => 'required',
         ]));
-        return redirect(route('field.index', ['form' => $form]))->with('success', 'Поле успешно обновлено!');
+        return back()->with('success', 'Поле успешно обновлено!');
     }
 
     /**

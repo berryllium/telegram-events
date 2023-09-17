@@ -19,7 +19,7 @@ class TelegramChannelFactory extends Factory
         return [
             'tg_id' => fake()->numberBetween(),
             'name' => fake()->title(),
-            'description' => fake()->text()
+            'description' => fake()->realText()
         ];
     }
 }

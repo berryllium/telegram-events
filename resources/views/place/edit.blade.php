@@ -23,7 +23,22 @@
             <select class="form-select" id="form" name="form">
                 <option value=""></option>
                 @foreach(\App\Models\Form::all() as $form)
-                    <option value="{{ $form->id }}" {{ $form->id == $place->form_id ? 'selected' : ''}}>{{ $form->name }}</option>
+                    <option value="{{ $form->id }}" {{ $form->id == $place->form_id ? 'selected' : ''}}>
+                        {{ $form->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('form')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="channels" class="form-label">ТГ каналы</label>
+            <select class="form-select" id="channels" name="channels[]" multiple>
+                @foreach(\App\Models\TelegramChannel::all() as $channel)
+                    <option value="{{ $channel->id }}" {{ $place->telegram_channels->contains($channel->id) ? 'selected' : ''}}>
+                        {{ $channel->name }}
+                    </option>
                 @endforeach
             </select>
             @error('form')
