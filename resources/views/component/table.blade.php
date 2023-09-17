@@ -9,7 +9,7 @@
     @foreach($entities['value'] as $entity)
         <tr>
             @foreach($fields as $field)
-                @if(is_object($entity->$field))
+                @if($entity->$field instanceof \Illuminate\Database\Eloquent\Model)
                     <td><a href="{{ route( Str::singular($entity->$field->getTable()) . '.edit', $entity->$field) }}">{{ $entity->$field->name }}</a></td>
                 @else
                     <td>{{ $entity->$field }}</td>
@@ -30,6 +30,8 @@
         </tr>
     @endforeach
 </table>
-<div class="row">
-    <div class="col-6">{{ $entities['value']->links() }}</div>
-</div>
+@if($entities['value'] instanceof LengthAwarePaginator)
+    <div class="row">
+        <div class="col-6">{{ $entities['value']->links() }}</div>
+    </div>
+@endif

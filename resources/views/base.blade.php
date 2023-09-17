@@ -12,6 +12,9 @@
         <li class="nav-item">
             <a class="nav-link" href="{{ route('place.index') }}">Места</a>
         </li>
+        <li class="nav-item">
+            <a class="nav-link" href="{{ route('message.index') }}">Сообщения</a>
+        </li>
     @endsection
 @section('messages')
     <div class="col-12">

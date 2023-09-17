@@ -15,6 +15,17 @@ class MessageSchedule extends Model
         'error_text'
     ];
 
+    public static $statuses = [
+        'wait' => 'Ожидание',
+        'error' => 'Ошибка',
+        'success' => 'Отправлено',
+    ];
+
+    public function getStatusNameAttribute()
+    {
+        return self::$statuses[$this->status] ?? $this->status;
+    }
+
     public function telegram_channels() {
         return $this->belongsToMany(TelegramChannel::class, 'message_schedules_telegram_channels');
     }

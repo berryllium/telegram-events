@@ -28,7 +28,7 @@ class Message extends Model
         return $this->belongsTo(Author::class);
     }
 
-    public function massage_schedules() {
+    public function message_schedules() {
         return $this->hasMany(MessageSchedule::class);
     }
 }

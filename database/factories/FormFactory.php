@@ -18,10 +18,16 @@ class FormFactory extends Factory
      */
     public function definition(): array
     {
+        $template = <<<TEMPLATE
+<b>{{ \$string }}</b>
+<code>{{ \$place }}</code>
+<i>{{ \$address }}</i>
+TEMPLATE;
+
         return [
             'name' => 'Форма ' . fake()->numberBetween(1, 500),
-            'template' => '<b>{{ $string }}</b> <code>{{ $place }}</code> <i>{{ $address }}</i>',
             'description' => fake()->text(),
+            'template' => $template,
         ];
     }
 

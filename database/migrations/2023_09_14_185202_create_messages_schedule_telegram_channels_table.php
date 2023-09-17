@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('message_schedules_telegram_channels', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\MessageSchedule::class);
+            $table->foreignIdFor(\App\Models\MessageSchedule::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\TelegramChannel::class);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();

@@ -30,7 +30,7 @@ class TelegramRequestHandler
             $web_app_data = $data['message']['web_app_data']['data'] ?? null;
 
             if($text == '/start') {
-                $this->sendButton($chat_id, $bot['id']);
+                $this->sendButton($chat_id, $bot);
             } elseif($web_app_data) {
                 Log::info('$web_app_data', [$web_app_data]);
                 $web_app_data = json_decode($web_app_data, true);
@@ -48,7 +48,7 @@ class TelegramRequestHandler
                 $message->save();
                 foreach ($message->data->schedule as $date) {
                     /** @var MessageSchedule $messageSchedule */
-                    $messageSchedule = $message->massage_schedules()->create([
+                    $messageSchedule = $message->message_schedules()->create([
                         'sending_date' => $date ? Carbon::parse($date) : now()
                     ]);
                     $messageSchedule->telegram_channels()->attach(1);
