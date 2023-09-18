@@ -12,7 +12,7 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        //
+        return view('author.index', ['authors' => Author::paginate(20)]);
     }
 
     /**
@@ -20,7 +20,7 @@ class AuthorController extends Controller
      */
     public function create()
     {
-        //
+        return view('author.create');
     }
 
     /**
@@ -28,15 +28,14 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(Author $author)
-    {
-        //
+        Author::create($request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'tg_id' => 'required|int',
+            'description' => 'required',
+            'trusted' => 'bool'
+        ]));
+        return redirect(route('author.index'))->with('success', 'Автор успешно добавлен');
     }
 
     /**
@@ -44,7 +43,7 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        //
+        return view('author.edit', ['author' => $author]);
     }
 
     /**
@@ -52,7 +51,15 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        //
+        $author->update($request->validate([
+            'name' => 'required',
+            'username' => 'required',
+            'tg_id' => 'required|int',
+            'description' => '',
+            'trusted' => 'bool'
+        ]));
+
+        return back()->with('success', 'Запись обновлена');
     }
 
     /**
@@ -60,6 +67,6 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        //
+        $author->delete();
     }
 }

@@ -31,4 +31,5 @@
 
     <h3 class="mt-4">Поля формы</h3>
     @include('form.field', ['form' => $form])
+    <a href="{{ route('field.create', ['form' => $form]) }}" class="btn btn-primary">Добавить поле</a>
 @endsection

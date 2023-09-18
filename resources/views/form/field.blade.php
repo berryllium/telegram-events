@@ -10,7 +10,7 @@
         <tr>
             <td>{{ $field->name }}</td>
             <td>{{ \App\Models\Field::$types[$field->type] }}</td>
-            <td>&lcub;&lcub; ${{ $field->code }} &rcub;&rcub;</td>
+            <td>&lcub;&lcub;&nbsp;${{ $field->code }}&nbsp;&rcub;&rcub;</td>
             <td class="align-middle text-nowrap">
                 <a href="{{ route('field.edit', [$form, $field]) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>

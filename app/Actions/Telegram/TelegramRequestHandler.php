@@ -63,6 +63,18 @@ class TelegramRequestHandler
 
                 $botApi->sendMessage($chat_id, "Ваше сообщение принято! #" . $web_app_data['message_id']);
                 $botApi->sendMessage($chat_id, $message->text, 'HTML');
+
+                $admin_text = str_replace(
+                    ['#author_type#', '#author_link#', '#message_link#'],
+                    [
+                        $author->trusted ? 'Доверенный автор' : 'Пользователь',
+                        "<a href='" . route('author.edit', $author->id) ."'>" . $author->name . "</a>",
+                        "<a href='" . route('message.edit', $author->id) ."'>Сообщение</a>",
+                    ],
+                    "#author_type# #author_link# разместил #message_link#"
+                );
+
+                $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
                 $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
             }
         } catch (\Exception $exception) {

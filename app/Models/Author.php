@@ -13,7 +13,9 @@ class Author extends Model
         'tg_id',
         'name',
         'username',
-        'premium'
+        'description',
+        'trusted',
+        'premium',
     ];
 
     public function messages() {

@@ -16,7 +16,9 @@ return new class extends Migration
             $table->bigInteger('tg_id');
             $table->string('name')->nullable();
             $table->string('username')->nullable();
+            $table->text('description')->nullable();
             $table->boolean('premium')->default(false);
+            $table->boolean('trusted')->default(false);
             $table->timestamps();
         });
     }

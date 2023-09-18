@@ -26,6 +26,7 @@ class Field extends Model
         'select' => 'Выпадающий список',
         'place' => 'Место',
         'address' => 'Адрес',
+        'files' => 'Файлы'
     ];
 
     public function form(): BelongsTo
