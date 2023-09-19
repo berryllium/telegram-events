@@ -18,6 +18,10 @@ class MessageFile extends Model
         return $this->belongsTo(Message::class);
     }
 
+    public function getPathAttribute() {
+        return Storage::path($this->filename);
+    }
+
     public function getSrcAttribute() {
         return asset(Storage::url($this->filename));
     }

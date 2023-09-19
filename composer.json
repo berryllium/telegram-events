@@ -14,7 +14,9 @@
         "laravel/ui": "^4.2",
         "telegram-bot/api": "^2.5",
       "ext-libxml": "*",
-        "ext-dom": "*"
+        "ext-dom": "*",
+      "ext-curl": "*",
+        "ext-fileinfo": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",

@@ -17,7 +17,7 @@ class TelegramFormHandler
         try {
             if($request->hasFile('files')) {
                 $request->validate(
-                    ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:5000'],
+                    ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
                     ['files.*.mimes' => 'Файлы могут быть только форматов: jpeg, jpg, png, webp, mp4, avi, mkv']
                 );
                 $files = $request->file('files');
@@ -49,6 +49,7 @@ class TelegramFormHandler
 
         } catch (\Exception $exception) {
             TechBotFacade::send($exception->getMessage());
+            return response()->json(['error' => $exception->getMessage()]);
         }
 
         return response()->json(['message_id' => $message->id]);

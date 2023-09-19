@@ -69,6 +69,12 @@
                             </select>
                         </div>
                         @break
+                    @case('files')
+                        <div class="form-group mb-3">
+                            <label for="field-{{ $k }}" class="form-label">{{ $field->name }}</label>
+                            <input id="field-{{ $k }}" class="form-control" name="files[]" type="file" multiple>
+                        </div>
+                        @break
                 @endswitch
         @endforeach
 

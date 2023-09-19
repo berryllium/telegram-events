@@ -8,10 +8,14 @@ use App\Models\Message;
 use App\Models\MessageSchedule;
 use App\Models\Place;
 use App\Models\TelegramBot;
+use CURLFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
+use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
+use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
 use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 
 class TelegramRequestHandler
@@ -48,34 +52,68 @@ class TelegramRequestHandler
                 $message->author_id = $author->id;
                 $message->save();
 
-                $place = Place::find($message->data->place);
-                $channels = $place->telegram_channels;
+                if(isset($message->data->place)) {
+                    $place = Place::find($message->data->place);
+                    $channels = $place->telegram_channels;
 
-                foreach ($message->data->schedule as $date) {
-                    /** @var MessageSchedule $messageSchedule */
-                    $messageSchedule = $message->message_schedules()->create([
-                        'sending_date' => $date ? Carbon::parse($date) : now()
-                    ]);
-                    $messageSchedule->telegram_channels()->attach($channels);
+                    if($channels) {
+                        foreach ($message->data->schedule as $date) {
+                            /** @var MessageSchedule $messageSchedule */
+                            $messageSchedule = $message->message_schedules()->create([
+                                'sending_date' => $date ? Carbon::parse($date) : now()
+                            ]);
+                            $messageSchedule->telegram_channels()->attach($channels);
+                        }
+                    }
+                } else {
+                    TechBotFacade::send('Не найдено поле place в сообщении ' . $message->id);
                 }
 
                 $botApi = new BotApi($bot->api_token);
-
-                $botApi->sendMessage($chat_id, "Ваше сообщение принято! #" . $web_app_data['message_id']);
-                $botApi->sendMessage($chat_id, $message->text, 'HTML');
 
                 $admin_text = str_replace(
                     ['#author_type#', '#author_link#', '#message_link#'],
                     [
                         $author->trusted ? 'Доверенный автор' : 'Пользователь',
                         "<a href='" . route('author.edit', $author->id) ."'>" . $author->name . "</a>",
-                        "<a href='" . route('message.edit', $author->id) ."'>Сообщение</a>",
+                        "<a href='" . route('message.edit', $message->id) ."'>Сообщение</a>",
                     ],
                     "#author_type# #author_link# разместил #message_link#"
                 );
 
+                // TODO вынести в отдельный класс формирование media для сообщениея
+                if($messageSchedule->message->message_files) {
+                    $media = new ArrayOfInputMedia();
+                    $needCaption = true;
+                    $attachments = [];
+                    foreach ($messageSchedule->message->message_files as $file) {
+                        $mime = mime_content_type($file->path);
+                        $attachments[$file->filename] = new CURLFile($file->path);
+
+                        if($needCaption) {
+                            $caption = $messageSchedule->message->text;
+                            $parseMode = 'HTML';
+                            $needCaption = false;
+                        } else {
+                            $caption = $parseMode = null;
+                        }
+
+                        if(strstr($mime, "video/")){
+                            $media->addItem(new InputMediaVideo('attach://' . $file->filename, $caption, $parseMode));
+                        }else if(strstr($mime, "image/")){
+                            $media->addItem(new InputMediaPhoto('attach://' . $file->filename, $caption, $parseMode));
+                        }
+
+                    }
+                    $botApi->sendMediaGroup($chat_id, $media, null, null, null, null, null, $attachments);
+                    $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $media, null, null, null, null, null, $attachments);
+                } else {
+                    $botApi->sendMessage($chat_id, $message->text, 'HTML');
+                    $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
+                }
+
                 $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
-                $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
+                $botApi->sendMessage($chat_id, "Ваше сообщение принято! #" . $web_app_data['message_id']);
             }
         } catch (\Exception $exception) {
             TechBotFacade::send($exception->getMessage(), $exception->getTraceAsString());
