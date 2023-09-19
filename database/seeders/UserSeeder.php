@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
@@ -14,10 +15,25 @@ class UserSeeder extends Seeder
     public function run(): void
     {
         User::factory(10)->create();
-        User::factory()->create([
-            'name' => 'Admin',
-            'email' => 'admin@admin.com',
+        $supervisor = User::factory()->create([
+            'name' => 'Supervisor',
+            'email' => 'supervisor@test.com',
             'password' => Hash::make('qwer1234')
         ]);
+        $supervisor->roles()->attach(Role::query()->where('name', '=', 'supervisor')->first());
+
+        $admin = User::factory()->create([
+            'name' => 'Admin',
+            'email' => 'admin@test.com',
+            'password' => Hash::make('qwer1234')
+        ]);
+        $admin->roles()->attach(Role::query()->where('name', '=', 'admin')->first());
+
+        $moderator = User::factory()->create([
+            'name' => 'Moderator',
+            'email' => 'moderator@test.com',
+            'password' => Hash::make('qwer1234')
+        ]);
+        $moderator->roles()->attach(Role::query()->where('name', '=', 'moderator')->first());
     }
 }

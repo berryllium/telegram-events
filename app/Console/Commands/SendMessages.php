@@ -33,7 +33,7 @@ class SendMessages extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->mainBot = new BotApi(TelegramBot::find(1)->api_token);
+        $this->mainBot = new BotApi(env('SERVICE_BOT_TOKEN'));
     }
 
     /**

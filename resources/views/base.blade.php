@@ -1,10 +1,10 @@
 @extends('layouts.app')
     @section('navbar')
         <li class="nav-item">
-            <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">Формы</a>
+            <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">Боты</a>
         </li>
         <li class="nav-item">
-            <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">Боты</a>
+            <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">Формы</a>
         </li>
         <li class="nav-item">
             <a class="nav-link{{ request()->segment(1) == 'channel' ? ' active' : '' }}" href="{{ route('channel.index') }}">Каналы</a>

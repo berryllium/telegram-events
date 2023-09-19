@@ -24,12 +24,12 @@ class ValidMessage implements ValidationRule
             libxml_use_internal_errors(false);
             $fail('Невалидный html в сообщении');
         }
-
-        $elements = $dom->getElementsByTagName('*');
-        foreach ($elements as $element) {
-            if (!in_array($element->tagName, ['html', 'body', 'b', 'i', 'code'])) {
-                $fail('Запрещенные html теги в сообщении - ' . $element->tagName);
-            }
-        }
+//
+//        $elements = $dom->getElementsByTagName('*');
+//        foreach ($elements as $element) {
+//            if (!in_array($element->tagName, ['html', 'body', 'b', 'i', 'code'])) {
+//                $fail('Запрещенные html теги в сообщении - ' . $element->tagName . $element->nodeValue);
+//            }
+//        }
     }
 }
