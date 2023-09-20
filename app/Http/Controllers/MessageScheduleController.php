@@ -60,7 +60,7 @@ class MessageScheduleController extends Controller
         ]);
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
-        return back()->with('success', 'Отправка обновлена');
+        return redirect(route('message.edit', $messageSchedule->message))->with('success', 'Отправка обновлена');
     }
 
     /**

@@ -26,6 +26,15 @@ class MessageSchedule extends Model
         return self::$statuses[$this->status] ?? $this->status;
     }
 
+    public function getStatusClassAttribute() {
+        $map = [
+            'wait' => 'warning',
+            'error' => 'danger',
+            'success' => 'success'
+        ];
+        return $map[$this->status] ?? null;
+    }
+
     public function telegram_channels() {
         return $this->belongsToMany(TelegramChannel::class);
     }

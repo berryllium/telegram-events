@@ -35,6 +35,7 @@ class TelegramBotController extends Controller
             'code' => 'required|unique:telegram_bots|alpha_dash:ascii',
             'api_token' => 'required',
             'description' => 'max:1000',
+            'moderation_group' => 'int',
             'form' => ''
         ]);
 
@@ -87,6 +88,7 @@ class TelegramBotController extends Controller
             'name' => 'required|min:2',
             'code' => 'required|alpha_dash:ascii|unique:telegram_bots,code,'.$bot->id,
             'api_token' => 'required',
+            'moderation_group' => 'int',
             'description' => 'max:1000',
         ]));
 

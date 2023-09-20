@@ -53,4 +53,9 @@ class User extends Authenticatable
         return $this->roles->contains('name', $roleName);
     }
 
+    public function hasAnyRole(...$roles)
+    {
+        return $this->roles->pluck('name')->intersect($roles)->count() > 0;
+    }
+
 }

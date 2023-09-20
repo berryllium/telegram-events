@@ -13,7 +13,6 @@ class PlaceController extends Controller
      */
     public function index()
     {
-
         return view('place/index', ['places' => Place::with('form')->paginate(20)]);
     }
 

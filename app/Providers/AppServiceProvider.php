@@ -13,7 +13,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind('tech_bot.service', fn () => new TechBotService());
+        $this->app->bind('tech_bot.service', TechBotService::class);
     }
 
     /**

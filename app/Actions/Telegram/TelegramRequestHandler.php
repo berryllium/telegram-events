@@ -8,14 +8,10 @@ use App\Models\Message;
 use App\Models\MessageSchedule;
 use App\Models\Place;
 use App\Models\TelegramBot;
-use CURLFile;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
-use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
-use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
 use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 
 class TelegramRequestHandler
@@ -42,11 +38,12 @@ class TelegramRequestHandler
                 $message = Message::query()->find($web_app_data['message_id']);
                 $author = Author::query()->where('tg_id', $sender['id'])->first();
                 if(!$author) {
-                    $author = new Author();
-                    $author->name = $sender['first_name'] ?? 'unknown';
-                    $author->username = $sender['username'] ?? 'unknown';
-                    $author->tg_id = $sender['id'];
-                    $author->premium = $sender['is_premium'] ?? false;
+                    $author = new Author([
+                        'name' => $sender['first_name'] ?? 'unknown',
+                        'username' => $sender['username'] ?? 'unknown',
+                        'tg_id' => $sender['id'],
+                        'premium' => $sender['is_premium'] ?? false,
+                    ]);
                     $author->save();
                 }
                 $message->author_id = $author->id;
@@ -81,32 +78,10 @@ class TelegramRequestHandler
                     "#author_type# #author_link# разместил #message_link#"
                 );
 
-                // TODO вынести в отдельный класс формирование media для сообщениея
-                if($messageSchedule->message->message_files) {
-                    $media = new ArrayOfInputMedia();
-                    $needCaption = true;
-                    $attachments = [];
-                    foreach ($messageSchedule->message->message_files as $file) {
-                        $mime = mime_content_type($file->path);
-                        $attachments[$file->filename] = new CURLFile($file->path);
-
-                        if($needCaption) {
-                            $caption = $messageSchedule->message->text;
-                            $parseMode = 'HTML';
-                            $needCaption = false;
-                        } else {
-                            $caption = $parseMode = null;
-                        }
-
-                        if(strstr($mime, "video/")){
-                            $media->addItem(new InputMediaVideo('attach://' . $file->filename, $caption, $parseMode));
-                        }else if(strstr($mime, "image/")){
-                            $media->addItem(new InputMediaPhoto('attach://' . $file->filename, $caption, $parseMode));
-                        }
-
-                    }
-                    $botApi->sendMediaGroup($chat_id, $media, null, null, null, null, null, $attachments);
-                    $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $media, null, null, null, null, null, $attachments);
+                if($message->message_files->count()) {
+                    $mediaArr = TechBotFacade::createMedia($message);
+                    $botApi->sendMediaGroup($chat_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+                    $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
                 } else {
                     $botApi->sendMessage($chat_id, $message->text, 'HTML');
                     $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
@@ -116,7 +91,7 @@ class TelegramRequestHandler
                 $botApi->sendMessage($chat_id, "Ваше сообщение принято! #" . $web_app_data['message_id']);
             }
         } catch (\Exception $exception) {
-            TechBotFacade::send($exception->getMessage(), $exception->getTraceAsString());
+            TechBotFacade::send(implode(', ', [$exception->getMessage(), $exception->getFile(), $exception->getLine()]));
         }
 
         return response()->json(['status' => 'ok']);
@@ -133,5 +108,4 @@ class TelegramRequestHandler
         $botApi = new BotApi($bot->api_token);
         $botApi->sendMessage($chat_id, 'Приветствую! Воспользуйтесь кнопкой для заполнения формы!', null, false, null, $keyboard);
     }
-
 }

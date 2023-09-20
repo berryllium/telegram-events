@@ -25,4 +25,13 @@ class MessageFile extends Model
     public function getSrcAttribute() {
         return asset(Storage::url($this->filename));
     }
+
+    public function getMimeTypeAttribute() {
+        return mime_content_type($this->path);
+    }
+
+    public function getTypeAttribute() {
+        $mime = explode('/', $this->getMimeTypeAttribute());
+        return $mime[0];
+    }
 }

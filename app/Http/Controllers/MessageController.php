@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\MessageFile;
+use App\Models\MessageSchedule;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
 
@@ -15,7 +16,9 @@ class MessageController extends Controller
     public function index()
     {
         return view('message.index', [
-            'messages' => Message::paginate(20)
+            'schedules' => MessageSchedule::with('message.author')->paginate(20),
+            'statuses' => MessageSchedule::$statuses,
+            'status_class' => array_combine(array_keys(MessageSchedule::$statuses), ['warning', 'danger', 'success'])
         ]);
     }
 
@@ -41,7 +44,7 @@ class MessageController extends Controller
     public function update(Request $request, Message $message)
     {
         $message->update($request->validate([
-            'text' => ['required', new ValidMessage()]
+            'text' => ['required', 'max:1000', new ValidMessage()]
         ]));
 
         return back()->with('success', 'Сообщение успешно обновлено');

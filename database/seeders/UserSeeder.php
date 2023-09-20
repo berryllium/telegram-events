@@ -14,7 +14,6 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        User::factory(10)->create();
         $supervisor = User::factory()->create([
             'name' => 'Supervisor',
             'email' => 'supervisor@test.com',

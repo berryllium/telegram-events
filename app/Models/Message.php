@@ -22,6 +22,18 @@ class Message extends Model
         return json_decode($value);
     }
 
+    public function getHtmlTextAttribute($value) {
+        return "<p>" . str_replace("\r\n", "</p><p>", $this->text) . "</p>";
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::saving(function ($model) {
+            $model->text = preg_replace(array('/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'), array('', "\r\n", "\r\n", '<b>', '</b>'), $model->text);;
+        });
+    }
+
     public function telegram_bot() : BelongsTo {
         return $this->belongsTo(TelegramBot::class);
     }

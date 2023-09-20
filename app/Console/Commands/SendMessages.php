@@ -2,6 +2,7 @@
 
 namespace App\Console\Commands;
 
+use App\Facades\TechBotFacade;
 use App\Models\MessageSchedule;
 use App\Models\TelegramBot;
 use CURLFile;
@@ -55,31 +56,9 @@ class SendMessages extends Command
                     if(!(isset($botApis[$bot->id]))) {
                         $botApis[$bot->id] = new BotApi($bot->api_token);
                     }
-                    // TODO вынести в отдельный класс формирование media для сообщениея
-                    if($messageSchedule->message->message_files) {
-                        $media = new ArrayOfInputMedia();
-                        $needCaption = true;
-                        $attachments = [];
-                        foreach ($messageSchedule->message->message_files as $file) {
-                            $mime = mime_content_type($file->path);
-                            $attachments[$file->filename] = new CURLFile($file->path);
-
-                            if($needCaption) {
-                                $caption = $messageSchedule->message->text;
-                                $parseMode = 'HTML';
-                                $needCaption = false;
-                            } else {
-                                $caption = $parseMode = null;
-                            }
-
-                            if(strstr($mime, "video/")){
-                                $media->addItem(new InputMediaVideo('attach://' . $file->filename, $caption, $parseMode));
-                            }else if(strstr($mime, "image/")){
-                                $media->addItem(new InputMediaPhoto('attach://' . $file->filename, $caption, $parseMode));
-                            }
-
-                        }
-                        $botApis[$bot->id]->sendMediaGroup($channel->tg_id, $media, null, null, null, null, null, $attachments);
+                    if($messageSchedule->message->message_files->count()) {
+                        $mediaArr = TechBotFacade::createMedia($messageSchedule->message);
+                        $botApis[$bot->id]->sendMediaGroup($channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
                     } else {
                         $botApis[$bot->id]->sendMessage($channel->tg_id, $messageSchedule->message->text, 'HTML');
                     }
