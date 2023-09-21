@@ -17,11 +17,10 @@ use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 class TelegramRequestHandler
 {
     public function handle(Request $request) {
-        TechBotFacade::send('обработка сообщения...');
         try {
             $data = $request->toArray();
             $token = $request->header('X-Telegram-Bot-Api-Secret-Token');
-            Log::info('Сообщение от телеграм ', $data);
+            Log::info('Telegram message ', $data);
 
             $bot = TelegramBot::query()->where('code', '=', $token)->first();
 
@@ -63,7 +62,7 @@ class TelegramRequestHandler
                         }
                     }
                 } else {
-                    TechBotFacade::send('Не найдено поле place в сообщении ' . $message->id);
+                    TechBotFacade::send('Place not found ' . $message->id);
                 }
 
                 $botApi = new BotApi($bot->api_token);
@@ -71,11 +70,11 @@ class TelegramRequestHandler
                 $admin_text = str_replace(
                     ['#author_type#', '#author_link#', '#message_link#'],
                     [
-                        $author->trusted ? 'Доверенный автор' : 'Пользователь',
+                        $author->trusted ? __('webapp.trusted_author') : __('webapp.user'),
                         "<a href='" . route('author.edit', $author->id) ."'>" . $author->name . "</a>",
-                        "<a href='" . route('message.edit', $message->id) ."'>Сообщение</a>",
+                        "<a href='" . route('message.edit', $message->id) ."'>".__('webapp.message')."</a>",
                     ],
-                    "#author_type# #author_link# разместил #message_link#"
+                    "#author_type# #author_link# ".__('webapp.has_posted')." #message_link#"
                 );
 
                 if($message->message_files->count()) {
@@ -88,7 +87,7 @@ class TelegramRequestHandler
                 }
 
                 $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
-                $botApi->sendMessage($chat_id, "Ваше сообщение принято! #" . $web_app_data['message_id']);
+                $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id']);
             }
         } catch (\Exception $exception) {
             TechBotFacade::send(implode(', ', [$exception->getMessage(), $exception->getFile(), $exception->getLine()]));
@@ -101,11 +100,11 @@ class TelegramRequestHandler
         $keyboard = new ReplyKeyboardMarkup(
             [
                 [
-                    ['text' => '🔖 Разместить пост ', 'web_app' => ['url'=> route('webapp', $bot)]]
+                    ['text' => __('webapp.add_post'), 'web_app' => ['url'=> route('webapp', $bot)]]
                 ]
             ]
         );
         $botApi = new BotApi($bot->api_token);
-        $botApi->sendMessage($chat_id, 'Приветствую! Воспользуйтесь кнопкой для заполнения формы!', null, false, null, $keyboard);
+        $botApi->sendMessage($chat_id, __('webapp.greeting'), null, false, null, $keyboard);
     }
 }

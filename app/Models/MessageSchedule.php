@@ -23,7 +23,7 @@ class MessageSchedule extends Model
 
     public function getStatusNameAttribute()
     {
-        return self::$statuses[$this->status] ?? $this->status;
+        return __($this->status);
     }
 
     public function getStatusClassAttribute() {

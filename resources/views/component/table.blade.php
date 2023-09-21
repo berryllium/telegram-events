@@ -3,7 +3,7 @@
         @foreach($headers as $header)
             <th>{{ $header }}</th>
         @endforeach
-        <th class="action-cell">Действия</th>
+        <th class="action-cell">{{ __('webapp.actions') }}</th>
     </tr>
 
     @foreach($entities['value'] as $entity)

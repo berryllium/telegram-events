@@ -1,39 +1,39 @@
 @extends('base')
-@section('title', 'Редактирование ТГ-бота')
+@section('title', __('webapp.bots.edit'))
 @section('content')
     <form method="post" action="{{ route('bot.update', [$bot]) }}">
         @csrf
         @method('put')
         <div class="mb-3">
-            <label for="name" class="form-label">Название бота</label>
+            <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $bot->name }}">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
-            <label for="code" class="form-label">Символьный код</label>
+            <label for="code" class="form-label">{{ __('webapp.code') }}</label>
             <input type="text" class="form-control" id="code" name="code" value="{{ $bot->code }}">
             @error('code')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
-            <label for="api_token" class="form-label">Ключ API</label>
+            <label for="api_token" class="form-label">{{ __('webapp.api_token') }}</label>
             <input type="text" class="form-control" id="api_token" name="api_token" value="{{ $bot->api_token }}">
             @error('api_token')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
-            <label for="moderation_group" class="form-label">Группа модерации</label>
+            <label for="moderation_group" class="form-label">{{ __('webapp.moderation_group') }}</label>
             <input type="text" class="form-control" id="moderation_group" name="moderation_group" value="{{ $bot->moderation_group }}">
             @error('moderation_group')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
-            <label for="form" class="form-label">Форма WebApp</label>
+            <label for="form" class="form-label">{{ __('webapp.webapp_form') }}</label>
             <select class="form-select" id="form" name="form">
                 <option value=""></option>
                 @foreach(\App\Models\Form::all() as $form)
@@ -45,12 +45,12 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="description" class="form-label">Описание</label>
+            <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $bot->description }}</textarea>
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Обновить</button>
+        <button type="submit" class="btn btn-primary">{{ __('webapp.create') }}</button>
     </form>
 @endsection

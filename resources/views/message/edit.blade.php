@@ -1,21 +1,21 @@
 @extends('base')
-@section('title', 'Редактирование сообщения от ' . $msg->author->name)
+@section('title', __('webapp.messages.edit', ['author' => $msg->author->name]) )
 @section('content')
     <form method="post" action="{{ route('message.update', $msg) }}">
         @csrf
         @method('put')
         <div class="mb-3">
-            <label for="text" class="form-label">Текст сообщения</label>
+            <label for="text" class="form-label">{{ __('webapp.message_text') }}</label>
             <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">{{ $msg->htmlText }}</textarea>
             @error('text')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Обновить</button>
+        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 
     <div class="row">
-        <div class="col-12"><h3 class="mt-4">Файлы</h3></div>
+        <div class="col-12"><h3 class="mt-4">{{ __('webapp.files') }}</h3></div>
         <div class="col-12 d-flex align-middle">
             @foreach($msg->message_files as $file)
                 <div class="col-2 pe-2 pb-2">
@@ -31,7 +31,7 @@
                                 <img src="<?=$file->src?>" alt="{{ $file->filename }}" height="auto" width="100%">
                             @endif
                         </a>
-                        <a href="#" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>Удалить</span></a>
+                        <a href="#" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>{{ __('webapp.delete') }}</span></a>
                     </div>
                 </div>
             @endforeach
@@ -43,6 +43,6 @@
         </div>
     </div>
 
-    <h3 class="mt-4">Расписание отправки</h3>
+    <h3 class="mt-4">{{ __('webapp.messages.schedule') }}</h3>
     @include('message.schedule', ['schedules' => $msg->message_schedules()->with('telegram_channels')->get()])
 @endsection

@@ -3,25 +3,25 @@
         @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
             @if(auth()->user()->hasRole('supervisor'))
                 <li class="nav-item">
-                    <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">Боты</a>
+                    <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">{{ __('menu.bots') }}</a>
                 </li>
             @endif
             <li class="nav-item">
-                <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">Формы</a>
+                <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">{{ __('menu.forms') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{{ request()->segment(1) == 'channel' ? ' active' : '' }}" href="{{ route('channel.index') }}">Каналы</a>
+                <a class="nav-link{{ request()->segment(1) == 'channel' ? ' active' : '' }}" href="{{ route('channel.index') }}">{{ __('menu.channels') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{{ request()->segment(1) == 'place' ? ' active' : '' }}" href="{{ route('place.index') }}">Места</a>
+                <a class="nav-link{{ request()->segment(1) == 'place' ? ' active' : '' }}" href="{{ route('place.index') }}">{{ __('menu.places') }}</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link{{ request()->segment(1) == 'author' ? ' active' : '' }}" href="{{ route('author.index') }}">Авторы</a>
+                <a class="nav-link{{ request()->segment(1) == 'author' ? ' active' : '' }}" href="{{ route('author.index') }}">{{ __('menu.authors') }}</a>
             </li>
         @endif
         @if(auth()->user()->hasAnyRole('supervisor', 'admin', 'moderator'))
             <li class="nav-item">
-                <a class="nav-link{{ request()->segment(1) == 'message' ? ' active' : '' }}" href="{{ route('message.index') }}">Сообщения</a>
+                <a class="nav-link{{ request()->segment(1) == 'message' ? ' active' : '' }}" href="{{ route('message.index') }}">{{ __('menu.messages') }}</a>
             </li>
         @endif
     @endsection

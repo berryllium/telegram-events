@@ -1,12 +1,12 @@
 <table class="table table-striped d-block d-md-table overflow-x-auto">
     <tr>
         <th>#</th>
-        <th>Запланированное время отправки</th>
-        <th>Фактическое время отправки</th>
-        <th>Статус</th>
-        <th>Каналы</th>
-        <th>Ошибка</th>
-        <th class="action-cell">Действия</th>
+        <th>{{ __('webapp.messages.scheduled_dispatch_time') }}</th>
+        <th>{{ __('webapp.messages.real_dispatch_time') }}</th>
+        <th>{{ __('webapp.status') }}</th>
+        <th>{{ __('webapp.channels') }}</th>
+        <th>{{ __('webapp.error') }}</th>
+        <th class="action-cell">{{ __('webapp.actions') }}</th>
     </tr>
     @php $counter = 1; @endphp
     @foreach($schedules as $schedule)

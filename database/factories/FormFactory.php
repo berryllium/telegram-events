@@ -25,7 +25,7 @@ class FormFactory extends Factory
 TEMPLATE;
 
         return [
-            'name' => 'Форма ' . fake()->numberBetween(1, 500),
+            'name' => __('webapp.form') . ' ' . fake()->numberBetween(1, 500),
             'description' => fake()->realText(),
             'template' => $template,
         ];

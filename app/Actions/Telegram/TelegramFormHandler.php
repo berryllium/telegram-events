@@ -18,7 +18,6 @@ class TelegramFormHandler
             if($request->hasFile('files')) {
                 $request->validate(
                     ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
-                    ['files.*.mimes' => 'Файлы могут быть только форматов: jpeg, jpg, png, webp, mp4, avi, mkv']
                 );
                 $files = $request->file('files');
             }

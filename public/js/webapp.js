@@ -3,7 +3,7 @@ window.addEventListener('load', () => {
     const form = $('#webapp-form')
     let ajaxObj = false
     webApp.expand()
-    webApp.MainButton.text = "Отправить";
+    webApp.MainButton.text = "Send";
     webApp.MainButton.show()
 
     Telegram.WebApp.onEvent("mainButtonClicked", async function(){
@@ -20,7 +20,7 @@ window.addEventListener('load', () => {
                 }
             },
             error: function () {
-                alert('Непредвиденная ошибка')
+                alert('Unexpected error')
             },
             complete: function() {
                 ajaxObj = false

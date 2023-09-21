@@ -1,12 +1,12 @@
 @extends('base')
-@section('title', 'Список ТГ-ботов')
+@section('title', __('webapp.bots.list'))
 @section('content')
 
-    <a href="{{ route('bot.create') }}" class="btn btn-primary mb-4">Добавить бот</a>
+    <a href="{{ route('bot.create') }}" class="btn btn-primary mb-4">{{ __('webapp.add') }}</a>
 
     @include('component.table', [
         'entities' => ['name' => 'bot', 'value' => $bots],
-        'headers' => ['Название', 'Форма', 'Описание'],
+        'headers' => [__('webapp.title'), __('webapp.form'), __('webapp.description')],
         'fields' => ['name', 'form', 'description']
     ])
 

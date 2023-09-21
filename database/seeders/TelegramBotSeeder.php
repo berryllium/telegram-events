@@ -14,7 +14,7 @@ class TelegramBotSeeder extends Seeder
     public function run(): void
     {
         TelegramBot::factory()->create([
-            'name' => 'Мой бот',
+            'name' => 'My Bot',
             'code' => 'dimabot',
             'api_token' => '6693099766:AAF45rcSrSzvUapg7IUpazpkIKhUABbUwho',
             'moderation_group' => env('SERVICE_BOT_CHANNEL'),
