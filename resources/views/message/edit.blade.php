@@ -1,47 +1,56 @@
 @extends('base')
 @section('title', __('webapp.messages.edit', ['author' => $msg->author->name]) )
 @section('content')
-    <form method="post" action="{{ route('message.update', $msg) }}">
+    <form method="post" class="row" action="{{ route('message.update', $msg) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
-        <div class="mb-3">
-            <label for="text" class="form-label">{{ __('webapp.message_text') }}</label>
-            <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">{{ $msg->htmlText }}</textarea>
+
+        <div class="mb-3 col-lg-6">
+            <div class="col-12"><h3 class="mt-4">{{ __('webapp.message_text') }}</h3></div>
+            <label for="text"></label><textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">{{ $msg->htmlText }}</textarea>
             @error('text')
-            <div class="form-text text-danger">{{ $message }}</div>
+                <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
-    </form>
 
-    <div class="row">
-        <div class="col-12"><h3 class="mt-4">{{ __('webapp.files') }}</h3></div>
-        <div class="col-12 d-flex align-middle">
-            @foreach($msg->message_files as $file)
-                <div class="col-2 pe-2 pb-2">
-                    <div class="border p-3">
-                        <a href="<?=$file->src?>" class="d-block mb-3" target="_blank">
-                            <input type="hidden" name="current_files[]" value="{{ $file->id }}">
-                            @if($file->type == 'video')
-                                <video width="100%" height="auto" controls>
-                                    <source src="{{ $file->src }}" type="{{ $file->mime }}">
-                                    Your browser does not support the video tag.
-                                </video>
-                            @else
-                                <img src="<?=$file->src?>" alt="{{ $file->filename }}" height="auto" width="100%">
-                            @endif
-                        </a>
-                        <a href="#" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>{{ __('webapp.delete') }}</span></a>
+        <div class="col-lg-6">
+            <div><h3 class="mt-4">{{ __('webapp.files') }}</h3></div>
+            <div class=" d-flex align-middle">
+                @foreach($msg->message_files as $file)
+                    <div class="file col-3 pe-1 pb-1 align-self-end">
+                        <div class="border p-2">
+                            <a href="<?=$file->src?>" class="d-block mb-3" target="_blank">
+                                <input type="hidden" name="current_files[]" value="{{ $file->id }}">
+                                @if($file->type == 'video')
+                                    <video width="100%" height="auto" controls>
+                                        <source src="{{ $file->src }}" type="{{ $file->mime }}">
+                                        Your browser does not support the video tag.
+                                    </video>
+                                @else
+                                    <img src="<?=$file->src?>" alt="{{ $file->filename }}" height="auto" width="100%">
+                                @endif
+                            </a>
+                            <a href="javascript:void(0)" onclick="this.closest('.file').remove()" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>{{ __('webapp.delete') }}</span></a>
+                        </div>
                     </div>
+                @endforeach
+            </div>
+
+            @error('files.*')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+
+            <div>
+                <div class="form-group mb-3 mt-2">
+                    <label><input id="files" class="form-control" name="files[]" type="file" multiple></label>
                 </div>
-            @endforeach
-        </div>
-        <div class="col-12">
-            <div class="form-group mb-3 mt-2">
-                <label><input id="files" class="form-control" name="files[]" type="file" multiple></label>
             </div>
         </div>
-    </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
+        </div>
+    </form>
 
     <h3 class="mt-4">{{ __('webapp.messages.schedule') }}</h3>
     @include('message.schedule', ['schedules' => $msg->message_schedules()->with('telegram_channels')->get()])

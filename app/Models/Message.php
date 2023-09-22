@@ -23,14 +23,20 @@ class Message extends Model
     }
 
     public function getHtmlTextAttribute($value) {
-        return "<p>" . str_replace("\r\n", "</p><p>", $this->text) . "</p>";
+        return str_replace("\r\n", "<br>", $this->text);
     }
 
     protected static function boot()
     {
         parent::boot();
         static::saving(function ($model) {
-            $model->text = preg_replace(array('/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'), array('', "\r\n", "\r\n", '<b>', '</b>'), $model->text);;
+            $model->text = preg_replace(
+                ['/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'],
+                ['', "\r\n", "\r\n", '<b>', '</b>'],
+                $model->text
+            );
+            $model->text = trim($model->text, "&nbsp;\r\n");
+            $model->text = str_replace('&nbsp;', "\r\n", $model->text);
         });
     }
 

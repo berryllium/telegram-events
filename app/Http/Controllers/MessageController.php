@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facades\TechBotFacade;
 use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageSchedule;
@@ -43,9 +44,33 @@ class MessageController extends Controller
      */
     public function update(Request $request, Message $message)
     {
-        $message->update($request->validate([
-            'text' => ['required', 'max:1000', new ValidMessage()]
-        ]));
+        /**
+         * @var MessageFile $file
+         */
+
+        $message->update($request->validate(
+            ['text' => ['required', 'max:1000', new ValidMessage()]],
+            ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
+        ));
+
+
+        foreach ($message->message_files as $file) {
+            if (!in_array($file->id, $request->get('current_files'))) {
+                $file->delete();
+            }
+        }
+
+
+        if ($files = $request->file('files')) {
+            foreach ($files as $file) {
+                if($file->getError()) {
+                    return back()->with('error',$file->getErrorMessage());
+                }
+                $path = $file->store('public/media');
+                $message->message_files()->save(new MessageFile(['filename' => $path]));
+            }
+        }
+
 
         return back()->with('success', 'Сообщение успешно обновлено');
     }
