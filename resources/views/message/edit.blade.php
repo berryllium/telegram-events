@@ -14,6 +14,12 @@
             @error('text')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+            <div class="form-check">
+                <input name="allowed" class="form-check-input" type="checkbox" value="1" id="flexCheckAllowed" {{ $msg->allowed ? 'checked' : '' }}>
+                <label class="form-check-label" for="flexCheckAllowed">
+                    {{ __('webapp.messages.sending_allowed') }}
+                </label>
+            </div>
         </div>
 
         <div class="col-lg-6">
@@ -50,9 +56,6 @@
             </div>
         </div>
 
-        <div>
-            <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
-        </div>
 
         <div>
             <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>

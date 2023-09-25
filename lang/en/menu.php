@@ -7,4 +7,5 @@ return [
     'authors' => 'Authors',
     'messages' => 'Messages',
     'form' => 'Form',
+    'users' => 'Users'
 ];

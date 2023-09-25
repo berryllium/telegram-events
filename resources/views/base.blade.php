@@ -5,6 +5,9 @@
                 <li class="nav-item">
                     <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">{{ __('menu.bots') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ request()->segment(1) == 'user' ? ' active' : '' }}" href="{{ route('user.index') }}">{{ __('menu.users') }}</a>
+                </li>
             @endif
             <li class="nav-item">
                 <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">{{ __('menu.forms') }}</a>

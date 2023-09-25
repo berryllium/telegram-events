@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Auth::routes();
 
 Route::middleware('auth')->group(function(){
+    Route::resource('/user', \App\Http\Controllers\UserController::class);
     Route::resource('/form', \App\Http\Controllers\FormController::class);
     Route::resource('/form/{form}/field', \App\Http\Controllers\FieldController::class);
     Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);

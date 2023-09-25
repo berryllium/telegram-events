@@ -27,16 +27,32 @@ return [
     'success' => 'Success',
     'error' => 'Error',
     'channels' => 'Channels',
+    'role' => 'Role',
+    'search' => 'Search',
+    'name' => 'Name',
+    'email' => 'Email',
+    'password' => 'Password',
+    'confirm_password' => 'Confirm Password',
     'bots' => [
         'list' => 'Telegram bots list',
         'add' => 'Add Telegram Bot',
-        'edit' => 'Edit Telegram Bot'
+        'edit' => 'Edit Telegram Bot',
+        'bots' => 'Bots',
+        'bot' => 'Bot'
     ],
     'messages' => [
         'edit' => 'Edit message from :author',
         'schedule' => 'Message schedule',
         'scheduled_dispatch_time' => 'Scheduled dispatch time',
         'real_dispatch_time' => 'Real dispatch time',
-
+        'sending_allowed' => 'Sending allowed',
+    ],
+    'users' => [
+        'list' => 'Users list',
+        'edit' => 'Edit users',
+        'add' => 'Add user'
+    ],
+    'roles' => [
+        'roles' => 'Roles'
     ]
 ];

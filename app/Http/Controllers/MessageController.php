@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Facades\TechBotFacade;
 use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageSchedule;
+use App\Models\TelegramBot;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
 
@@ -14,12 +14,17 @@ class MessageController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
         return view('message.index', [
-            'schedules' => MessageSchedule::with('message.author')->paginate(20),
+            'bots' => TelegramBot::all(),
             'statuses' => MessageSchedule::$statuses,
-            'status_class' => array_combine(array_keys(MessageSchedule::$statuses), ['warning', 'danger', 'success'])
+            'status_class' => array_combine(array_keys(MessageSchedule::$statuses), ['warning', 'danger', 'success']),
+            'schedules' => MessageSchedule::with('message.author')->with('message.telegram_bot')->filter($request->only([
+                'search',
+                'telegram_bot',
+                'status',
+            ]))->paginate(20),
         ]);
     }
 
@@ -48,11 +53,12 @@ class MessageController extends Controller
          * @var MessageFile $file
          */
 
+        $message->allowed = (bool) $request->get('allowed');
+
         $message->update($request->validate(
             ['text' => ['required', 'max:1000', new ValidMessage()]],
             ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
         ));
-
 
         foreach ($message->message_files as $file) {
             if (!in_array($file->id, $request->get('current_files'))) {
