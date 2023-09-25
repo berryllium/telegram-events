@@ -44,6 +44,7 @@ class SendMessages extends Command
     {
         $messageSchedules = MessageSchedule::query()
             ->where('status', '=', 'wait')
+            ->where('allowed', '=', true)
             ->limit(100)
             ->get();
 
@@ -67,7 +68,7 @@ class SendMessages extends Command
                 $messageSchedule->error_text = null;
                 $messageSchedule->save();
             } catch (\Exception $exception) {
-                $error = 'Ошибка при отправке сообщения ' .
+                $error = 'Sending error ' .
                     $messageSchedule->message->error . ' ' .
                     $exception->getMessage();
 

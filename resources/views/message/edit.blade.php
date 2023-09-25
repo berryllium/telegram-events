@@ -7,7 +7,10 @@
 
         <div class="mb-3 col-lg-6">
             <div class="col-12"><h3 class="mt-4">{{ __('webapp.message_text') }}</h3></div>
-            <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">{{ $msg->htmlText }}</textarea>
+            <label for="text" class="sr-only"></label>
+            <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">
+                {{ $msg->htmlText }}
+            </textarea>
             @error('text')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -45,6 +48,10 @@
                     <label><input id="files" class="form-control" name="files[]" type="file" multiple></label>
                 </div>
             </div>
+        </div>
+
+        <div>
+            <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
         </div>
 
         <div>

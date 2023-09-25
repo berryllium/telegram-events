@@ -46,6 +46,7 @@ class TelegramRequestHandler
                     $author->save();
                 }
                 $message->author_id = $author->id;
+                $message->allowed = $author->trusted;
                 $message->save();
 
                 if(isset($message->data->place)) {
