@@ -21,6 +21,9 @@
             <li class="nav-item">
                 <a class="nav-link{{ request()->segment(1) == 'author' ? ' active' : '' }}" href="{{ route('author.index') }}">{{ __('menu.authors') }}</a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link{{ request()->segment(1) == 'dictionary' ? ' active' : '' }}" href="{{ route('dictionary.index') }}">{{ __('menu.dictionaries') }}</a>
+            </li>
         @endif
         @if(auth()->user()->hasAnyRole('supervisor', 'admin', 'moderator'))
             <li class="nav-item">

@@ -11,13 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('messages', function (Blueprint $table) {
+        Schema::create('dictionary_values', function (Blueprint $table) {
             $table->id();
-            $table->text('data');
-            $table->text('text');
-            $table->boolean('allowed')->default(false);
-            $table->foreignIdFor(\App\Models\Author::class)->nullable()->default(null);
-            $table->foreignIdFor(\App\Models\TelegramBot::class);
+            $table->foreignIdFor(\App\Models\Dictionary::class)->constrained()->onDelete('cascade');
+            $table->string('value');
             $table->timestamps();
         });
     }
@@ -27,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('messages');
+        Schema::dropIfExists('dictionary_values');
     }
 };
