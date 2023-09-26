@@ -44,6 +44,7 @@ class SendMessages extends Command
     {
         $messageSchedules = MessageSchedule::query()
             ->where('status', '=', 'wait')
+            ->where('sending_date', '<=', now())
             ->whereHas('message', fn($q) => $q->where('allowed', true))
             ->limit(100)
             ->get();
