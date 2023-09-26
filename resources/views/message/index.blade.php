@@ -10,17 +10,17 @@
             <th>Текст сообщения</th>
             <th>Время отправки</th>
             <th>Статус</th>
-            <th>ID Сообщения</th>
+            <th>Бот</th>
             <th class="action-cell">Действия</th>
         </tr>
 
         @foreach($schedules as $schedule)
             <tr>
                 <td>{{ $schedule->message->author->name }}</td>
-                <td>{{ $schedule->message->text }}</td>
+                <td>{{ strip_tags($schedule->message->text) }}</td>
                 <td>{{ $schedule->sending_date }}</td>
                 <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
-                <td>{{ $schedule->message->id }}</td>
+                <td>{{ $schedule->message->telegram_bot->name }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
                         @include('component.buttons', ['entity' => $schedule->message, 'model' => 'message'])

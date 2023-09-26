@@ -55,7 +55,7 @@ class MessageSchedule extends Model
                 $filters['telegram_bot'] ?? false,
                 fn ($query, $value) => $query->whereHas('message',
                     fn($q) => $q->whereHas('telegram_bot',
-                        fn($qa) => $qa->where('id', $value)
+                        fn($qa) => is_array($value) ? $qa->whereIn('id', $value) : $qa->where('id', $value)
                     )
                 )
             )

@@ -26,7 +26,9 @@ Route::middleware('auth')->group(function(){
     Route::resource('/message', \App\Http\Controllers\MessageController::class)->except(['create', 'store']);
     Route::resource('/message_schedule', \App\Http\Controllers\MessageScheduleController::class)->except(['create', 'store']);
     Route::resource('/author', \App\Http\Controllers\AuthorController::class);
-    Route::get('/', [\App\Http\Controllers\FormController::class, 'index']);
+    Route::get('/', function () {
+        return redirect('/message');
+    });
 });
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
