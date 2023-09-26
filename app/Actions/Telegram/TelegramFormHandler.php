@@ -10,6 +10,7 @@ use App\Models\TelegramBot;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Validator;
 
 class TelegramFormHandler
 {
@@ -33,9 +34,19 @@ class TelegramFormHandler
                 }
             }
 
+            $text = Blade::render($telegramBot->form->template, $fields);
+            $validator = Validator::make(
+                ['text' => $text],
+                ['text' => 'max:999'],
+                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - 1000])],
+            );
+            if ($validator->fails()) {
+                return response()->json(['error' => $validator->errors()->first()]);
+            }
+
             $message = $telegramBot->messages()->create([
                 'data' => json_encode($data),
-                'text' => Blade::render($telegramBot->form->template, $fields),
+                'text' => $text,
                 'allowed' => false
             ]);
 

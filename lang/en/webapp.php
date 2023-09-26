@@ -33,6 +33,7 @@ return [
     'email' => 'Email',
     'password' => 'Password',
     'confirm_password' => 'Confirm Password',
+    'limit_error' => 'Допустимое кол-во символов превышено на :value !',
     'bots' => [
         'list' => 'Telegram bots list',
         'add' => 'Add Telegram Bot',
