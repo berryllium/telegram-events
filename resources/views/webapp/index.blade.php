@@ -93,8 +93,6 @@
             <label for="schedule" >{{ __('webapp.publish_date') }}</label>
             <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
         </div>
-        <div data-role="copy-block" class="mb-5">
-            <div class="btn btn-primary"> {{ __('webapp.add_date') }}</div>
-        </div>
+        <div class="btn btn-primary mt-2 mb-5" data-role="copy-block"> {{ __('webapp.add_date') }}</div>
     </form>
 @endsection

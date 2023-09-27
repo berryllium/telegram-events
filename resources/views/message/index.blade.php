@@ -23,12 +23,17 @@
                 <td>{{ $schedule->message->telegram_bot->name }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
-                        @include('component.buttons', ['entity' => $schedule->message, 'model' => 'message'])
-                    @else
-                        <a href="{{ route('message.edit', $schedule->message) }}" class="btn btn-primary m-1">
-                            <i class="bi bi-pen" role="button"></i>
-                        </a>
+                        <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete">
+                            @csrf
+                            @method('delete')
+                            <button class="btn btn-danger" type="submit">
+                                <i class="bi bi-trash" role="button" onclick="this.parentNode.submit()"></i>
+                            </button>
+                        </form>
                     @endif
+                    <a href="{{ route('message.edit', $schedule->message) }}" class="btn btn-primary m-1">
+                        <i class="bi bi-pen" role="button"></i>
+                    </a>
                 </td>
             </tr>
         @endforeach
