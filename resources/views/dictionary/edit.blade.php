@@ -19,10 +19,28 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">Обновить</button>
+        <div class="mb-3">
+            <label class="form-label">{{ __('webapp.dictionary.values') }}</label>
+            @foreach($dictionary->dictionary_values as $item)
+                <div class="form-group mb-2">
+                    <label class="d-block">
+                        <input
+                                type="text"
+                                class="form-control"
+                                id="dictionary_value-{{ $item->id }}"
+                                name="dictionary_values[{{ $item->id }}]"
+                                value="{{ $item->value }}"
+                        >
+                    </label>
+                </div>
+            @endforeach
+            <div class="form-group mb-2">
+                <label class="d-block">
+                    <input type="text" class="form-control" name="new_values[]">
+                </label>
+            </div>
+            <div class="btn btn-primary" data-role="copy-block">+</div>
+        </div>
+        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
-
-{{--    <h3 class="mt-4">{{ 'webapp.dictionary.values' }}</h3>--}}
-{{--    @include('dictionary.values', ['dictionary' => $dictionary])--}}
-{{--    <a href="{{ route('dictionary_value.create', ['dictionary' => $dictionary]) }}" class="btn btn-primary">{{ __('webapp.add') }}</a>--}}
 @endsection

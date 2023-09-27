@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dictionary;
+use App\Models\DictionaryValue;
 use Illuminate\Http\Request;
 
 class DictionaryController extends Controller
@@ -30,6 +31,7 @@ class DictionaryController extends Controller
     {
         $dictionary = Dictionary::create($request->validate([
             'name' => 'required|max:255',
+            'description' => ''
         ]));
         return redirect(route('dictionary.edit', $dictionary))->with('success', __('webapp.dictionary.success'));
     }
@@ -55,10 +57,32 @@ class DictionaryController extends Controller
      */
     public function update(Request $request, Dictionary $dictionary)
     {
+        $new_values = array_filter($request->get('new_values') ?? []);
+
+        if($new_values) {
+            $dictionary->dictionary_values()->insert(
+                array_map(function ($v) use($dictionary) {
+                    return ['value' => $v, 'dictionary_id' => $dictionary->id];
+                }, $new_values)
+            );
+        }
+
+        if ($current_values = $request->get('dictionary_values')) {
+            foreach ($current_values as $k => $v) {
+                if($v) {
+                    DictionaryValue::query()->where('id', $k)->update(['value' => $v]);
+                } else {
+                    DictionaryValue::query()->where('id', $k)->delete();
+                }
+            }
+        }
+
         $dictionary->update($request->validate([
             'name' => 'required|max:255',
+            'description' => ''
         ]));
-        return redirect(route('dictionary.index'));
+
+        return back()->with('success', __('webapp.dictionary.updated'));
     }
 
     /**

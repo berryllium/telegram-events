@@ -8,6 +8,11 @@ select2();
 
 window.addEventListener('load', function(){
     $('[data-select="2"]').select2()
+    $('[data-role="copy-block"]').click(function(){
+        $(this).prev().after($(this).prev().clone())
+    })
+
+
     ClassicEditor
         .create( document.querySelector( '[data-editor="ck"]' ), {
             toolbar: ['bold', 'italic', 'link'],
@@ -19,4 +24,6 @@ window.addEventListener('load', function(){
         .catch( error => {
             console.error( 'There was a problem initializing the editor.', error );
         } );
+
+
 })
