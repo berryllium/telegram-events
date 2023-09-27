@@ -35,11 +35,15 @@ TEMPLATE;
     {
         return $this->afterCreating(function (Form $form) {
             foreach(array_keys(Field::$types) as $type) {
-                $form->fields()->create([
+                $arr = [
                     'name' => $type,
                     'code' => $type,
                     'type' => $type,
-                ]);
+                ];
+                if($type == 'select') {
+                    $arr['dictionary_id'] = 1;
+                }
+                $form->fields()->create($arr);
             }
         });
     }

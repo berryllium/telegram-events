@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dictionary;
 use App\Models\Field;
 use App\Models\Form;
 use Illuminate\Http\Request;
@@ -69,8 +70,12 @@ class FieldController extends Controller
         $field->update($request->validate([
             'name' => 'required|min:2',
             'code' => 'required',
-            'type' => 'required',
         ]));
+
+        if($dictionary_id = (int) $request->get('dictionary_id')) {
+            $field->dictionary_id = $dictionary_id;
+            $field->save();
+        }
         return redirect(route('form.edit', $form))->with('success', 'Поле успешно обновлено!');
     }
 

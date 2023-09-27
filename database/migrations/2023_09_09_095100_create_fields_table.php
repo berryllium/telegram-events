@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('code');
             $table->enum('type', array_keys(\App\Models\Field::$types));
+            $table->foreignIdFor(\App\Models\Dictionary::class)->nullable()->default(null);
             $table->foreignIdFor(Form::class);
             $table->timestamps();
         });

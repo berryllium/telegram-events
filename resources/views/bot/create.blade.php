@@ -1,6 +1,10 @@
 @extends('base')
 @section('title', __('webapp.bots.add'))
 @section('content')
+    <p class="text-center">
+        <strong>Внимание!</strong>
+        при добавлении бота происходит привязка его вебхука к данному сайту и отвязка от остальных!
+    </p>
     <form method="post" action="{{ route('bot.store') }}">
         @csrf
         <div class="mb-3">

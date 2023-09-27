@@ -54,10 +54,11 @@ class TelegramRequestHandler
                     $channels = $place->telegram_channels;
 
                     if($channels) {
-                        foreach ($message->data->schedule as $date) {
+                        $publish_dates = $this->preparePublishDates($message->data->schedule);
+                        foreach ($publish_dates as $date) {
                             /** @var MessageSchedule $messageSchedule */
                             $messageSchedule = $message->message_schedules()->create([
-                                'sending_date' => $date ? Carbon::parse($date) : now()
+                                'sending_date' => $date
                             ]);
                             $messageSchedule->telegram_channels()->attach($channels);
                         }
@@ -107,5 +108,27 @@ class TelegramRequestHandler
         );
         $botApi = new BotApi($bot->api_token);
         $botApi->sendMessage($chat_id, __('webapp.greeting'), null, false, null, $keyboard);
+    }
+
+    private function preparePublishDates(array $dates): array
+    {
+        $result = [];
+        $dates = array_unique($dates);
+        foreach ($dates as $k => $date) {
+            $dates[$k] = $date ? Carbon::parse($date) : now();
+        }
+        sort($dates);
+
+        $last = null;
+        foreach ($dates as $date) {
+            if(!$last) {
+                $last = $date;
+            } elseif($date->diffInSeconds($last) < 300) {
+                continue;
+            }
+            $result[] = $date;
+        }
+
+        return $result;
     }
 }

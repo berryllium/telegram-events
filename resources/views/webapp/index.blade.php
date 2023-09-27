@@ -1,5 +1,6 @@
 @extends('layouts.webapp')
 @section('content')
+    @php /** @var \App\Models\Field $field */ @endphp
     <h1 class="pt-2 text-center">{{ $form->name }}</h1>
     <form id="webapp-form" type="post" action="{{ route('webapp', $bot) }}">
         @foreach($form->fields as $k => $field)
@@ -23,10 +24,19 @@
                             </div>
                         @break
                     @case('radio')
-                        <div class="form-check mb-3">
-                            <input id="field-{{ $k }}" type="radio" class="form-check-input" name="{{ $field->code }}">
-                            <label class="form-check-label" for="field-{{ $k }}">{{ $field->name }}</label>
-                        </div>
+                        @if($field->dictionary and $field->dictionary->dictionary_values)
+                            <div class="form-group mb-3">
+                                <label class="form-check-label" for="field-{{ $k }}">{{ $field->name }}</label>
+                                @foreach($field->dictionary->dictionary_values as $value)
+                                    <div class="form-check mb-2">
+                                        <input class="form-check-input" id="field-{{ $k }}-{{ $value->id }}" type="radio" name="{{ $field->code }}" value="{{ $value->value }}">
+                                        <label class="form-check-label" for="field-{{ $k }}-{{ $value->id }}">
+                                            {{ $value->value }}
+                                        </label>
+                                    </div>
+                                @endforeach
+                            </div>
+                            @endif
                         @break
                     @case('text')
                             <div class="form-group mb-3">
@@ -44,8 +54,9 @@
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
                             <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                @foreach($field->dictionary->dictionary_values as $value)
+                                    <option value="{{ $value->value }}">{{ $value->value }}</option>
+                                @endforeach
                             </select>
                         </div>
                         @break
@@ -82,6 +93,8 @@
             <label for="schedule" >{{ __('webapp.publish_date') }}</label>
             <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
         </div>
-
+        <div data-role="copy-block" class="mb-5">
+            <div class="btn btn-primary"> {{ __('webapp.add_date') }}</div>
+        </div>
     </form>
 @endsection

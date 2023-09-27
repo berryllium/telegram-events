@@ -6,6 +6,10 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
+/**
+ * @property-read boolean $canHaveDictionary
+ * @property-read ?string $typeName
+ */
 class Field extends Model
 {
     use HasFactory;
@@ -13,7 +17,8 @@ class Field extends Model
     protected $fillable = [
         'name',
         'code',
-        'type'
+        'type',
+        'dictionary_id'
     ];
 
     public static $types = [
@@ -32,5 +37,17 @@ class Field extends Model
     public function form(): BelongsTo
     {
         return $this->belongsTo(Form::class);
+    }
+
+    public function dictionary() : BelongsTo {
+        return $this->belongsTo(Dictionary::class);
+    }
+
+    public function getTypeNameAttribute() {
+        return self::$types[$this->type] ?? '';
+    }
+
+    public function getCanHaveDictionaryAttribute() {
+        return !!in_array($this->type, ['select', 'checkbox', 'radio']);
     }
 }

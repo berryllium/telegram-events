@@ -1,6 +1,7 @@
 @extends('base')
 @section('title', 'Редактирование поля формы')
 @section('content')
+    @php /** @var \App\Models\Field $field */ @endphp
     <form method="post" action="{{ route('field.update', ['form' => $form, 'field' => $field]) }}">
         @csrf
         @method('put')
@@ -20,15 +21,26 @@
         </div>
         <div class="mb-3">
             <label for="type" class="form-label">Тип поля</label>
-            <select class="form-select" id="type" name="type">
-                @foreach(\App\Models\Field::$types as $id => $type)
-                    <option value="{{ $id }}" {{ $field->type == $id ? 'selected' : '' }}>{{ $type }}</option>
-                @endforeach
+            <select class="form-select" id="type" disabled>
+                <option value="">{{ $field->typeName }}</option>
             </select>
-            @error('description')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
         </div>
+        @if($field->canHaveDictionary)
+            <div class="mb-3">
+                <label for="dictionary_id" class="form-label">Справочник</label>
+                <select class="form-select" id="dictionary_id" name="dictionary_id">
+                    <option value=""></option>
+                    @foreach(\App\Models\Dictionary::all() as $dictionary)
+                        <option value="{{ $dictionary->id }}" {{ $field->dictionary_id == $dictionary->id ? 'selected' : '' }}>
+                            {{ $dictionary->name }}
+                        </option>
+                    @endforeach
+                </select>
+                @error('description')
+                <div class="form-text text-danger">{{ $message }}</div>
+                @enderror
+            </div>
+        @endif
         <button type="submit" class="btn btn-primary">Обновить</button>
     </form>
 @endsection

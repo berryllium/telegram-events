@@ -12,7 +12,7 @@ class TelegramWebAppController extends Controller
 {
     public function index(TelegramBot $telegramBot)
     {
-        return view('telegram.webapp.index', [
+        return view('webapp.index', [
             'bot' => $telegramBot,
             'form' => $telegramBot->form
         ]);

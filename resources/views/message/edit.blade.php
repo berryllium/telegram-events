@@ -7,7 +7,7 @@
 
         <div class="mb-3 col-lg-6">
             <div class="col-12"><h3 class="mt-4">{{ __('webapp.message_text') }}</h3></div>
-            <label for="text" class="sr-only"></label>
+            <label for="text" class="d-none"></label>
             <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">
                 {{ $msg->htmlText }}
             </textarea>
@@ -24,27 +24,28 @@
 
         <div class="col-lg-6">
             <div><h3 class="mt-4">{{ __('webapp.files') }}</h3></div>
-            <div class=" d-flex align-middle">
-                @foreach($msg->message_files as $file)
-                    <div class="file col-3 pe-1 pb-1 align-self-end">
-                        <div class="border p-2">
-                            <a href="<?=$file->src?>" class="d-block mb-3" target="_blank">
-                                <input type="hidden" name="current_files[]" value="{{ $file->id }}">
-                                @if($file->type == 'video')
-                                    <video width="100%" height="auto" controls>
-                                        <source src="{{ $file->src }}" type="{{ $file->mime }}">
-                                        Your browser does not support the video tag.
-                                    </video>
-                                @else
-                                    <img src="<?=$file->src?>" alt="{{ $file->filename }}" height="auto" width="100%">
-                                @endif
-                            </a>
-                            <a href="javascript:void(0)" onclick="this.closest('.file').remove()" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>{{ __('webapp.delete') }}</span></a>
+            @if($msg->message_files->count())
+                <div class="d-flex align-middle">
+                    @foreach($msg->message_files as $file)
+                        <div class="file col-3 pe-1 pb-1 align-self-end">
+                            <div class="border p-2">
+                                <a href="<?=$file->src?>" class="d-block mb-3" target="_blank">
+                                    <input type="hidden" name="current_files[]" value="{{ $file->id }}">
+                                    @if($file->type == 'video')
+                                        <video width="100%" height="auto" controls>
+                                            <source src="{{ $file->src }}" type="{{ $file->mime }}">
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    @else
+                                        <img src="<?=$file->src?>" alt="{{ $file->filename }}" height="auto" width="100%">
+                                    @endif
+                                </a>
+                                <a href="javascript:void(0)" onclick="this.closest('.file').remove()" class="d-block text-sm-center"><i class="bi bi-trash"></i><span>{{ __('webapp.delete') }}</span></a>
+                            </div>
                         </div>
-                    </div>
-                @endforeach
-            </div>
-
+                    @endforeach
+                </div>
+            @endif
             @error('files.*')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
