@@ -48,6 +48,6 @@ class Field extends Model
     }
 
     public function getCanHaveDictionaryAttribute() {
-        return !!in_array($this->type, ['select', 'checkbox', 'radio']);
+        return !!in_array($this->type, ['select', 'radio']);
     }
 }
