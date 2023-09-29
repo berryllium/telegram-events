@@ -33,7 +33,7 @@ class DictionaryController extends Controller
             'name' => 'required|max:255',
             'description' => ''
         ]));
-        return redirect(route('dictionary.edit', $dictionary))->with('success', __('webapp.dictionary.success'));
+        return redirect(route('dictionary.edit', $dictionary))->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -82,7 +82,7 @@ class DictionaryController extends Controller
             'description' => ''
         ]));
 
-        return back()->with('success', __('webapp.dictionary.updated'));
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**

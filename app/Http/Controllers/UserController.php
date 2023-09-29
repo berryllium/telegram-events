@@ -53,7 +53,7 @@ class UserController extends Controller
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('telegram_bots'));
 
-        return back()->with('success', __('user.created'));
+        return back()->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -92,7 +92,7 @@ class UserController extends Controller
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('bots'));
 
-        return back()->with('success', __('user.updated'));
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**

@@ -1,12 +1,12 @@
 @extends('base')
-@section('title', 'Список ТГ-каналов')
+@section('title', __('webapp.channels'))
 @section('content')
 
-    <a href="{{ route('channel.create') }}" class="btn btn-primary mb-4">Добавить канал</a>
+    <a href="{{ route('channel.create') }}" class="btn btn-primary mb-4">{{ __('webapp.add') }}</a>
 
     @include('component.table', [
         'entities' => ['name' => 'channel', 'value' => $channels],
-        'headers' => ['Название', 'Описание', 'Телеграм ID'],
+        'headers' => [__('webapp.name'), __('webapp.description'), __('webapp.tg_id')],
         'fields' => ['name', 'description', 'tg_id']
     ])
 

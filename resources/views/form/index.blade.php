@@ -1,12 +1,12 @@
 @extends('base')
-@section('title', 'Список веб-форм')
+@section('title', __('webapp.forms.list'))
 @section('content')
 
-    <a href="{{ route('form.create') }}" class="btn btn-primary mb-4">Создать новую форму</a>
+    <a href="{{ route('form.create') }}" class="btn btn-primary mb-4">{{ __('webapp.add') }}</a>
 
     @include('component.table', [
         'entities' => ['name' => 'form', 'value' => $forms],
-        'headers' => ['Название', 'Описание'],
+        'headers' => [__('webapp.name'), __('webapp.description')],
         'fields' => ['name', 'description']
     ])
 @endsection

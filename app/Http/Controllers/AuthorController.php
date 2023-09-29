@@ -38,7 +38,7 @@ class AuthorController extends Controller
             'description' => 'required',
             'trusted' => 'bool'
         ]));
-        return redirect(route('author.index'))->with('success', 'Автор успешно добавлен');
+        return redirect(route('author.index'))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -67,7 +67,7 @@ class AuthorController extends Controller
 
         $author->places()->sync($request->get('places'));
 
-        return back()->with('success', 'Запись обновлена');
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**

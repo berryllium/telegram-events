@@ -33,7 +33,7 @@ class FormController extends Controller
             'name' => 'required|min:2',
             'description' => 'max:1000',
         ]));
-        return redirect(route('form.index'))->with('success', 'Форма успешно создана!');
+        return redirect(route('form.index'))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -64,7 +64,7 @@ class FormController extends Controller
             'template' => 'max:1000',
             'description' => 'max:1000',
         ]));
-        return back()->with('success', 'Форма успешно обновлена!');
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -73,6 +73,6 @@ class FormController extends Controller
     public function destroy(Form $form)
     {
         $form->delete();
-        return redirect(route('form.index'))->with('success', 'Форма успешно удалена!');
+        return redirect(route('form.index'))->with('success', __('webapp.record_deleted'));
     }
 }

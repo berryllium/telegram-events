@@ -60,7 +60,7 @@ class MessageScheduleController extends Controller
         ]);
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
-        return redirect(route('message.edit', $messageSchedule->message))->with('success', 'Отправка обновлена');
+        return redirect(route('message.edit', $messageSchedule->message))->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -69,6 +69,6 @@ class MessageScheduleController extends Controller
     public function destroy(MessageSchedule $messageSchedule)
     {
         $messageSchedule->delete();
-        return back()->with('success', 'Отправка успешно удалена');
+        return back()->with('success', __('webapp.record_deleted'));
     }
 }

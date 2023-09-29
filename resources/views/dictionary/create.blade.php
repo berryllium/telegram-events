@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', __('webapp.dictionary.create'))
+@section('title', __('webapp.dictionaries.add'))
 @section('content')
     <form method="post" action="{{ route('dictionary.store') }}">
         @csrf

@@ -38,7 +38,7 @@ class PlaceController extends Controller
 
         $place = Form::find($data['form'])->places()->create($data);
 
-        return redirect(route('place.index'))->with('success', 'Объект успешно создан!');
+        return redirect(route('place.index'))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -72,7 +72,7 @@ class PlaceController extends Controller
             'form' => 'int'
         ]));
         $place->telegram_channels()->sync($request->input('channels'));
-        return back()->with('success', 'Объект успешно обновлен!');
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -81,6 +81,6 @@ class PlaceController extends Controller
     public function destroy(Place $place)
     {
         $place->delete();
-        return redirect(route('place.index'))->with('success', 'Объект успешно удален!');
+        return redirect(route('place.index'))->with('success', __('webapp.record_deleted'));
     }
 }

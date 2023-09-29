@@ -1,12 +1,12 @@
 <?php
 return [
-    'bots' => 'Боты',
-    'forms' => 'Формы',
-    'channels' => 'Каналы',
-    'places' => 'Места',
     'authors' => 'Авторы',
-    'messages' => 'Сообщения',
+    'bots' => 'Боты',
+    'channels' => 'Каналы',
+    'dictionaries' => 'Справочники',
     'form' => 'Формы',
+    'forms' => 'Формы',
+    'messages' => 'Сообщения',
+    'places' => 'Места',
     'users' => 'Пользователи',
-    'dictionaries' => 'Справочники'
 ];

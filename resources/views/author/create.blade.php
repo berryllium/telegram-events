@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', 'Добавление автора')
+@section('title', __('webapp.authors.add'))
 @section('content')
     <form method="post" action="{{ route('author.store') }}">
         @csrf

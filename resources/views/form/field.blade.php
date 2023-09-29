@@ -1,9 +1,9 @@
 <table class="table table-striped d-block d-md-table overflow-x-auto">
     <tr>
-        <th>Название</th>
-        <th>Тип</th>
-        <th>Код (для вставки в шаблон)</th>
-        <th class="action-cell">Действия</th>
+        <th>{{ __('webapp.name') }}</th>
+        <th>{{ __('webapp.type') }}</th>
+        <th>{{ __('webapp.template_code') }}</th>
+        <th class="action-cell">{{ __('webapp.actions') }}</th>
     </tr>
 
     @foreach($form->fields as $field)

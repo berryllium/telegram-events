@@ -1,17 +1,17 @@
 @extends('base')
-@section('title', 'Сообщения')
+@section('title', __('webapp.messages.title'))
 @section('content')
 
     @include('message.component.filter', ['statuses' => $statuses])
 
     <table class="table table-striped d-block d-md-table overflow-x-auto">
         <tr>
-            <th>Автор</th>
-            <th>Текст сообщения</th>
-            <th>Время отправки</th>
-            <th>Статус</th>
-            <th>Бот</th>
-            <th class="action-cell">Действия</th>
+            <th>{{ __('webapp.author') }}</th>
+            <th>{{ __('webapp.message_text') }}</th>
+            <th>{{ __('webapp.sending_time') }}</th>
+            <th>{{ __('webapp.status') }}</th>
+            <th>{{ __('webapp.bot') }}</th>
+            <th class="action-cell">{{ __('webapp.actions') }}</th>
         </tr>
 
         @foreach($schedules as $schedule)

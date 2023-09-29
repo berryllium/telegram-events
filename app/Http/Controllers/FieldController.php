@@ -40,7 +40,7 @@ class FieldController extends Controller
                 ])
             )
         );
-        return redirect(route('field.index', ['form' => $form]))->with('success', 'Поле успешно создано!');
+        return redirect(route('form.index', ['form' => $form]))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -76,7 +76,7 @@ class FieldController extends Controller
             $field->dictionary_id = $dictionary_id;
             $field->save();
         }
-        return redirect(route('form.edit', $form))->with('success', 'Поле успешно обновлено!');
+        return redirect(route('form.edit', $form))->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -85,6 +85,6 @@ class FieldController extends Controller
     public function destroy(Form $form, Field $field)
     {
         $field->delete();
-        return redirect(route('field.index', ['form' => $form]))->with('success', 'Поле успешно удалено!');
+        return redirect(route('form.index', ['form' => $form]))->with('success', __('webapp.record_deleted'));
     }
 }

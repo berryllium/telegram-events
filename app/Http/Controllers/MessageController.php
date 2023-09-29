@@ -85,7 +85,7 @@ class MessageController extends Controller
         }
 
 
-        return back()->with('success', 'Сообщение успешно обновлено');
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**
@@ -94,6 +94,6 @@ class MessageController extends Controller
     public function destroy(Message $message)
     {
         $message->delete();
-        return redirect(route('messages.index'))->with('success', 'Сообщение и все его запланированные отправки удалены');
+        return redirect(route('messages.index'))->with('success', __('webapp.message_deleted'));
     }
 }

@@ -1,11 +1,12 @@
 <?php
 return [
-    'bots' => 'Bots',
-    'forms' => 'Forms',
-    'channels' => 'Channels',
-    'places' => 'Places',
     'authors' => 'Authors',
-    'messages' => 'Messages',
+    'bots' => 'Bots',
+    'channels' => 'Channels',
+    'dictionaries' => 'Dictionaries',
     'form' => 'Form',
-    'users' => 'Users'
+    'forms' => 'Forms',
+    'messages' => 'Messages',
+    'places' => 'Places',
+    'users' => 'Users',
 ];

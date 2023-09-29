@@ -56,7 +56,7 @@ class TelegramBotController extends Controller
             false,
             $data['code']);
 
-        return redirect(route('bot.index'))->with('success', 'Бот успешно создан!');
+        return redirect(route('bot.index'))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -101,7 +101,7 @@ class TelegramBotController extends Controller
             null,
             false,
             $request->get('code'))) {
-            return back()->with('success', 'Бот успешно обновлен!');
+            return back()->with('success', __('webapp.record_updated'));
         }
 
         return redirect()->back->with('error', 'Не удалось привязать бота, проверьте токен!');
@@ -114,6 +114,6 @@ class TelegramBotController extends Controller
     public function destroy(TelegramBot $bot)
     {
         $bot->delete();
-        return redirect(route('bot.index'))->with('success', 'Бот успешно удален!');
+        return redirect(route('bot.index'))->with('success', __('webapp.record_deleted'));
     }
 }

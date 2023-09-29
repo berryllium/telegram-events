@@ -32,7 +32,7 @@ Route::middleware('auth')->group(function(){
     });
 });
 
-Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/language/{lang}', [App\Http\Controllers\LanguageController::class, 'index'])->name('language');
 
 Route::get('/telegram/webapp/{telegram_bot}', [\App\Http\Controllers\WebApp\TelegramWebAppController::class, 'index'])->name('webapp');
 Route::post('/telegram/webapp/{telegram_bot}', [\App\Http\Controllers\WebApp\TelegramWebAppController::class, 'handleForm'])->name('webapp');
