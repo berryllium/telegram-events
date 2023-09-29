@@ -91,6 +91,6 @@ class DictionaryController extends Controller
     public function destroy(Dictionary $dictionary)
     {
         $dictionary->delete();
-        return back();
+        return back()->with('success', 'webapp.record_deleted');
     }
 }

@@ -25,4 +25,8 @@ class Place extends Model
     {
         return $this->belongsToMany(TelegramChannel::class);
     }
+
+    public function authors() : BelongsToMany {
+        return $this->belongsToMany(Author::class);
+    }
 }

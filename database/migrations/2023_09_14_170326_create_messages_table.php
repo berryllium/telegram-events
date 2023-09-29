@@ -17,7 +17,7 @@ return new class extends Migration
             $table->text('text');
             $table->boolean('allowed')->default(false);
             $table->foreignIdFor(\App\Models\Author::class)->nullable()->default(null);
-            $table->foreignIdFor(\App\Models\TelegramBot::class);
+            $table->foreignIdFor(\App\Models\TelegramBot::class)->constrained()->onDelete('cascade');
             $table->timestamps();
         });
     }

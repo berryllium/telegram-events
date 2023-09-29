@@ -29,22 +29,23 @@ class TelegramRequestHandler
             $text = $data['message']['text'] ?? null;
             $web_app_data = $data['message']['web_app_data']['data'] ?? null;
 
+            $author = Author::query()->where('tg_id', $sender['id'])->first();
+            if(!$author) {
+                $author = new Author([
+                    'name' => $sender['first_name'] ?? 'unknown',
+                    'username' => $sender['username'] ?? 'unknown',
+                    'tg_id' => $sender['id'],
+                    'premium' => $sender['is_premium'] ?? false,
+                ]);
+                $author->save();
+            }
+
             if($text == '/start') {
-                $this->sendButton($chat_id, $bot);
+                $this->sendButton($chat_id, $bot, $author);
             } elseif($web_app_data) {
                 Log::info('$web_app_data', [$web_app_data]);
                 $web_app_data = json_decode($web_app_data, true);
                 $message = Message::query()->find($web_app_data['message_id']);
-                $author = Author::query()->where('tg_id', $sender['id'])->first();
-                if(!$author) {
-                    $author = new Author([
-                        'name' => $sender['first_name'] ?? 'unknown',
-                        'username' => $sender['username'] ?? 'unknown',
-                        'tg_id' => $sender['id'],
-                        'premium' => $sender['is_premium'] ?? false,
-                    ]);
-                    $author->save();
-                }
                 $message->author_id = $author->id;
                 $message->allowed = !!$author->trusted;
                 $message->save();
@@ -52,6 +53,10 @@ class TelegramRequestHandler
                 if(isset($message->data->place)) {
                     $place = Place::find($message->data->place);
                     $channels = $place->telegram_channels;
+
+                    if($author->places()->count() < 1) {
+                        $author->places()->sync($message->data->place);
+                    }
 
                     if($channels) {
                         $publish_dates = $this->preparePublishDates($message->data->schedule);
@@ -98,11 +103,11 @@ class TelegramRequestHandler
         return response()->json(['status' => 'ok']);
     }
 
-    public function sendButton($chat_id, $bot) {
+    public function sendButton($chat_id, $bot, $author) {
         $keyboard = new ReplyKeyboardMarkup(
             [
                 [
-                    ['text' => __('webapp.add_post'), 'web_app' => ['url'=> route('webapp', $bot)]]
+                    ['text' => __('webapp.add_post'), 'web_app' => ['url'=> route('webapp', ['telegram_bot' => $bot, 'author' => $author])]]
                 ]
             ]
         );

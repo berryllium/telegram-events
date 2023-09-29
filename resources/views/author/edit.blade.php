@@ -25,6 +25,18 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="form" class="form-label">{{ __('webapp.places.places') }}</label>
+            <select class="form-select" id="form" name="places[]" multiple data-select="2">
+                <option value=""></option>
+                @foreach($places as $place)
+                    <option value="{{ $place->id }}" {{ $author->places->contains($place->id) ? 'selected' : ''}}>{{ $place->name }} ({{ $place->form->name }})</option>
+                @endforeach
+            </select>
+            @error('form')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <div class="form-check mb-3">
             <input type="hidden" name="trusted" value="0">
             <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $author->trusted ? 'checked' : '' }}>

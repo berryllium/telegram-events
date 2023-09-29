@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
+use App\Models\Place;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -12,7 +13,9 @@ class AuthorController extends Controller
      */
     public function index()
     {
-        return view('author.index', ['authors' => Author::paginate(20)]);
+        return view('author.index', [
+            'authors' => Author::paginate(20)
+        ]);
     }
 
     /**
@@ -43,7 +46,10 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
-        return view('author.edit', ['author' => $author]);
+        return view('author.edit', [
+            'author' => $author,
+            'places' => Place::with('form')->get()
+        ]);
     }
 
     /**
@@ -59,6 +65,8 @@ class AuthorController extends Controller
             'trusted' => 'bool'
         ]));
 
+        $author->places()->sync($request->get('places'));
+
         return back()->with('success', 'Запись обновлена');
     }
 
@@ -67,6 +75,8 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
+        $author->messages()->delete();
         $author->delete();
+        return back()->with('success', 'webapp.record_deleted');
     }
 }

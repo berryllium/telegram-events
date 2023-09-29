@@ -30,4 +30,9 @@ window.addEventListener('load', () => {
             processData: false
         });
     });
+
+    $('[name="place"]').change(function (){
+        $('[name="address"]').val($(this).val()).trigger('change')
+    })
+
 })

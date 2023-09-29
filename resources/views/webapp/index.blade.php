@@ -64,7 +64,7 @@
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
                             <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
-                                @foreach($form->places as $place)
+                                @foreach($places as $place)
                                     <option value="{{ $place->id }}">{{ $place->name }}</option>
                                 @endforeach
                             </select>
@@ -74,7 +74,7 @@
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
                             <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
-                                @foreach($form->places as $place)
+                                @foreach($places as $place)
                                     <option value="{{ $place->id }}">{{ $place->address }}</option>
                                 @endforeach
                             </select>
