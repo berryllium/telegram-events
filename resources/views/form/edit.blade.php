@@ -1,6 +1,10 @@
 @extends('base')
 @section('title', 'Редактирование веб-формы')
 @section('content')
+    <p class="text-center">
+        <strong>Внимание!</strong>
+        В форме должно обязательно присутствовать поле типа Место с кодом place и Адрес с кодом address!
+    </p>
     <form method="post" action="{{ route('form.update', [$form]) }}">
         <input type="hidden" name="tg_channel" value="1">
         @csrf

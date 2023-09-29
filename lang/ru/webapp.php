@@ -12,7 +12,7 @@ return [
     'user' => 'Пользователь',
     'title' => 'Название',
     'message' => 'сообщение',
-    'has_posted' => 'размещено',
+    'has_posted' => 'разместил',
     'message_accepted' => 'Сообщение принято',
     'code' => 'Код',
     'api_token' => 'API токен',
