@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Form extends Model
@@ -22,11 +23,7 @@ class Form extends Model
         return $this->hasMany(Field::class);
     }
 
-    public function places() : HasMany {
-        return $this->hasMany(Place::class);
-    }
-
-    public function bots() : HasMany {
-        return $this->hasMany(TelegramBot::class);
+    public function bot() : BelongsTo {
+        return $this->belongsTo(TelegramBot::class);
     }
 }

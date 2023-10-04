@@ -14,13 +14,4 @@
             @endforeach
         </select>
     </div>
-    <div class="col-lg-3 col-6 my-1">
-        <label class="visually-hidden" for="telegram_bot">Preference</label>
-        <select class="form-select" id="telegram_bot" name="telegram_bot">
-            <option selected value="">{{ __('webapp.bots.bot') }}</option>
-            @foreach($bots as $bot)
-                <option value="{{ $bot->id }}" {{ request('telegram_bot') == $bot->id ? 'selected' : '' }}>{{ $bot->name }}</option>
-            @endforeach
-        </select>
-    </div>
 @endsection

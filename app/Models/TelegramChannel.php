@@ -23,4 +23,8 @@ class TelegramChannel extends Model
     public function places() : HasMany {
         return $this->hasMany(Place::class);
     }
+
+    public function telegram_bot() : BelongsTo {
+        return $this->belongsTo(TelegramBot::class);
+    }
 }

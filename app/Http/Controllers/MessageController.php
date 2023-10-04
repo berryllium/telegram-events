@@ -16,22 +16,16 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
-        $allowed_bots = auth()->user()->hasRole('supervisor') ? TelegramBot::all() : auth()->user()->telegram_bots;
         $filters = $request->only([
             'search',
-            'telegram_bot',
             'status',
         ]);
-
-        $filters['telegram_bot'] = isset($filters['telegram_bot']) && $filters['telegram_bot'] && $allowed_bots->contains($filters['telegram_bot']) ?
-            $filters['telegram_bot'] :
-            $allowed_bots->getQueueableIds();
+        $filters['telegram_bot'] = session('bot');
 
         return view('message.index', [
-            'bots' => $allowed_bots,
             'statuses' => MessageSchedule::$statuses,
             'status_class' => array_combine(array_keys(MessageSchedule::$statuses), ['warning', 'danger', 'success']),
-            'schedules' => MessageSchedule::with('message.author')->with('message.telegram_bot')->filter($filters)->paginate(20),
+            'schedules' => MessageSchedule::with('message.author')->filter($filters)->paginate(20),
         ]);
     }
 

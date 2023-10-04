@@ -17,8 +17,8 @@ class Place extends Model
         'description',
     ];
 
-    public function form() : BelongsTo {
-        return $this->belongsTo(Form::class);
+    public function bot() : BelongsTo {
+        return $this->belongsTo(TelegramBot::class);
     }
 
     public function telegram_channels() : BelongsToMany

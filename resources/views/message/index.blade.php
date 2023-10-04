@@ -10,7 +10,6 @@
             <th>{{ __('webapp.message_text') }}</th>
             <th>{{ __('webapp.sending_time') }}</th>
             <th>{{ __('webapp.status') }}</th>
-            <th>{{ __('webapp.bot') }}</th>
             <th class="action-cell">{{ __('webapp.actions') }}</th>
         </tr>
 
@@ -20,7 +19,6 @@
                 <td>{{ strip_tags($schedule->message->text) }}</td>
                 <td>{{ $schedule->sending_date }}</td>
                 <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
-                <td>{{ $schedule->message->telegram_bot->name }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
                         <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete">

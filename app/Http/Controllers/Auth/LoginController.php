@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Auth;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
+use Illuminate\Http\Request;
+use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
 {
@@ -36,5 +38,25 @@ class LoginController extends Controller
     public function __construct()
     {
         $this->middleware('guest')->except('logout');
+    }
+
+    protected function attemptLogin(Request $request)
+    {
+        return $this->guard()->attemptWhen(
+            $this->credentials($request),
+            fn ($user) => $user->hasRole('supervisor') || $user->telegram_bots->contains($request->input('telegram_bot')),
+            $request->filled('telegram_bot')
+        );
+    }
+
+    protected function sendFailedLoginResponse(Request $request)
+    {
+        $user = $this->guard()->getLastAttempted();
+        if($user && $this->guard()->getProvider()->validateCredentials($user, $this->credentials($request))) {
+            $messages = ['telegram_bot' => trans('auth.bot')];
+        } else {
+            $messages = [$this->username() => trans('auth.failed')];
+        }
+        throw ValidationException::withMessages($messages);
     }
 }

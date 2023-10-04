@@ -4,7 +4,7 @@ return [
     'bots' => 'Боты',
     'channels' => 'Каналы',
     'dictionaries' => 'Справочники',
-    'form' => 'Формы',
+    'form' => 'Форма',
     'forms' => 'Формы',
     'messages' => 'Сообщения',
     'places' => 'Места',
