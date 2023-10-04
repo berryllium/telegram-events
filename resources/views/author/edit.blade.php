@@ -37,16 +37,22 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="form-check mb-3">
-            <input type="hidden" name="trusted" value="0">
-            <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $author->trusted ? 'checked' : '' }}>
-            <label class="form-check-label" for="trusted">{{ __('webapp.trusted_author') }}</label>
+        <div class="mb-3">
+            {{ __('webapp.trusted_author') }}
+            @foreach($bots as $bot)
+                <div class="form-check mt-1">
+                    <input type="hidden" name="allowed_bots[{{ $bot->id }}]">
+                    <input id="bot-{{ $bot->id }}" type="checkbox" class="form-check-input" name="allowed_bots[{{ $bot->id }}]" value="1" {{ $author->telegram_bots->contains($bot->id) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="bot-{{ $bot->id }}">{{ $bot->name }}</label>
+                </div>
+            @endforeach
         </div>
+
         <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $author->description }}</textarea>
             @error('description')
-            <div class="form-text text-danger">{{ $message }}</div>
+                <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>

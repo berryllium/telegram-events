@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Place;
+use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -14,7 +15,7 @@ class AuthorController extends Controller
     public function index()
     {
         return view('author.index', [
-            'authors' => Author::paginate(20)
+            'authors' => Author::paginate(20),
         ]);
     }
 
@@ -48,7 +49,8 @@ class AuthorController extends Controller
     {
         return view('author.edit', [
             'author' => $author,
-            'places' => Place::with('form')->get()
+            'places' => Place::with('form')->get(),
+            'bots' => auth()->user()->allowed_bots,
         ]);
     }
 
@@ -66,6 +68,16 @@ class AuthorController extends Controller
         ]));
 
         $author->places()->sync($request->get('places'));
+
+        if($request->get('allowed_bots')) {
+            foreach ($request->get('allowed_bots') as $bot => $value) {
+                if($value) {
+                    $author->telegram_bots()->attach($bot);
+                } else {
+                    $author->telegram_bots()->detach($bot);
+                }
+            }
+        }
 
         return back()->with('success', __('webapp.record_updated'));
     }

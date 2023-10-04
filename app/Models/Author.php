@@ -26,4 +26,8 @@ class Author extends Model
     public function places() : BelongsToMany {
         return $this->belongsToMany(Place::class);
     }
+
+    public function telegram_bots() : BelongsToMany {
+        return $this->belongsToMany(TelegramBot::class);
+    }
 }

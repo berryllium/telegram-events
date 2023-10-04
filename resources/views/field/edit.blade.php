@@ -6,7 +6,7 @@
         @csrf
         @method('put')
         <div class="mb-3">
-            <label for="name" class="form-label">__('webapp.title')</label>
+            <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $field->name }}">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
@@ -27,7 +27,7 @@
         </div>
         @if($field->canHaveDictionary)
             <div class="mb-3">
-                <label for="dictionary_id" class="form-label">__('webapp.dictionary')</label>
+                <label for="dictionary_id" class="form-label">{{ __('webapp.dictionaries.dictionary') }}</label>
                 <select class="form-select" id="dictionary_id" name="dictionary_id">
                     <option value=""></option>
                     @foreach(\App\Models\Dictionary::all() as $dictionary)

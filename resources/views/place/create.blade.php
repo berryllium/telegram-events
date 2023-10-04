@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', __('webapp.forms.add'))
+@section('title', __('webapp.places.add'))
 @section('content')
     <form method="post" action="{{ route('place.store') }}">
         @csrf

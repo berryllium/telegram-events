@@ -13,6 +13,7 @@ use Laravel\Sanctum\HasApiTokens;
 
 /**
  * @property Collection telegram_bots
+ * @property Collection allowed_bots
  */
 class User extends Authenticatable
 {
@@ -82,6 +83,10 @@ class User extends Authenticatable
                 $filters['role'] ?? false,
                 fn ($query, $value) => $query->whereHas('roles', fn($q) => $q->where('roles.id', $value))
             );
+    }
+
+    public function getAllowedBotsAttribute() : Collection {
+        return $this->hasRole('supervisor') ? TelegramBot::all() : $this->telegram_bots;
     }
 
 }
