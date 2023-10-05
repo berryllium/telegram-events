@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use App\Models\Place;
+use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
@@ -13,7 +14,9 @@ class PlaceController extends Controller
      */
     public function index()
     {
-        return view('place/index', ['places' => Place::with('form')->paginate(20)]);
+        return view('place/index', [
+            'places' => Place::query()->where('telegram_bot_id', session('bot'))->paginate(20)
+        ]);
     }
 
     /**
@@ -33,10 +36,9 @@ class PlaceController extends Controller
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
-            'form' => 'int'
         ]);
 
-        $place = Form::find($data['form'])->places()->create($data);
+        TelegramBot::find(session('bot'))->places()->create($data);
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
     }
@@ -64,12 +66,10 @@ class PlaceController extends Controller
      */
     public function update(Request $request, Place $place)
     {
-        $place->form_id = $request->get('form');
         $place->update($request->validate([
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
-            'form' => 'int'
         ]));
         $place->telegram_channels()->sync($request->input('channels'));
         return back()->with('success', __('webapp.record_updated'));

@@ -24,6 +24,10 @@ class TelegramBot extends Model
         return $this->belongsTo(Form::class);
     }
 
+    public function authors() : BelongsToMany {
+        return $this->belongsToMany(Author::class)->withPivot(['trusted', 'title', 'description']);
+    }
+
     public function messages() {
         return $this->hasMany(Message::class);
     }

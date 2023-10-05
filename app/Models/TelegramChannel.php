@@ -17,7 +17,7 @@ class TelegramChannel extends Model
     protected $fillable = [
         'tg_id',
         'name',
-        'description'
+        'description',
     ];
 
     public function places() : HasMany {

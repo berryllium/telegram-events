@@ -5,23 +5,16 @@
         @csrf
         @method('put')
         <div class="mb-3">
-            <label for="name" class="form-label">{{ __('webapp.name') }}</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ $author->name }}">
-            @error('name')
+            <label for="title" class="form-label">{{ __('webapp.name') }}</label>
+            <input type="text" class="form-control" id="title" name="title" value="{{ $pivot->title }}">
+            @error('title')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
-            <label for="username" class="form-label">{{ __('webapp.login') }}</label>
-            <input type="text" class="form-control" id="username" name="username" value="{{ $author->username }}">
-            @error('username')
-            <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
-            <label for="tg_id" class="form-label">{{ __('webapp.tg_id') }}</label>
-            <input type="number" class="form-control" id="tg_id" name="tg_id" value="{{ $author->tg_id }}">
-            @error('tg_id')
+            <label for="description" class="form-label">{{ __('webapp.description') }}</label>
+            <textarea class="form-control" id="description" name="description" rows="5">{{ $pivot->description }}</textarea>
+            @error('description')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
@@ -30,7 +23,7 @@
             <select class="form-select" id="form" name="places[]" multiple data-select="2">
                 <option value=""></option>
                 @foreach($places as $place)
-                    <option value="{{ $place->id }}" {{ $author->places->contains($place->id) ? 'selected' : ''}}>{{ $place->name }} ({{ $place->form->name }})</option>
+                    <option value="{{ $place->id }}" {{ $author->places->contains($place->id) ? 'selected' : ''}}>{{ $place->name }}</option>
                 @endforeach
             </select>
             @error('form')
@@ -38,22 +31,8 @@
             @enderror
         </div>
         <div class="mb-3">
-            {{ __('webapp.trusted_author') }}
-            @foreach($bots as $bot)
-                <div class="form-check mt-1">
-                    <input type="hidden" name="allowed_bots[{{ $bot->id }}]">
-                    <input id="bot-{{ $bot->id }}" type="checkbox" class="form-check-input" name="allowed_bots[{{ $bot->id }}]" value="1" {{ $author->telegram_bots->contains($bot->id) ? 'checked' : '' }}>
-                    <label class="form-check-label" for="bot-{{ $bot->id }}">{{ $bot->name }}</label>
-                </div>
-            @endforeach
-        </div>
-
-        <div class="mb-3">
-            <label for="description" class="form-label">{{ __('webapp.description') }}</label>
-            <textarea class="form-control" id="description" name="description" rows="5">{{ $author->description }}</textarea>
-            @error('description')
-                <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
+            <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $pivot->trusted ? 'checked' : '' }}>
+            <label class="form-check-label" for="trusted">{{ __('webapp.trusted_author') }}</label>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>

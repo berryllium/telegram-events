@@ -6,7 +6,7 @@
 
     @include('component.table', [
         'entities' => ['name' => 'place', 'value' => $places],
-        'headers' => [__('webapp.title'), __('webapp.address'), __('webapp.form'), __('webapp.description')],
-        'fields' => ['name', 'address', 'form', 'description']
+        'headers' => [__('webapp.title'), __('webapp.address'),  __('webapp.description')],
+        'fields' => ['name', 'address', 'description']
     ])
 @endsection

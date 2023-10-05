@@ -15,6 +15,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(\App\Models\Author::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\TelegramBot::class)->constrained()->onDelete('cascade');
+            $table->boolean('trusted')->default(false);
+            $table->string('title')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });

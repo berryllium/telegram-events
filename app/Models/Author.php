@@ -28,6 +28,6 @@ class Author extends Model
     }
 
     public function telegram_bots() : BelongsToMany {
-        return $this->belongsToMany(TelegramBot::class);
+        return $this->belongsToMany(TelegramBot::class)->withPivot(['trusted', 'title', 'description']);
     }
 }

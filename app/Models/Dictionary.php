@@ -12,7 +12,8 @@ class Dictionary extends Model
 
     protected $fillable = [
         'name',
-        'description'
+        'description',
+        'telegram_bot_id'
     ];
 
     public function dictionary_values() : HasMany {

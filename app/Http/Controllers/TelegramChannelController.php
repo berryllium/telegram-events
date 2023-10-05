@@ -14,7 +14,7 @@ class TelegramChannelController extends Controller
     public function index()
     {
 
-        return view('channel/index', ['channels' => TelegramChannel::paginate(20)]);
+        return view('channel/index', ['channels' => TelegramChannel::query()->where('telegram_bot_id', session('bot'))->paginate(20)]);
     }
 
     /**
@@ -33,7 +33,8 @@ class TelegramChannelController extends Controller
         TelegramChannel::create($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
-            'description' => 'max:1000'
+            'description' => 'max:1000',
+            'telegram_bot_id' => session('bot')
         ]));
         return redirect(route('channel.index'))->with('success', __('webapp.record_added'));
     }
@@ -65,6 +66,7 @@ class TelegramChannelController extends Controller
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'description' => 'max:1000',
+            'telegram_bot_id' => session('bot')
         ]));
         return back()->with('success', __('webapp.record_updated'));
     }

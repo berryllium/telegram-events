@@ -29,15 +29,20 @@ class TelegramRequestHandler
             $text = $data['message']['text'] ?? null;
             $web_app_data = $data['message']['web_app_data']['data'] ?? null;
 
+            $author_name = $sender['first_name'] ?? $sender['username'] ?? 'new author';
             $author = Author::query()->where('tg_id', $sender['id'])->first();
             if(!$author) {
                 $author = new Author([
-                    'name' => $sender['first_name'] ?? 'unknown',
+                    'name' => $author_name,
                     'username' => $sender['username'] ?? 'unknown',
                     'tg_id' => $sender['id'],
                     'premium' => $sender['is_premium'] ?? false,
                 ]);
                 $author->save();
+            }
+
+            if(!$author->telegram_bots()->get()->contains($bot->id)) {
+                $author->telegram_bots()->attach($bot, ['title' => $author_name]);
             }
 
             if($text == '/start') {
@@ -47,7 +52,8 @@ class TelegramRequestHandler
                 $web_app_data = json_decode($web_app_data, true);
                 $message = Message::query()->find($web_app_data['message_id']);
                 $message->author_id = $author->id;
-                $message->allowed = !!$author->trusted;
+                $trusted = $bot->authors()->wherePivot('trusted', true)->exists();
+                $message->allowed = $trusted;
                 $message->save();
 
                 if(isset($message->data->place)) {
@@ -78,7 +84,7 @@ class TelegramRequestHandler
                     ['#author_type#', '#author_link#', '#message_link#'],
                     [
                         $author->trusted ? __('webapp.trusted_author') : __('webapp.user'),
-                        "<a href='" . route('author.edit', $author->id) ."'>" . $author->name . "</a>",
+                        "<a href='" . route('author.edit', $author->id) ."'>" . $bot->authors()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot->title . "</a>",
                         "<a href='" . route('message.edit', $message->id) ."'>".__('webapp.message')."</a>",
                     ],
                     "#author_type# #author_link# ".__('webapp.has_posted')." #message_link#"

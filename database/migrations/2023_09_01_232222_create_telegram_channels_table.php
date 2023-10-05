@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('telegram_channels', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('tg_id')->comment('ID телеграм канала');
+            $table->foreignIdFor(\App\Models\TelegramBot::class)->default(1);
             $table->string('name');
             $table->text('description')->nullable();
-            $table->foreignIdFor(\App\Models\TelegramBot::class);
             $table->timestamps();
         });
     }

@@ -48,7 +48,7 @@ return [
     'title' => 'Title',
     'type' => 'Type',
     'tg_id' => 'Telegram ID',
-    'trusted_author' => 'Trusted author for bots',
+    'trusted_author' => 'Trusted author',
     'update' => 'Update',
     'user' => 'User',
     'wait' => 'Wait',

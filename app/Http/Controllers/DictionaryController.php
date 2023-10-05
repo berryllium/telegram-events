@@ -13,7 +13,11 @@ class DictionaryController extends Controller
      */
     public function index()
     {
-        return view('dictionary.index', ['dictionaries' => Dictionary::paginate(20)]);
+        return view('dictionary.index', [
+            'dictionaries' => Dictionary::query()
+                ->where('telegram_bot_id', session('bot'))
+                ->paginate(20)
+        ]);
     }
 
     /**
@@ -29,10 +33,12 @@ class DictionaryController extends Controller
      */
     public function store(Request $request)
     {
-        $dictionary = Dictionary::create($request->validate([
+        $data = $request->validate([
             'name' => 'required|max:255',
-            'description' => ''
-        ]));
+            'description' => '',
+        ]);
+        $data['telegram_bot_id'] = session('bot');
+        $dictionary = Dictionary::create($data);
         return redirect(route('dictionary.edit', $dictionary))->with('success', __('webapp.record_updated'));
     }
 

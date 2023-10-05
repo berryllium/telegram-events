@@ -15,14 +15,14 @@ class TelegramWebAppController extends Controller
     public function index(Request $request, TelegramBot $telegramBot)
     {
         $author = Author::find($request->get('author'));
-        if($author->id && $author->places->count()) {
-            $places = $telegramBot->form->places->intersect($author->places);
+        if($author && $author->places->count()) {
+            $places = $telegramBot->places->intersect($author->places);
         }
 
         return view('webapp.index', [
             'bot' => $telegramBot,
             'form' => $telegramBot->form,
-            'places' => $places ?? $telegramBot->form->places,
+            'places' => $places ?? $telegramBot->places,
         ]);
     }
 

@@ -53,7 +53,11 @@ class LoginController extends Controller
     {
         $user = $this->guard()->getLastAttempted();
         if($user && $this->guard()->getProvider()->validateCredentials($user, $this->credentials($request))) {
-            $messages = ['telegram_bot' => trans('auth.bot')];
+            if(!$request->input('telegram_bot')) {
+                $messages = ['telegram_bot' => trans('auth.bot')];
+            } else {
+                $messages = ['telegram_bot' => trans('auth.bot_permissions')];
+            }
         } else {
             $messages = [$this->username() => trans('auth.failed')];
         }

@@ -20,6 +20,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('qwer1234')
         ]);
         $supervisor->roles()->attach(Role::query()->where('name', '=', 'supervisor')->first());
+        $supervisor->telegram_bots()->attach(1);
+
 
         $admin = User::factory()->create([
             'name' => 'Admin',
@@ -27,6 +29,8 @@ class UserSeeder extends Seeder
             'password' => Hash::make('qwer1234')
         ]);
         $admin->roles()->attach(Role::query()->where('name', '=', 'admin')->first());
+        $admin->telegram_bots()->attach(1);
+
 
         $moderator = User::factory()->create([
             'name' => 'Moderator',
@@ -34,5 +38,7 @@ class UserSeeder extends Seeder
             'password' => Hash::make('qwer1234')
         ]);
         $moderator->roles()->attach(Role::query()->where('name', '=', 'moderator')->first());
+        $moderator->telegram_bots()->attach(1);
+
     }
 }

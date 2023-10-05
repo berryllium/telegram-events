@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('username')->nullable();
             $table->text('description')->nullable();
             $table->boolean('premium')->default(false);
-            $table->boolean('trusted')->default(false);
             $table->timestamps();
         });
     }

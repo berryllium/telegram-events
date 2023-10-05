@@ -21,7 +21,7 @@ class PlaceFactory extends Factory
             'name' => fake()->word(),
             'address' => fake()->address(),
             'description' => fake()->realText(),
-            'form_id' => 1
+            'telegram_bot_id' => 1
         ];
     }
 

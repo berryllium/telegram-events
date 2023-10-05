@@ -30,7 +30,7 @@
                 </li>
             @endif
         @endif
-        @if(auth()->user()->hasAnyRole('supervisor', 'admin', 'moderator'))
+        @if(auth()->user()->hasAnyRole('supervisor', 'admin', 'moderator') and @session('bot'))
             <li class="nav-item">
                 <a class="nav-link{{ request()->segment(1) == 'message' ? ' active' : '' }}" href="{{ route('message.index') }}">{{ __('menu.messages') }}</a>
             </li>

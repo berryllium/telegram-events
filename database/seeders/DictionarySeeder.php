@@ -16,6 +16,7 @@ class DictionarySeeder extends Seeder
             [
                 'name' => __('webapp.age'),
                 'description' => fake()->realText(),
+                'telegram_bot_id' => 1
             ]
         );
     }

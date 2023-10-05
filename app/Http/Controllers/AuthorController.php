@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
-use App\Models\Place;
 use App\Models\TelegramBot;
+use App\Models\TelegramBotAuthor;
 use Illuminate\Http\Request;
 
 class AuthorController extends Controller
@@ -15,7 +15,7 @@ class AuthorController extends Controller
     public function index()
     {
         return view('author.index', [
-            'authors' => Author::paginate(20),
+            'pivots' => TelegramBotAuthor::query()->where('telegram_bot_id', session('bot'))->paginate()
         ]);
     }
 
@@ -32,14 +32,7 @@ class AuthorController extends Controller
      */
     public function store(Request $request)
     {
-        Author::create($request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'tg_id' => 'required|int',
-            'description' => 'required',
-            'trusted' => 'bool'
-        ]));
-        return redirect(route('author.index'))->with('success', __('webapp.record_added'));
+
     }
 
     /**
@@ -47,10 +40,13 @@ class AuthorController extends Controller
      */
     public function edit(Author $author)
     {
+        $bot = TelegramBot::find(session('bot'));
+        $pivot = $author->telegram_bots()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot;
+
         return view('author.edit', [
             'author' => $author,
-            'places' => Place::with('form')->get(),
-            'bots' => auth()->user()->allowed_bots,
+            'pivot' => $pivot,
+            'places' => $bot->places()->get(),
         ]);
     }
 
@@ -59,23 +55,25 @@ class AuthorController extends Controller
      */
     public function update(Request $request, Author $author)
     {
-        $author->update($request->validate([
-            'name' => 'required',
-            'username' => 'required',
-            'tg_id' => 'required|int',
-            'description' => '',
-            'trusted' => 'bool'
+        $bot = TelegramBot::find(session('bot'));
+        $bot->authors()->updateExistingPivot($author->id, $request->validate([
+            'trusted' => 'int',
+            'title' => 'required|max:255',
+            'description' => 'max:1000',
         ]));
 
-        $author->places()->sync($request->get('places'));
+        $newPlaces = $request->get('places') ?? [];
+        $oldPlaces = $author->places()->where('telegram_bot_id', $bot->id)->get();
 
-        if($request->get('allowed_bots')) {
-            foreach ($request->get('allowed_bots') as $bot => $value) {
-                if($value) {
-                    $author->telegram_bots()->attach($bot);
-                } else {
-                    $author->telegram_bots()->detach($bot);
-                }
+        foreach ($oldPlaces as $place) {
+            if(!in_array($place->id, $newPlaces)) {
+                $author->places()->detach($place);
+            }
+        }
+
+        foreach ($newPlaces as $place) {
+            if(!$oldPlaces->contains($place)) {
+                $author->places()->attach($place);
             }
         }
 
@@ -87,8 +85,8 @@ class AuthorController extends Controller
      */
     public function destroy(Author $author)
     {
-        $author->messages()->delete();
-        $author->delete();
+        $bot = TelegramBot::find(session('bot'));
+        $bot->authors()->detach($author);
         return back()->with('success', 'webapp.record_deleted');
     }
 }
