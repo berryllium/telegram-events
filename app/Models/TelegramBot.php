@@ -48,22 +48,21 @@ class TelegramBot extends Model
     }
 
     public function setWebhook() : bool {
-//        try {
-//            $botApi = new BotApi($this->api_token);
-//            $botApi->setWebhook(
-//                route('api.telegram'),
-//                null,
-//                null,
-//                40,
-//                null,
-//                false,
-//                $this->code);
-//            return true;
-//        } catch (\Exception $exception) {
-//            Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
-//            return false;
-//        }
-return true;
+        try {
+            $botApi = new BotApi($this->api_token);
+            $botApi->setWebhook(
+                route('api.telegram'),
+                null,
+                null,
+                40,
+                null,
+                false,
+                $this->code);
+            return true;
+        } catch (\Exception $exception) {
+            Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
+            return false;
+        }
     }
 
     public function unsetWebhook() : bool
