@@ -16,8 +16,8 @@ class TelegramBotSeeder extends Seeder
         TelegramBot::factory()->create([
             'name' => 'My Bot',
             'code' => 'dimabot',
-            'api_token' => '6693099766:AAF45rcSrSzvUapg7IUpazpkIKhUABbUwho',
-            'moderation_group' => env('SERVICE_BOT_CHANNEL'),
+            'api_token' => config('app.service_bot.token'),
+            'moderation_group' => config('app.service_bot.channel'),
             'description' => 'My bot',
             'form_id' => 1
         ]);

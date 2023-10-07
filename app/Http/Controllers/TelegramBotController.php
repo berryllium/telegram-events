@@ -30,16 +30,14 @@ class TelegramBotController extends Controller
      */
     public function store(Request $request)
     {
-        $data = $request->validate([
+        $bot = TelegramBot::create($request->validate([
             'name' => 'required|min:2',
             'code' => 'required|unique:telegram_bots|alpha_dash:ascii',
             'api_token' => 'required',
             'description' => 'max:1000',
             'moderation_group' => 'int',
             'form_id' => 'required|int',
-        ]);
-
-        $bot = Telegrambot::create($data);
+        ]));
 
         if($bot->setWebhook()) {
             return redirect(route('bot.index'))->with('success', __('webapp.record_added'));
@@ -71,7 +69,6 @@ class TelegramBotController extends Controller
      */
     public function update(Request $request, TelegramBot $bot)
     {
-
         $bot->update($request->validate([
             'name' => 'required|min:2',
             'code' => 'required|alpha_dash:ascii|unique:telegram_bots,code,'.$bot->id,

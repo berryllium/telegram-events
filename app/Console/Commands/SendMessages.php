@@ -34,7 +34,7 @@ class SendMessages extends Command
     public function __construct()
     {
         parent::__construct();
-        $this->mainBot = new BotApi(env('SERVICE_BOT_TOKEN'));
+        $this->mainBot = new BotApi(config('app.service_bot.token'));
     }
 
     /**
@@ -76,7 +76,7 @@ class SendMessages extends Command
                 $messageSchedule->status = 'error';
                 $messageSchedule->error_text = $error;
                 $messageSchedule->save();
-                $this->mainBot->sendMessage(env('SERVICE_BOT_CHANNEL'),  $exception->getMessage());
+                $this->mainBot->sendMessage(config('app.service_bot.channel'),  $exception->getMessage());
             }
         }
     }

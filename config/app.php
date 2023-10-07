@@ -185,4 +185,17 @@ return [
          'TechBotFacade' => \App\Facades\TechBotFacade::class,
     ])->toArray(),
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Telegram bots service
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    'service_bot' => [
+        'token' => env('SERVICE_BOT_TOKEN'),
+        'channel' => env('SERVICE_BOT_CHANNEL'),
+    ],
+
 ];

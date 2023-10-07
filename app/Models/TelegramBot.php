@@ -23,6 +23,10 @@ class TelegramBot extends Model
         'form_id'
     ];
 
+    protected $casts = [
+        'api_token' => 'encrypted'
+    ];
+
     public function form() : BelongsTo {
         return $this->belongsTo(Form::class);
     }
@@ -43,26 +47,26 @@ class TelegramBot extends Model
         return $this->hasMany(Place::class);
     }
 
-    public function setWebhook() {
-        try {
-            $botApi = new BotApi($this->api_token);
-            $botApi->setWebhook(
-                route('api.telegram'),
-                null,
-                null,
-                40,
-                null,
-                false,
-                $this->code);
-            return true;
-        } catch (\Exception $exception) {
-            Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
-            return false;
-        }
-
+    public function setWebhook() : bool {
+//        try {
+//            $botApi = new BotApi($this->api_token);
+//            $botApi->setWebhook(
+//                route('api.telegram'),
+//                null,
+//                null,
+//                40,
+//                null,
+//                false,
+//                $this->code);
+//            return true;
+//        } catch (\Exception $exception) {
+//            Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
+//            return false;
+//        }
+return true;
     }
 
-    public function unsetWebhook()
+    public function unsetWebhook() : bool
     {
         try {
             $botApi = new BotApi($this->api_token);
@@ -72,7 +76,6 @@ class TelegramBot extends Model
             Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
             return false;
         }
-
     }
 
 }

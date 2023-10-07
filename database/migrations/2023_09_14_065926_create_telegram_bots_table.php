@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('code')->unique();
-            $table->string('api_token');
+            $table->text('api_token');
             $table->bigInteger('moderation_group');
             $table->text('description');
             $table->foreignIdFor(\App\Models\Form::class);

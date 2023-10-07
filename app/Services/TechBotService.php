@@ -16,8 +16,8 @@ class TechBotService
 
     public function __construct()
     {
-        $this->client = new BotApi(env('SERVICE_BOT_TOKEN'));
-        $this->channel = env('SERVICE_BOT_CHANNEL');
+        $this->client = new BotApi(config('app.service_bot.token'));
+        $this->channel = config('app.service_bot.channel');
     }
 
     public function send(string $message) {
