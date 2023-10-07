@@ -102,7 +102,8 @@ return [
         'template' => 'Message template',
         'fields' => 'Form fields',
         'add_field' => 'Add field',
-        'notice' => 'Fields place and address is necessary, do not change their codes!'
+        'notice' => 'Fields place and address is necessary, do not change their codes!',
+        'form_has_bot' => 'You can\'t delete this form because in is assigned to the :bot bot',
     ],
     'fields' => [
         'add' => 'Add Field',

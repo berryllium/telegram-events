@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Form;
+use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 
 class FormController extends Controller
@@ -71,7 +72,11 @@ class FormController extends Controller
      */
     public function destroy(Form $form)
     {
-        $form->delete();
-        return redirect(route('form.index'))->with('success', __('webapp.record_deleted'));
+        if($bot = TelegramBot::query()->where('form_id', $form->id)->first()) {
+            return back()->with('error', __('webapp.forms.form_has_bot', ['bot' => $bot->name]));
+        } else {
+            $form->delete();
+            return redirect(route('form.index'))->with('success', __('webapp.record_deleted'));
+        }
     }
 }
