@@ -2,6 +2,7 @@
 return [
     'actions' => 'Actions',
     'add' => 'Add',
+    'bot_created_without_binding' => 'The bot has been created but the Webhook hasn\'t been assigned. Check the token and update the bot!',
     'add_channel' => 'Add channel',
     'add_date' => 'Add date',
     'add_post' => '🔖 Add post',

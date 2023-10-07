@@ -36,27 +36,16 @@ class TelegramBotController extends Controller
             'api_token' => 'required',
             'description' => 'max:1000',
             'moderation_group' => 'int',
-            'form' => ''
+            'form_id' => 'required|int',
         ]);
 
-        if(isset($data['form']) && $data['form']) {
-            $form = Form::find($data['form']);
-            $form->bots()->create($data);
+        $bot = Telegrambot::create($data);
+
+        if($bot->setWebhook()) {
+            return redirect(route('bot.index'))->with('success', __('webapp.record_added'));
         } else {
-            Telegrambot::create($data);
+            return redirect(route('bot.index'))->with('error', __('webapp.bot_created_without_binding'));
         }
-
-        $botApi = new BotApi($data['api_token']);
-        $res = $botApi->setWebhook(
-            route('api.telegram'),
-            null,
-            null,
-            40,
-            null, 
-            false,
-            $data['code']);
-
-        return redirect(route('bot.index'))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -82,7 +71,6 @@ class TelegramBotController extends Controller
      */
     public function update(Request $request, TelegramBot $bot)
     {
-        $bot->form_id = $request->get('form');
 
         $bot->update($request->validate([
             'name' => 'required|min:2',
@@ -90,21 +78,14 @@ class TelegramBotController extends Controller
             'api_token' => 'required',
             'moderation_group' => 'int',
             'description' => 'max:1000',
+            'form_id' => 'required|int',
         ]));
 
-        $botApi = new BotApi($bot->api_token);
-        if($botApi->setWebhook(
-            route('api.telegram'),
-            null,
-            null,
-            40,
-            null,
-            false,
-            $request->get('code'))) {
+        if($bot->setWebhook()) {
             return back()->with('success', __('webapp.record_updated'));
+        } else {
+            return back()->with('error', __('webapp.bot_created_without_binding'));
         }
-
-        return redirect()->back->with('error', 'Не удалось привязать бота, проверьте токен!');
 
     }
 
@@ -113,6 +94,11 @@ class TelegramBotController extends Controller
      */
     public function destroy(TelegramBot $bot)
     {
+
+        if($bot->unsetWebhook()) {
+            return back()->with('error', __('webapp.bot_created_without_binding'));
+        }
+
         $bot->delete();
         return redirect(route('bot.index'))->with('success', __('webapp.record_deleted'));
     }
