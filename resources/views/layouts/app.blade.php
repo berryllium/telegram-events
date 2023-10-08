@@ -21,9 +21,34 @@
 <div id="app">
     <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                {{ session('bot') ? \App\Models\TelegramBot::find(session('bot'))->name : config('app.name', 'Laravel') }}
-            </a>
+            <div class="dropdown">
+                @if(auth()->user())
+                    @php
+                        $bot = \App\Models\TelegramBot::find(session('bot'));
+                        $userBots = auth()->user()->hasRole('supervisor') ? \App\Models\TelegramBot::all() : auth()->user()->telegram_bots;
+                    @endphp
+
+                    @if($userBots->count() > 1)
+                        <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            {{ $bot->name }}
+                        </button>
+                        <ul class="dropdown-menu">
+                            @foreach(\App\Models\TelegramBot::all() as $bot)
+                                <li><a class="dropdown-item text-warning-emphasis" href="{{ route('bot_switch', $bot) }}">{{ $bot->name }}</a></li>
+                            @endforeach
+                        </ul>
+                    @else
+                        <a class="navbar-brand" href="{{ url('/') }}">
+                            {{ $bot->name }}
+                        </a>
+                    @endif
+                @else
+                    <a class="navbar-brand" href="{{ url('/') }}">
+                        {{ config('app.name', 'Laravel') }}
+                    </a>
+                @endif
+            </div>
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
                 <span class="navbar-toggler-icon"></span>
             </button>

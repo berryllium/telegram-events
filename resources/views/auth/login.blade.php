@@ -40,25 +40,6 @@
                         </div>
 
                         <div class="row mb-3">
-                            <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Telegram bot') }}</label>
-
-                            <div class="col-md-6">
-                                <select name="telegram_bot" id="telegram_bot" class="form-select @error('telegram_bot') is-invalid @enderror">
-                                    <option value=""></option>
-                                    @foreach(\App\Models\TelegramBot::all() as $bot)
-                                        <option value="{{ $bot->id }}">{{ $bot->name }}</option>
-                                    @endforeach
-                                </select>
-
-                                @error('telegram_bot')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
-                        </div>
-
-                        <div class="row mb-3">
                             <div class="col-md-6 offset-md-4">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>

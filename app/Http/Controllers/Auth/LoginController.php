@@ -44,7 +44,7 @@ class LoginController extends Controller
     {
         return $this->guard()->attemptWhen(
             $this->credentials($request),
-            fn ($user) => $user->hasRole('supervisor') || $user->telegram_bots->contains($request->input('telegram_bot')),
+            fn ($user) => $user->hasRole('supervisor') || $user->telegram_bots()->exists(),
             $request->filled('telegram_bot')
         );
     }
@@ -53,11 +53,7 @@ class LoginController extends Controller
     {
         $user = $this->guard()->getLastAttempted();
         if($user && $this->guard()->getProvider()->validateCredentials($user, $this->credentials($request))) {
-            if(!$request->input('telegram_bot')) {
-                $messages = ['telegram_bot' => trans('auth.bot')];
-            } else {
-                $messages = ['telegram_bot' => trans('auth.bot_permissions')];
-            }
+            $messages = ['telegram_bot' => trans('auth.bot')];
         } else {
             $messages = [$this->username() => trans('auth.failed')];
         }

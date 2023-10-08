@@ -16,7 +16,7 @@ return [
     'failed' => 'These credentials do not match our records.',
     'password' => 'The provided password is incorrect.',
     'throttle' => 'Too many login attempts. Please try again in :seconds seconds.',
-    'bot' => 'You must choose the bot',
+    'bot' => 'There is no bots for you. Ask the site owner',
     'bot_permissions' => 'You do not have permissions to this bot',
 
 ];

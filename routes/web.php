@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/', function () {
         return redirect('/message');
     });
+
+    Route::get('/bot-switch/{bot}', \App\Http\Controllers\BotSwitchController::class)->name('bot_switch');
 });
 
 Route::get('/language/{lang}', [App\Http\Controllers\LanguageController::class, 'index'])->name('language');

@@ -3,18 +3,18 @@
         @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
             @if(auth()->user()->hasRole('supervisor'))
                 <li class="nav-item">
-                    <a class="nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">{{ __('menu.bots') }}</a>
+                    <a class="text-warning-emphasis nav-link{{ request()->segment(1) == 'bot' ? ' active' : '' }}" href="{{ route('bot.index') }}">{{ __('menu.bots') }}</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link{{ request()->segment(1) == 'user' ? ' active' : '' }}" href="{{ route('user.index') }}">{{ __('menu.users') }}</a>
+                    <a class="text-warning-emphasis nav-link{{ request()->segment(1) == 'user' ? ' active' : '' }}" href="{{ route('user.index') }}">{{ __('menu.users') }}</a>
                 </li>
-                <li class="nav-item me-3">
-                    <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">{{ __('menu.forms') }}</a>
+                <li class="nav-item me-4">
+                    <a class="text-warning-emphasis nav-link{{ request()->path() == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">{{ __('menu.forms') }}</a>
                 </li>
             @endif
             @if(session('bot'))
                 <li class="nav-item">
-                    <a class="nav-link{{ !request()->segment(1) || request()->segment(1) == 'form' ? ' active' : '' }}"  href="{{ route('form.edit', 1) }}">{{ __('menu.form') }}</a>
+                    <a class="nav-link{{ request()->segment(1) == 'form' && request()->segment(2) ? ' active' : '' }}"  href="{{ route('form.edit', 1) }}">{{ __('menu.form') }}</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link{{ request()->segment(1) == 'channel' ? ' active' : '' }}" href="{{ route('channel.index') }}">{{ __('menu.channels') }}</a>

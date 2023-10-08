@@ -3,6 +3,8 @@ return [
     'actions' => 'Действия',
     'add' => 'Добавить',
     'bot' => 'Бот',
+    'bot_chosen' => 'The bot :bot has been chosen',
+    'bot_chosen_error' => 'The bot :bot has not been chosen',
     'bot_created_without_binding' => 'Бот создан, но вебхук не привязан, проверьте правильность токена и пересохраните бота!',
     'author' => 'Автор',
     'add_date' => 'Добавить дату',

@@ -2,7 +2,6 @@
 return [
     'actions' => 'Actions',
     'add' => 'Add',
-    'bot_created_without_binding' => 'The bot has been created but the Webhook hasn\'t been assigned. Check the token and update the bot!',
     'add_channel' => 'Add channel',
     'add_date' => 'Add date',
     'add_post' => '🔖 Add post',
@@ -12,6 +11,9 @@ return [
     'author' => 'Author',
     'author_list' => 'Author list',
     'bot' => 'Bot',
+    'bot_chosen' => 'The bot :bot has been chosen',
+    'bot_chosen_error' => 'The bot :bot has not been chosen',
+    'bot_created_without_binding' => 'The bot has been created but the Webhook hasn\'t been assigned. Check the token and update the bot!',
     'channels' => 'Channels',
     'channel_name' => 'Channel Name',
     'code' => 'Code',
