@@ -18,6 +18,7 @@ class TelegramChannel extends Model
         'tg_id',
         'name',
         'description',
+        'telegram_bot_id'
     ];
 
     public function places() : HasMany {

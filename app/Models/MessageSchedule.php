@@ -49,7 +49,9 @@ class MessageSchedule extends Model
         return $query
             ->when(
                 $filters['search'] ?? false,
-                fn ($query, $value) => $query->where('name', 'like', '%'.$value.'%')->orWhere('email', 'like', '%'.$value.'%')
+                fn ($query, $value) => $query->whereHas('message',
+                    fn($q) => $q->where('text', 'like', "%$value%")
+                )
             )
             ->when(
                 $filters['telegram_bot'] ?? false,

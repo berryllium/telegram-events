@@ -2,12 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Form;
+use App\Models\Author;
 use App\Models\TelegramChannel;
 use Illuminate\Http\Request;
 
 class TelegramChannelController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(TelegramChannel::class, 'channel');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -30,12 +34,15 @@ class TelegramChannelController extends Controller
      */
     public function store(Request $request)
     {
-        TelegramChannel::create($request->validate([
+        $data = $request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'description' => 'max:1000',
-            'telegram_bot_id' => session('bot')
-        ]));
+        ]);
+        $data['telegram_bot_id'] = session('bot');
+
+        TelegramChannel::create($data);
+
         return redirect(route('channel.index'))->with('success', __('webapp.record_added'));
     }
 
@@ -66,7 +73,6 @@ class TelegramChannelController extends Controller
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'description' => 'max:1000',
-            'telegram_bot_id' => session('bot')
         ]));
         return back()->with('success', __('webapp.record_updated'));
     }

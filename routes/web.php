@@ -24,17 +24,13 @@ Route::middleware('auth')->group(function(){
     Route::resource('/bot', \App\Http\Controllers\TelegramBotController::class);
     Route::resource('/place', \App\Http\Controllers\PlaceController::class);
     Route::resource('/message', \App\Http\Controllers\MessageController::class)->except(['create', 'store']);
-    Route::resource('/message_schedule', \App\Http\Controllers\MessageScheduleController::class)->except(['create', 'store']);
+    Route::resource('/message_schedule', \App\Http\Controllers\MessageScheduleController::class)->except(['create', 'store', 'index']);
     Route::resource('/author', \App\Http\Controllers\AuthorController::class);
     Route::resource('/dictionary', \App\Http\Controllers\DictionaryController::class);
-    Route::get('/', function () {
-        return redirect('/message');
-    });
-
+    Route::get('/', fn() => redirect('/message'));
     Route::get('/bot-switch/{bot}', \App\Http\Controllers\BotSwitchController::class)->name('bot_switch');
 });
 
 Route::get('/language/{lang}', [App\Http\Controllers\LanguageController::class, 'index'])->name('language');
-
 Route::get('/telegram/webapp/{telegram_bot}', [\App\Http\Controllers\WebApp\TelegramWebAppController::class, 'index'])->name('webapp');
 Route::post('/telegram/webapp/{telegram_bot}', [\App\Http\Controllers\WebApp\TelegramWebAppController::class, 'handleForm'])->name('webapp');

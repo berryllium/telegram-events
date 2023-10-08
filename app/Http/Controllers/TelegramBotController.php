@@ -9,6 +9,11 @@ use TelegramBot\Api\BotApi;
 
 class TelegramBotController extends Controller
 {
+
+    public function __construct() {
+        $this->authorizeResource(TelegramBot::class, 'bot');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -57,7 +62,7 @@ class TelegramBotController extends Controller
     /**
      * Show the bot for editing the specified resource.
      */
-    public function edit(Telegrambot $bot)
+    public function edit(Telegrambot $bot, Request $request)
     {
         return view('bot/edit', [
             'bot' => $bot

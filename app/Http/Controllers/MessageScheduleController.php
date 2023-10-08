@@ -9,12 +9,16 @@ use Illuminate\Support\Carbon;
 
 class MessageScheduleController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(MessageSchedule::class, 'message_schedule');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index(Message $message)
     {
-        return view('schedule', ['msg' => $message]);
+        //
     }
 
     /**

@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Form extends Model
 {
@@ -23,7 +24,7 @@ class Form extends Model
         return $this->hasMany(Field::class);
     }
 
-    public function bot() : BelongsTo {
-        return $this->belongsTo(TelegramBot::class);
+    public function bot() : HasOne {
+        return $this->hasOne(TelegramBot::class);
     }
 }

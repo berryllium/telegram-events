@@ -8,6 +8,10 @@ use Illuminate\Http\Request;
 
 class DictionaryController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Dictionary::class, 'dictionary');
+    }
+
     /**
      * Display a listing of the resource.
      */

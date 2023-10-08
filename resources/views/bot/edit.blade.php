@@ -51,6 +51,6 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">{{ __('webapp.create') }}</button>
+        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection

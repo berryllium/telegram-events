@@ -17,7 +17,7 @@ class Place extends Model
         'description',
     ];
 
-    public function bot() : BelongsTo {
+    public function telegram_bot() : BelongsTo {
         return $this->belongsTo(TelegramBot::class);
     }
 

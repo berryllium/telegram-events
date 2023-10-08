@@ -5,12 +5,15 @@ namespace App\Http\Controllers;
 use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageSchedule;
-use App\Models\TelegramBot;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Message::class, 'message');
+    }
+
     /**
      * Display a listing of the resource.
      */

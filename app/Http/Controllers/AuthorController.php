@@ -9,6 +9,10 @@ use Illuminate\Http\Request;
 
 class AuthorController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Author::class, 'author');
+    }
+
     /**
      * Display a listing of the resource.
      */

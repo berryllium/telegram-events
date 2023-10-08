@@ -13,9 +13,11 @@
                 </li>
             @endif
             @if(session('bot'))
-                <li class="nav-item">
-                    <a class="nav-link{{ request()->segment(1) == 'form' && request()->segment(2) ? ' active' : '' }}"  href="{{ route('form.edit', 1) }}">{{ __('menu.form') }}</a>
-                </li>
+                @if($form = \App\Models\TelegramBot::find(session('bot'))?->form?->id)
+                    <li class="nav-item">
+                        <a class="nav-link{{ request()->segment(1) == 'form' && request()->segment(2) ? ' active' : '' }}"  href="{{ route('form.edit', $form) }}">{{ __('menu.form') }}</a>
+                    </li>
+                @endif
                 <li class="nav-item">
                     <a class="nav-link{{ request()->segment(1) == 'channel' ? ' active' : '' }}" href="{{ route('channel.index') }}">{{ __('menu.channels') }}</a>
                 </li>

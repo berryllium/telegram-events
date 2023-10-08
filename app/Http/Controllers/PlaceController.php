@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Form;
 use App\Models\Place;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 
 class PlaceController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Place::class, 'place');
+    }
+
     /**
      * Display a listing of the resource.
      */

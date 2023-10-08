@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Dictionary;
 use App\Models\Field;
 use App\Models\Form;
 use Illuminate\Http\Request;
 
 class FieldController extends Controller
 {
+    public function __construct() {
+        $this->authorizeResource(Field::class, 'field');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -40,7 +43,7 @@ class FieldController extends Controller
                 ])
             )
         );
-        return redirect(route('form.index', ['form' => $form]))->with('success', __('webapp.record_added'));
+        return redirect(route('form.edit', ['form' => $form]))->with('success', __('webapp.record_added'));
     }
 
     /**
@@ -85,6 +88,6 @@ class FieldController extends Controller
     public function destroy(Form $form, Field $field)
     {
         $field->delete();
-        return redirect(route('form.index', ['form' => $form]))->with('success', __('webapp.record_deleted'));
+        return redirect(route('form.edit', ['form' => $form]))->with('success', __('webapp.record_deleted'));
     }
 }
