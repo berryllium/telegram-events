@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Role;
-use App\Models\TelegramChannel;
+use App\Models\Channel;
 use Illuminate\Database\Seeder;
 
 class RoleSeeder extends Seeder

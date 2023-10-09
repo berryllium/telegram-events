@@ -74,7 +74,7 @@ class PlaceController extends Controller
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
         ]));
-        $place->telegram_channels()->sync($request->input('channels'));
+        $place->channels()->sync($request->input('channels'));
         return back()->with('success', __('webapp.record_updated'));
     }
 

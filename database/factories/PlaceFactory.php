@@ -6,7 +6,7 @@ use App\Models\Place;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TelegramChannel>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Channel>
  */
 class PlaceFactory extends Factory
 {
@@ -28,7 +28,7 @@ class PlaceFactory extends Factory
     public function configure()
     {
         return $this->afterCreating(function (Place $place) {
-            $place->telegram_channels()->sync([1]);
+            $place->channels()->sync([1]);
         });
     }
 }

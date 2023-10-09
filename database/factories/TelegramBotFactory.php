@@ -5,7 +5,7 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\TelegramChannel>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Channel>
  */
 class TelegramBotFactory extends Factory
 {

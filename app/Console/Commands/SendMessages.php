@@ -3,9 +3,12 @@
 namespace App\Console\Commands;
 
 use App\Facades\TechBotFacade;
+use App\Models\MessageFile;
 use App\Models\MessageSchedule;
 use App\Models\TelegramBot;
+use App\Services\VKService;
 use CURLFile;
+use DigitalStar\vk_api\vk_api;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Storage;
 use TelegramBot\Api\BotApi;
@@ -53,16 +56,32 @@ class SendMessages extends Command
 
         foreach ($messageSchedules as $messageSchedule) {
             try {
-                foreach ($messageSchedule->telegram_channels as $channel) {
-                    $bot = $messageSchedule->message->telegram_bot;
-                    if(!(isset($botApis[$bot->id]))) {
-                        $botApis[$bot->id] = new BotApi($bot->api_token);
-                    }
-                    if($messageSchedule->message->message_files->count()) {
-                        $mediaArr = TechBotFacade::createMedia($messageSchedule->message);
-                        $botApis[$bot->id]->sendMediaGroup($channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
-                    } else {
-                        $botApis[$bot->id]->sendMessage($channel->tg_id, $messageSchedule->message->text, 'HTML');
+                foreach ($messageSchedule->channels as $channel) {
+                    if($channel->type == 'tg') {
+                        $bot = $messageSchedule->message->telegram_bot;
+                        if(!(isset($botApis[$bot->id]))) {
+                            $botApis[$bot->id] = new BotApi($bot->api_token);
+                        }
+                        if($messageSchedule->message->message_files->count()) {
+                            $mediaArr = TechBotFacade::createMedia($messageSchedule->message);
+                            $botApis[$bot->id]->sendMediaGroup($channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+                        } else {
+                            $botApis[$bot->id]->sendMessage($channel->tg_id, $messageSchedule->message->text, 'HTML');
+                        }
+                    } elseif($channel->type == 'vk') {
+                        $vk = new VKService(config('app.vk_token'),$channel->tg_id,"");
+                        if($messageSchedule->message->message_files->count()) {
+                            foreach ($messageSchedule->message->message_files as $file) {
+                                /** @var MessageFile $file */
+                                if ($file->type == 'image') {
+                                    $vk->addPhoto($file->path);
+                                } elseif ($file->type == 'video') {
+                                    $vk->addVideo($file->path);
+                                }
+                            }
+                        }
+                        $vk->Post(strip_tags($messageSchedule->message->text));
+                        sleep(1);
                     }
                 }
                 $messageSchedule->status = 'success';

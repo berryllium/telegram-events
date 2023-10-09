@@ -20,7 +20,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/user', \App\Http\Controllers\UserController::class);
     Route::resource('/form', \App\Http\Controllers\FormController::class);
     Route::resource('/form/{form}/field', \App\Http\Controllers\FieldController::class);
-    Route::resource('/channel', \App\Http\Controllers\TelegramChannelController::class);
+    Route::resource('/channel', \App\Http\Controllers\ChannelController::class);
     Route::resource('/bot', \App\Http\Controllers\TelegramBotController::class);
     Route::resource('/place', \App\Http\Controllers\PlaceController::class);
     Route::resource('/message', \App\Http\Controllers\MessageController::class)->except(['create', 'store']);

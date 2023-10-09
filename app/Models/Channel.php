@@ -8,15 +8,21 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
-class TelegramChannel extends Model
+class Channel extends Model
 {
     use HasFactory;
 
-    protected $table = 'telegram_channels';
+    public static $types = [
+        'tg',
+        'vk'
+    ];
+
+    protected $table = 'channels';
 
     protected $fillable = [
         'tg_id',
         'name',
+        'type',
         'description',
         'telegram_bot_id'
     ];

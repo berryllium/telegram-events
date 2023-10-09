@@ -3,13 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Author;
-use App\Models\TelegramChannel;
+use App\Models\Channel;
 use Illuminate\Http\Request;
 
-class TelegramChannelController extends Controller
+class ChannelController extends Controller
 {
     public function __construct() {
-        $this->authorizeResource(TelegramChannel::class, 'channel');
+        $this->authorizeResource(Channel::class, 'channel');
     }
 
     /**
@@ -18,7 +18,7 @@ class TelegramChannelController extends Controller
     public function index()
     {
 
-        return view('channel/index', ['channels' => TelegramChannel::query()->where('telegram_bot_id', session('bot'))->paginate(20)]);
+        return view('channel/index', ['channels' => Channel::query()->where('telegram_bot_id', session('bot'))->paginate(20)]);
     }
 
     /**
@@ -37,11 +37,12 @@ class TelegramChannelController extends Controller
         $data = $request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
+            'type' => 'required|in:tg,vk',
             'description' => 'max:1000',
         ]);
         $data['telegram_bot_id'] = session('bot');
 
-        TelegramChannel::create($data);
+        Channel::create($data);
 
         return redirect(route('channel.index'))->with('success', __('webapp.record_added'));
     }
@@ -57,7 +58,7 @@ class TelegramChannelController extends Controller
     /**
      * Show the channel for editing the specified resource.
      */
-    public function edit(TelegramChannel $channel)
+    public function edit(Channel $channel)
     {
         return view('channel/edit', [
             'channel' => $channel
@@ -67,11 +68,12 @@ class TelegramChannelController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, TelegramChannel $channel)
+    public function update(Request $request, Channel $channel)
     {
         $channel->update($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
+            'type' => 'required|in:tg,vk',
             'description' => 'max:1000',
         ]));
         return back()->with('success', __('webapp.record_updated'));
@@ -80,7 +82,7 @@ class TelegramChannelController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(TelegramChannel $channel)
+    public function destroy(Channel $channel)
     {
         $channel->delete();
         return redirect(route('channel.index'))->with('success', __('webapp.record_deleted'));

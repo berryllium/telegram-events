@@ -58,7 +58,7 @@ class TelegramRequestHandler
 
                 if(isset($message->data->place)) {
                     $place = Place::find($message->data->place);
-                    $channels = $place->telegram_channels;
+                    $channels = $place->channels;
 
                     if($author->places()->count() < 1) {
                         $author->places()->sync($message->data->place);
@@ -71,7 +71,7 @@ class TelegramRequestHandler
                             $messageSchedule = $message->message_schedules()->create([
                                 'sending_date' => $date
                             ]);
-                            $messageSchedule->telegram_channels()->attach($channels);
+                            $messageSchedule->channels()->attach($channels);
                         }
                     }
                 } else {

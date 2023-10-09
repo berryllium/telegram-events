@@ -3,7 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\TelegramBot;
-use App\Models\TelegramChannel;
+use App\Models\Channel;
 use Illuminate\Database\Seeder;
 
 class TelegramBotSeeder extends Seeder

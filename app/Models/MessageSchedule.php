@@ -36,8 +36,8 @@ class MessageSchedule extends Model
         return $map[$this->status] ?? null;
     }
 
-    public function telegram_channels() {
-        return $this->belongsToMany(TelegramChannel::class);
+    public function channels() {
+        return $this->belongsToMany(Channel::class);
     }
 
     public function message() {

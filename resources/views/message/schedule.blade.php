@@ -16,7 +16,7 @@
             <td>{{ $schedule->status == 'success' ? $schedule->updated_at : '' }}</td>
             <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
             <td>
-                @foreach($schedule->telegram_channels as $channel)
+                @foreach($schedule->channels as $channel)
                     <p>{{ $channel->name }}</p>
                 @endforeach
             </td>

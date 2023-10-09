@@ -64,5 +64,5 @@
     </form>
 
     <h3 class="mt-4">{{ __('webapp.messages.schedule') }}</h3>
-    @include('message.schedule', ['schedules' => $msg->message_schedules()->with('telegram_channels')->get()])
+    @include('message.schedule', ['schedules' => $msg->message_schedules()->with('channels')->get()])
 @endsection

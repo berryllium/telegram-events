@@ -16,7 +16,7 @@ class DatabaseSeeder extends Seeder
              RoleSeeder::class,
              UserSeeder::class,
              TelegramBotSeeder::class,
-             TelegramChannelSeeder::class,
+             ChannelSeeder::class,
              DictionarySeeder::class,
              FormSeeder::class,
              PlaceSeeder::class,

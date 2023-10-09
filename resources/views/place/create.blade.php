@@ -20,7 +20,7 @@
         <div class="mb-3">
             <label for="channels" class="form-label">{{ __('webapp.channels') }}</label>
             <select class="form-select" id="channels" name="channels[]" multiple>
-                @foreach(\App\Models\TelegramChannel::where('telegram_bot_id', session('bot'))->get() as $channel)
+                @foreach(\App\Models\Channel::where('telegram_bot_id', session('bot'))->get() as $channel)
                     <option value="{{ $channel->id }}" {{ old('channels') && in_array($channel->id, old('channels')) ? 'selected' : ''}}>
                         {{ $channel->name }}
                     </option>

@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('telegram_channels', function (Blueprint $table) {
+        Schema::create('channels', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('tg_id')->comment('ID телеграм канала');
             $table->foreignIdFor(\App\Models\TelegramBot::class)->default(1);
             $table->string('name');
+            $table->enum('type', ['tg', 'vk']);
             $table->text('description')->nullable();
             $table->timestamps();
         });
@@ -26,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('telegram_channels');
+        Schema::dropIfExists('channels');
     }
 };
