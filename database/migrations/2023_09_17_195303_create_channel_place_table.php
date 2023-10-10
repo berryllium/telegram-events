@@ -11,9 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('message_schedule_channel', function (Blueprint $table) {
+        Schema::create('channel_place', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\MessageSchedule::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\Place::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Channel::class)->constrained()->onDelete('cascade');
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('message_schedule_channel');
+        Schema::dropIfExists('channel_place');
     }
 };

@@ -69,8 +69,11 @@ class VKService
         $this->sendlog("VK: Добавление фото: " . print_r($request_params,true));
 
         $upload_server = json_decode(file_get_contents("https://api.vk.com/method/photos.getWallUploadServer?" . http_build_query($request_params)), true);
-
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
+
+        if(isset($upload_server['error'])) {
+            throw new \Exception('VK error: ' . $upload_server['error']['error_code']);
+        }
 
         $upload_url = $upload_server['response']['upload_url'];
 

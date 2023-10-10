@@ -5,15 +5,34 @@
         @csrf
         @method('put')
         <div class="mb-3">
-            <label for="status" class="form-label">{{ __('webapp.status') }}</label>
-            <select id="status" name="status" class="form-select">
-                @foreach(\App\Models\MessageSchedule::$statuses as $status => $statusName)
-                    <option value="{{ $status }}" {{ $status == $schedule->status ? 'selected' : '' }}>{{ __("webapp.$status") }}</option>
+            <table class="table table-striped d-block d-md-table overflow-x-auto">
+                <tr>
+                    <th>{{ __('webapp.channels') }}</th>
+                    <th>{{ __('webapp.status') }}</th>
+                    <th>{{ __('webapp.error') }}</th>
+                    <th>{{ __('webapp.retry') }}</th>
+                </tr>
+                @foreach($schedule->channels as $channel)
+                    <tr>
+                        <td>{{ $channel->name }}</td>
+                        <td>
+                            @if($channel->pivot->error)
+                                {{ __('webapp.error') }}
+                            @elseif($channel->pivot->sent)
+                                {{ __('webapp.success') }}
+                            @else
+                                {{ __('webapp.process') }}
+                            @endif
+                        </td>
+                        <td>{{ $channel->pivot->error }}</td>
+                        <td>
+                            @if($channel->pivot->error)
+                                <label><input type="checkbox" name="retry[]" value="{{ $channel->id }}"></label>
+                            @endif
+                        </td>
+                    </tr>
                 @endforeach
-            </select>
-            @error('status')
-            <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
+            </table>
         </div>
         <div class="mb-3">
             <label for="sending_date" class="form-label">{{ __('webapp.sending_time') }}</label>

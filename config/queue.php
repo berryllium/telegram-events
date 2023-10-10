@@ -14,6 +14,8 @@ return [
     */
 
     'default' => env('QUEUE_CONNECTION', 'sync'),
+    'vk' => env('VK_CONNECTION', 'vk'),
+    'tg' => env('VK_CONNECTION', 'tg'),
 
     /*
     |--------------------------------------------------------------------------
@@ -32,6 +34,22 @@ return [
 
         'sync' => [
             'driver' => 'sync',
+        ],
+
+        'vk' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'vk',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
+        'tg' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'tg',
+            'retry_after' => 90,
+            'after_commit' => false,
         ],
 
         'database' => [

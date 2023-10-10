@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Jobs\ProcessMessage;
 use App\Models\Message;
 use App\Models\MessageSchedule;
 use Illuminate\Http\Request;
@@ -59,11 +60,19 @@ class MessageScheduleController extends Controller
     public function update(Request $request, MessageSchedule $messageSchedule)
     {
         $data = $request->validate([
-            'status' => 'in:' . implode(',', array_keys(MessageSchedule::$statuses)),
+            'status' => 'in:' . implode(',', array_keys(MessageSchedule::$statusMap)),
             'sending_date' => ''
         ]);
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
+
+        if($retry = $request->get('retry')) {
+            foreach ($retry as $channel_id) {
+                $channel = $messageSchedule->channels()->find($channel_id);
+                ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
+            }
+        }
+
         return redirect(route('message.edit', $messageSchedule->message))->with('success', __('webapp.record_updated'));
     }
 

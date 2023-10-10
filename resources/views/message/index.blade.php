@@ -2,7 +2,7 @@
 @section('title', __('webapp.messages.title'))
 @section('content')
 
-    @include('message.component.filter', ['statuses' => $statuses])
+    @include('message.component.filter')
 
     <table class="table table-striped d-block d-md-table overflow-x-auto">
         <tr>

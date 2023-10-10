@@ -16,28 +16,24 @@ class MessageSchedule extends Model
         'error_text'
     ];
 
-    public static $statuses = [
-        'wait' => 'Ожидание',
-        'error' => 'Ошибка',
-        'success' => 'Отправлено',
+    public static array $statusMap = [
+        'wait' => 'warning',
+        'process' => 'info',
+        'error' => 'danger',
+        'success' => 'success',
     ];
 
     public function getStatusNameAttribute()
     {
-        return __($this->status);
+        return __('webapp.'.$this->status);
     }
 
     public function getStatusClassAttribute() {
-        $map = [
-            'wait' => 'warning',
-            'error' => 'danger',
-            'success' => 'success'
-        ];
-        return $map[$this->status] ?? null;
+        return self::$statusMap[$this->status] ?? null;
     }
 
     public function channels() {
-        return $this->belongsToMany(Channel::class);
+        return $this->belongsToMany(Channel::class)->withPivot(['sent', 'error']);
     }
 
     public function message() {

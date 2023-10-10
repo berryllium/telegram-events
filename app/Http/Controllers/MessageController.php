@@ -26,8 +26,6 @@ class MessageController extends Controller
         $filters['telegram_bot'] = session('bot');
 
         return view('message.index', [
-            'statuses' => MessageSchedule::$statuses,
-            'status_class' => array_combine(array_keys(MessageSchedule::$statuses), ['warning', 'danger', 'success']),
             'schedules' => MessageSchedule::with('message.author')->filter($filters)->paginate(20),
         ]);
     }

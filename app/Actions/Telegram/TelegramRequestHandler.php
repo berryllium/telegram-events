@@ -23,6 +23,9 @@ class TelegramRequestHandler
             Log::info('Telegram message ', $data);
 
             $bot = TelegramBot::query()->where('code', '=', $token)->first();
+            if(!isset($data['message'])) {
+                return response()->json(['status' => 'ok']);
+            }
 
             $chat_id = $data['message']['chat']['id'] ?? null;
             $sender = $data['message']['from'] ?? null;

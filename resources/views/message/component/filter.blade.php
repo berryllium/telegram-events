@@ -9,8 +9,8 @@
         <label class="visually-hidden" for="autoSizingSelect"></label>
         <select class="form-select" id="autoSizingSelect" name="status">
             <option selected value="">{{ __('webapp.status') }}</option>
-            @foreach($statuses as $id => $status)
-                <option value="{{ $id }}" {{ $id == request('status') ? 'selected' : '' }}>{{ __("webapp.$id") }}</option>
+            @foreach(\App\Models\MessageSchedule::$statusMap as $status => $class)
+                <option value="{{ $status }}" {{ $status == request('status') ? 'selected' : '' }}>{{ __("webapp.$status") }}</option>
             @endforeach
         </select>
     </div>

@@ -11,10 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('place_channel', function (Blueprint $table) {
+        Schema::create('channel_message_schedule', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(\App\Models\Place::class)->constrained()->onDelete('cascade');
+            $table->foreignIdFor(\App\Models\MessageSchedule::class)->constrained()->onDelete('cascade');
             $table->foreignIdFor(\App\Models\Channel::class)->constrained()->onDelete('cascade');
+            $table->boolean('sent')->default(false);
+            $table->text('error')->nullable()->default(null);
             $table->timestamp('created_at')->useCurrent();
             $table->timestamp('updated_at')->useCurrent();
         });
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('place_channel');
+        Schema::dropIfExists('channel_message_schedule');
     }
 };

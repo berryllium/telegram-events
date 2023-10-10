@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -33,5 +34,9 @@ class Channel extends Model
 
     public function telegram_bot() : BelongsTo {
         return $this->belongsTo(TelegramBot::class);
+    }
+
+    public function message_schedule() : BelongsToMany {
+        return $this->belongsToMany(MessageSchedule::class)->withPivot(['sent', 'error']);
     }
 }
