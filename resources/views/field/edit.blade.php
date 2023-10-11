@@ -14,7 +14,8 @@
         </div>
         <div class="mb-3">
             <label for="code" class="form-label">{{ __('webapp.code') }}</label>
-            <input type="text" class="form-control" id="code" name="code" value="{{ $field->code }}">
+            <input type="text" class="form-control" id="code" name="code" value="{{ $field->code }}"
+                    {{ $field->code == 'place' ? 'disabled' : '' }}>
             @error('code')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror

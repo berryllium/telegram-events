@@ -27,4 +27,16 @@ class Form extends Model
     public function bot() : HasOne {
         return $this->hasOne(TelegramBot::class);
     }
+
+    protected static function boot()
+    {
+        parent::boot();
+        static::created(function ($model){
+            $model->fields()->create([
+                'name' => __('webapp.place'),
+                'code' => 'place',
+                'type' => 'place',
+            ]);
+        });
+    }
 }

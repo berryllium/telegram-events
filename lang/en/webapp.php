@@ -90,6 +90,7 @@ return [
         'add' => 'Add author',
     ],
     'places' => [
+        'place' => 'Place',
         'places' => 'Related places',
         'list' => 'Places list',
         'add' => 'Add place',
