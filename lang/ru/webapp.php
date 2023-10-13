@@ -28,6 +28,7 @@ return [
     'confirm_password' => 'Подтверждение пароля',
     'create' => 'Создать',
     'delete' => 'Удалить',
+    'deletion_confirm' => 'Вы уверены, что хотите удалить запись?',
     'description' => 'Описание',
     'email' => 'Email',
     'error' => 'Ошибка',

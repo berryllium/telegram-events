@@ -12,6 +12,12 @@ window.addEventListener('load', function(){
         $(this).prev().after($(this).prev().clone())
     })
 
+    $('[data-action="delete"]').submit(function(){
+        if(!confirm(($(this).data('text')) ? ($(this).data('text')) : 'Delete?')) {
+            return false
+        }
+    })
+
 
     ClassicEditor
         .create( document.querySelector( '[data-editor="ck"]' ), {
@@ -24,6 +30,5 @@ window.addEventListener('load', function(){
         .catch( error => {
             console.error( 'There was a problem initializing the editor.', error );
         } );
-
 
 })

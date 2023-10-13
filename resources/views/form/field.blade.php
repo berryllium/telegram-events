@@ -16,7 +16,7 @@
                     <i class="bi bi-pen" role="button"></i>
                 </a>
                 @if($field->code !='place')
-                    <form action="{{ route('field.destroy', [$form, $field]) }}" method="post" class="d-inline m-1" data-action="delete">
+                    <form action="{{ route('field.destroy', [$form, $field]) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
                         @csrf
                         @method('delete')
                         <button class="btn btn-danger" type="submit">

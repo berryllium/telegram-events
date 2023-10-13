@@ -25,7 +25,7 @@
                 <a href="{{ route('message_schedule.edit', $schedule) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>
                 </a>
-                <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete">
+                <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
                     @csrf
                     @method('delete')
                     <button class="btn btn-danger" type="submit">

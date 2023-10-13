@@ -21,7 +21,7 @@
                 <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
-                        <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete">
+                        <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger" type="submit">

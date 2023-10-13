@@ -24,6 +24,7 @@ return [
     'confirm_password' => 'Confirm Password',
     'create' => 'Create',
     'delete' => 'Delete',
+    'deletion_confirm' => 'Are you sure you want to delete the entry?',
     'description' => 'Description',
     'dictionary' => 'Dictionary',
     'edit_channel' => 'Edit Channel',
