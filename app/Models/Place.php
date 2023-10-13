@@ -15,6 +15,8 @@ class Place extends Model
         'name',
         'address',
         'description',
+        'working_hours',
+        'additional_info',
     ];
 
     public function telegram_bot() : BelongsTo {

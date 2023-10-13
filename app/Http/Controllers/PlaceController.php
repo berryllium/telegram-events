@@ -39,6 +39,8 @@ class PlaceController extends Controller
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
+            'working_hours' => '',
+            'additional_info' => '',
         ]);
 
         TelegramBot::find(session('bot'))->places()->create($data);
@@ -73,6 +75,8 @@ class PlaceController extends Controller
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
             'description' => 'max:1000',
+            'working_hours' => '',
+            'additional_info' => '',
         ]));
         $place->channels()->sync($request->input('channels'));
         return back()->with('success', __('webapp.record_updated'));

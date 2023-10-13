@@ -11,6 +11,7 @@
                     <th>{{ __('webapp.status') }}</th>
                     <th>{{ __('webapp.error') }}</th>
                     <th>{{ __('webapp.retry') }}</th>
+                    <th>{{ __('webapp.delete') }}</th>
                 </tr>
                 @foreach($schedule->channels as $channel)
                     <tr>
@@ -27,7 +28,12 @@
                         <td>{{ $channel->pivot->error }}</td>
                         <td>
                             @if($channel->pivot->error)
-                                <label><input type="checkbox" name="retry[]" value="{{ $channel->id }}"></label>
+                                <label><input type="radio" name="act[{{ $channel->id }}][retry]"></label>
+                            @endif
+                        </td>
+                        <td>
+                            @if($channel->pivot->error)
+                                <label><input type="radio" name="act[{{ $channel->id }}][delete]"></label>
                             @endif
                         </td>
                     </tr>

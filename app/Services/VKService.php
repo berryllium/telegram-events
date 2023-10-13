@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Facades\TechBotFacade;
 use CURLFile;
 
 class VKService
@@ -178,13 +179,17 @@ class VKService
         $this->sendlog("VK: Публикация поста: " . print_r($post_params,true));
         $json = file_get_contents("https://api.vk.com/method/wall.post?" . http_build_query($post_params));
         $response = json_decode($json, true);
+        $this->sendlog("Ответ от VK: " . print_r($json,true));
         if(isset($response['error'])) {
-            throw new \Exception($response['error_msg']);
+            if(isset($response['error']['error_msg']) && $response['error']['error_msg']) {
+                throw new \Exception($response['error']['error_msg']);
+            } else {
+                throw new \Exception(print_r($response, 1));
+            }
         }
         $this->attach = '';
         $gr_id = $this->group_id;
         $post_id  = $response['response']['post_id'];
-        $this->sendlog("Ответ от VK: " . print_r($json,true));
         $this->sendlog("VK: Итоговые переменные gr_id: " . $gr_id . " post_id: " . $post_id);
         $this->sendlog("Запись успешно опубликована! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>");
         return "Бот опубликовал автоматически запись в группе вконтакте! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>";

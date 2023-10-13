@@ -34,10 +34,20 @@ class TelegramFormHandler
                 }
             }
 
+            if(isset($fields['place']) && $fields['place']) {
+                /** @var Place $place */
+                $place = $fields['place'];
+                $fields['place_address'] = $place->address;
+                $fields['place_working_hours'] = $place->working_hours;
+                $fields['place_additional_info'] = $place->additional_info;
+                $fields['place'] = $place->name;
+            }
+
             $text = Blade::render($telegramBot->form->template, $fields);
+
             $validator = Validator::make(
                 ['text' => $text],
-                ['text' => 'max:999'],
+                ['text' => 'max:1023'],
                 ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - 1000])],
             );
             if ($validator->fails()) {
@@ -74,7 +84,7 @@ class TelegramFormHandler
         } elseif($field->type == 'checkbox') {
             return $value ? 'Да' : 'Нет';
         }  elseif($field->type == 'place') {
-            return Place::query()->find($value)->name ?? null;
+            return Place::query()->find($value) ?? null;
         } elseif($field->type == 'address') {
             return Place::query()->find($value)->address ?? null;
         }

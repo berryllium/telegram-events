@@ -19,7 +19,6 @@ class FormFactory extends Factory
     public function definition(): array
     {
         $template = <<<TEMPLATE
-<b>{{ \$string }}</b>
 <code>{{ \$place }}</code>
 <i>{{ \$address }}</i>
 TEMPLATE;
@@ -29,22 +28,5 @@ TEMPLATE;
             'description' => fake()->realText(),
             'template' => $template,
         ];
-    }
-
-    public function configure()
-    {
-        return $this->afterCreating(function (Form $form) {
-            foreach(array_keys(Field::$types) as $type) {
-                $arr = [
-                    'name' => $type,
-                    'code' => $type,
-                    'type' => $type,
-                ];
-                if($type == 'select') {
-                    $arr['dictionary_id'] = 1;
-                }
-                $form->fields()->create($arr);
-            }
-        });
     }
 }

@@ -33,9 +33,14 @@ class Form extends Model
         parent::boot();
         static::created(function ($model){
             $model->fields()->create([
-                'name' => __('webapp.place'),
+                'name' => __('webapp.places.place'),
                 'code' => 'place',
                 'type' => 'place',
+            ]);
+            $model->fields()->create([
+                'name' => __('webapp.address'),
+                'code' => 'address',
+                'type' => 'address',
             ]);
         });
     }

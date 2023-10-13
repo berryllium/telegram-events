@@ -66,10 +66,14 @@ class MessageScheduleController extends Controller
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
 
-        if($retry = $request->get('retry')) {
-            foreach ($retry as $channel_id) {
-                $channel = $messageSchedule->channels()->find($channel_id);
-                ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
+        if($act = $request->get('act')) {
+            foreach ($act as $channel_id => $actions) {
+                if(isset($actions['delete'])) {
+                    $messageSchedule->channels()->detach($channel_id);
+                } elseif(isset($actions['retry'])) {
+                    $channel = $messageSchedule->channels()->find($channel_id);
+                    ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
+                }
             }
         }
 

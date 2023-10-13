@@ -2,6 +2,7 @@
 return [
     'actions' => 'Actions',
     'add' => 'Add',
+    'additional_info' => 'Additional info',
     'add_channel' => 'Add channel',
     'add_date' => 'Add date',
     'add_post' => '🔖 Add post',
@@ -56,11 +57,12 @@ return [
     'title' => 'Title',
     'type' => 'Type',
     'channel_id' => 'Channel ID',
-    'trusted_author' => 'Trusted author',
+    'trusted_author' => '❗Trusted author❗',
     'update' => 'Update',
     'user' => 'User',
     'wait' => 'Wait',
     'webapp_form' => 'WebApp form',
+    'working_hours' => 'Working Hours',
     'bots' => [
         'list' => 'Telegram bots list',
         'add' => 'Add Telegram Bot',
@@ -110,7 +112,7 @@ return [
         'template' => 'Message template',
         'fields' => 'Form fields',
         'add_field' => 'Add field',
-        'notice' => 'Fields place and address is necessary, do not change their codes!',
+        'notice' => 'Fields place and address is necessary, do not change their codes! Use also place_working_hours and place_additional_info codes.',
         'form_has_bot' => 'You can\'t delete this form because in is assigned to the :bot bot',
     ],
     'fields' => [

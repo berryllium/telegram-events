@@ -19,8 +19,22 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="working_hours" class="form-label">{{ __('webapp.working_hours') }}</label>
+            <input type="text" class="form-control" id="working_hours" name="working_hours" value="{{ $place->working_hours }}">
+            @error('working_hours')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="additional_info" class="form-label">{{ __('webapp.additional_info') }}</label>
+            <textarea class="form-control" id="additional_info" name="additional_info" rows="5">{{ $place->additional_info }}</textarea>
+            @error('additional_info')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="channels" class="form-label">{{ __('webapp.channels') }}</label>
-            <select class="form-select" id="channels" name="channels[]" multiple>
+            <select class="form-select" id="channels" name="channels[]" multiple data-select="2">
                 @foreach(\App\Models\Channel::where('telegram_bot_id', session('bot'))->get() as $channel)
                     <option value="{{ $channel->id }}" {{ $place->channels->contains($channel->id) ? 'selected' : ''}}>
                         {{ $channel->name }}

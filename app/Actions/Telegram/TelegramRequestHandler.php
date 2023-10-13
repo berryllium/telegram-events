@@ -82,12 +82,12 @@ class TelegramRequestHandler
                 }
 
                 $botApi = new BotApi($bot->api_token);
-
+                $pivot = $bot->authors()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot;
                 $admin_text = str_replace(
                     ['#author_type#', '#author_link#', '#message_link#'],
                     [
-                        $author->trusted ? __('webapp.trusted_author') : __('webapp.user'),
-                        "<a href='" . route('author.edit', $author->id) ."'>" . $bot->authors()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot->title . "</a>",
+                        $pivot->trusted ? __('webapp.trusted_author') : __('webapp.user'),
+                        "<a href='" . route('author.edit', $author->id) ."'>" . $pivot->title . "</a>",
                         "<a href='" . route('message.edit', $message->id) ."'>".__('webapp.message')."</a>",
                     ],
                     "#author_type# #author_link# ".__('webapp.has_posted')." #message_link#"

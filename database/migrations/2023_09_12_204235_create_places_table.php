@@ -15,7 +15,9 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->string('address');
-            $table->text('description')->nullable();
+            $table->string('working_hours')->nullable()->default(null);
+            $table->text('additional_info')->nullable()->default(null);
+            $table->text('description')->nullable()->default(null);
             $table->foreignIdFor(\App\Models\TelegramBot::class);
             $table->timestamps();
         });

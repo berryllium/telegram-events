@@ -70,10 +70,13 @@ class FieldController extends Controller
      */
     public function update(Request $request, Form $form, Field $field)
     {
-        $field->update($request->validate([
+        $data = $request->validate([
             'name' => 'required|min:2',
-            'code' => 'required',
-        ]));
+        ]);
+        if($field->type == 'place' || $field->type == 'address') {
+            $data['code'] = $field->type;
+        }
+        $field->update($data);
 
         if($dictionary_id = (int) $request->get('dictionary_id')) {
             $field->dictionary_id = $dictionary_id;
