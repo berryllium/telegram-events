@@ -18,6 +18,7 @@ class Field extends Model
         'name',
         'code',
         'type',
+        'sort',
         'dictionary_id'
     ];
 

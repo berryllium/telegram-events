@@ -50,6 +50,7 @@ return [
     'role' => 'Role',
     'retry' => 'Retry',
     'search' => 'Search',
+    'sort' => 'Sort',
     'sending_time' => 'Sending time',
     'sending_title' => 'Sending message #:message',
     'status' => 'Status',

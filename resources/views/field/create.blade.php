@@ -24,8 +24,12 @@
                     <option value="{{ $id }}">{{ $type }}</option>
                 @endforeach
             </select>
-            @error('description')
-                <div class="form-text text-danger">{{ $message }}</div>
+        </div>
+        <div class="mb-3">
+            <label for="sort" class="form-label">{{ __('webapp.sort') }}</label>
+            <input type="number" class="form-control" id="sort" name="sort" value="{{ old('sort') }}">
+            @error('sort')
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>

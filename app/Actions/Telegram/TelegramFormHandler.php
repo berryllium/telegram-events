@@ -47,8 +47,8 @@ class TelegramFormHandler
 
             $validator = Validator::make(
                 ['text' => $text],
-                ['text' => 'max:1023'],
-                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - 1000])],
+                ['text' => 'max:2000'],
+                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - 2000])],
             );
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first()]);

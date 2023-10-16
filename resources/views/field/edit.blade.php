@@ -26,6 +26,13 @@
                 <option value="">{{ $field->typeName }}</option>
             </select>
         </div>
+        <div class="mb-3">
+            <label for="sort" class="form-label">{{ __('webapp.sort') }}</label>
+            <input type="number" class="form-control" id="sort" name="sort" value="{{ $field->sort }}">
+            @error('sort')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         @if($field->canHaveDictionary)
             <div class="mb-3">
                 <label for="dictionary_id" class="form-label">{{ __('webapp.dictionaries.dictionary') }}</label>

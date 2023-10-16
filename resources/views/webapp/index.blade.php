@@ -3,7 +3,7 @@
     @php /** @var \App\Models\Field $field */ @endphp
     <h1 class="pt-2 text-center">{{ $form->name }}</h1>
     <form id="webapp-form" type="post" action="{{ route('webapp', $bot) }}">
-        @foreach($form->fields as $k => $field)
+        @foreach($form->fields()->orderBy('sort', 'asc')->get() as $k => $field)
                 @switch($field->type)
                     @case('string')
                             <div class="form-group mb-3">
@@ -41,7 +41,7 @@
                     @case('text')
                             <div class="form-group mb-3">
                                 <label for="field-{{ $k }}">{{ $field->name }}</label>
-                                <textarea class="form-control" id="field-{{ $k }}" rows="3" name="{{ $field->code }}"></textarea>
+                                <textarea class="form-control" id="field-{{ $k }}" rows="7" name="{{ $field->code }}"></textarea>
                             </div>
                         @break
                     @case('date')
@@ -74,8 +74,8 @@
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
                             <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
-                                @foreach($places as $place)
-                                    <option value="{{ $place->id }}">{{ $place->address }}</option>
+                                @foreach($addresses as $address)
+                                    <option value="{{ $address->id }}">{{ $address->address }}</option>
                                 @endforeach
                             </select>
                         </div>

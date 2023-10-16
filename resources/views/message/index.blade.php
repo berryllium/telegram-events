@@ -16,7 +16,7 @@
         @foreach($schedules as $schedule)
             <tr>
                 <td>{{ $schedule->message->author->name }}</td>
-                <td>{{ strip_tags($schedule->message->text) }}</td>
+                <td>{{ Str::of(strip_tags($schedule->message->text))->limit(50) }}</td>
                 <td>{{ $schedule->sending_date }}</td>
                 <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
                 <td class="align-middle text-nowrap">

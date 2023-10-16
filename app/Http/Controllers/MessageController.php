@@ -22,6 +22,8 @@ class MessageController extends Controller
         $filters = $request->only([
             'search',
             'status',
+            'from',
+            'to',
         ]);
         $filters['telegram_bot'] = session('bot');
 

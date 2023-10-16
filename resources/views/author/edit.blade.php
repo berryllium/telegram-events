@@ -31,6 +31,7 @@
             @enderror
         </div>
         <div class="mb-3">
+            <input type="hidden" name="trusted" value="0">
             <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $pivot->trusted ? 'checked' : '' }}>
             <label class="form-check-label" for="trusted">{{ __('webapp.trusted_author') }}</label>
         </div>

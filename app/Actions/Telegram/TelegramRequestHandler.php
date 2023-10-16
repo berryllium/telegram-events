@@ -55,7 +55,10 @@ class TelegramRequestHandler
                 $web_app_data = json_decode($web_app_data, true);
                 $message = Message::query()->find($web_app_data['message_id']);
                 $message->author_id = $author->id;
-                $trusted = $bot->authors()->wherePivot('trusted', true)->exists();
+                $trusted = $author->telegram_bots()
+                    ->wherePivot('trusted', true)
+                    ->wherePivot('telegram_bot_id', $bot->id)
+                    ->exists();
                 $message->allowed = $trusted;
                 $message->save();
 
@@ -63,8 +66,8 @@ class TelegramRequestHandler
                     $place = Place::find($message->data->place);
                     $channels = $place->channels;
 
-                    if($author->places()->count() < 1) {
-                        $author->places()->sync($message->data->place);
+                    if($author->places()->where('telegram_bot_id', $bot->id)->count() < 1) {
+                        $author->places()->attach($message->data->place);
                     }
 
                     if($channels) {
@@ -82,7 +85,7 @@ class TelegramRequestHandler
                 }
 
                 $botApi = new BotApi($bot->api_token);
-                $pivot = $bot->authors()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot;
+                $pivot = $author->telegram_bots()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot;
                 $admin_text = str_replace(
                     ['#author_type#', '#author_link#', '#message_link#'],
                     [
@@ -106,6 +109,7 @@ class TelegramRequestHandler
                 $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id']);
             }
         } catch (\Exception $exception) {
+            Log::error($exception->getMessage(), $exception->getTrace());
             TechBotFacade::send(implode(', ', [$exception->getMessage(), $exception->getFile(), $exception->getLine()]));
         }
 

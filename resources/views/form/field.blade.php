@@ -3,14 +3,16 @@
         <th>{{ __('webapp.name') }}</th>
         <th>{{ __('webapp.type') }}</th>
         <th>{{ __('webapp.template_code') }}</th>
+        <th>{{ __('webapp.sort') }}</th>
         <th class="action-cell">{{ __('webapp.actions') }}</th>
     </tr>
 
-    @foreach($form->fields as $field)
+    @foreach($form->fields()->orderBy('sort', 'asc')->get() as $field)
         <tr>
             <td>{{ $field->name }}</td>
             <td>{{ \App\Models\Field::$types[$field->type] }}</td>
             <td>&lcub;&lcub;&nbsp;${{ $field->code }}&nbsp;&rcub;&rcub;</td>
+            <td>{{ $field->sort }}</td>
             <td class="align-middle text-nowrap">
                 <a href="{{ route('field.edit', [$form, $field]) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>

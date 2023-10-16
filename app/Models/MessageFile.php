@@ -34,4 +34,11 @@ class MessageFile extends Model
         $mime = explode('/', $this->getMimeTypeAttribute());
         return $mime[0];
     }
+
+    public static function boot() {
+        parent::boot();
+        static::deleting(function($model){
+            Storage::delete($model->path);
+        });
+    }
 }

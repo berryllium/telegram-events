@@ -18,17 +18,18 @@ window.addEventListener('load', function(){
         }
     })
 
-
-    ClassicEditor
-        .create( document.querySelector( '[data-editor="ck"]' ), {
-            toolbar: ['bold', 'italic', 'link'],
-            coreStyles_bold: { element: 'b', overrides: 'strong' }
-        })
-        .then( editor => {
-            window.editor = editor;
-        } )
-        .catch( error => {
-            console.error( 'There was a problem initializing the editor.', error );
-        } );
+    if($('[data-editor="ck"]').length) {
+        ClassicEditor
+            .create( document.querySelector( '[data-editor="ck"]' ), {
+                toolbar: ['bold', 'italic', 'link'],
+                coreStyles_bold: { element: 'b', overrides: 'strong' }
+            })
+            .then( editor => {
+                window.editor = editor;
+            } )
+            .catch( error => {
+                console.error( 'There was a problem initializing the editor.', error );
+            } );
+    }
 
 })

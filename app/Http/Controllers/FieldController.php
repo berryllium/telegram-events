@@ -72,6 +72,7 @@ class FieldController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|min:2',
+            'sort' => 'required|int',
         ]);
         if($field->type == 'place' || $field->type == 'address') {
             $data['code'] = $field->type;
