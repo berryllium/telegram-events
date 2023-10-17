@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Dictionary;
 use App\Models\Field;
 use App\Models\Form;
 use Illuminate\Http\Request;
@@ -26,7 +27,10 @@ class FieldController extends Controller
      */
     public function create(Form $form)
     {
-        return view('field/create', ['form' => $form]);
+        return view('field/create', [
+            'form' => $form,
+            'dictionaries' => Dictionary::query()->where('telegram_bot_id', session('bot'))->get(),
+        ]);
     }
 
     /**
@@ -34,15 +38,21 @@ class FieldController extends Controller
      */
     public function store(Form $form, Request $request)
     {
-        $form->fields()->save(
+        /** @var Field $field */
+        $field = $form->fields()->save(
             Field::make(
                 $request->validate([
                     'name' => 'required',
                     'code' => 'required',
+                    'sort' => 'int',
                     'type' => 'required|in:' . implode(',', array_keys(Field::$types))
                 ])
             )
         );
+        if($field->canHaveDictionary && $dictionary_id = (int) $request->get('dictionary_id')) {
+            $field->dictionary_id = $dictionary_id;
+            $field->save();
+        }
         return redirect(route('form.edit', ['form' => $form]))->with('success', __('webapp.record_added'));
     }
 
@@ -62,6 +72,7 @@ class FieldController extends Controller
         return view('field/edit', [
             'form' => $form,
             'field' => $field,
+            'dictionaries' => Dictionary::query()->where('telegram_bot_id', session('bot'))->get()
         ]);
     }
 
@@ -73,6 +84,7 @@ class FieldController extends Controller
         $data = $request->validate([
             'name' => 'required|min:2',
             'sort' => 'required|int',
+            'code' => 'required',
         ]);
         if($field->type == 'place' || $field->type == 'address') {
             $data['code'] = $field->type;

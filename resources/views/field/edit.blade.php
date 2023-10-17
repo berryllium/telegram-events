@@ -38,7 +38,7 @@
                 <label for="dictionary_id" class="form-label">{{ __('webapp.dictionaries.dictionary') }}</label>
                 <select class="form-select" id="dictionary_id" name="dictionary_id">
                     <option value=""></option>
-                    @foreach(\App\Models\Dictionary::all() as $dictionary)
+                    @foreach($dictionaries as $dictionary)
                         <option value="{{ $dictionary->id }}" {{ $field->dictionary_id == $dictionary->id ? 'selected' : '' }}>
                             {{ $dictionary->name }}
                         </option>
