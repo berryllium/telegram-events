@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Form;
 use App\Models\TelegramBot;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use TelegramBot\Api\BotApi;
 
@@ -19,7 +20,9 @@ class TelegramBotController extends Controller
      */
     public function index()
     {
-        return view('bot/index', ['bots' => TelegramBot::with('form')->paginate(20)]);
+        return view('bot/index', [
+            'bots' => TelegramBot::with('form')->paginate(20)
+        ]);
     }
 
     /**
@@ -27,7 +30,9 @@ class TelegramBotController extends Controller
      */
     public function create()
     {
-        return view('bot/create');
+        return view('bot/create', [
+            'forms' => Form::query()->whereDoesntHave('bots')->get()
+        ]);
     }
 
     /**
@@ -41,7 +46,7 @@ class TelegramBotController extends Controller
             'api_token' => 'required',
             'description' => 'max:1000',
             'moderation_group' => 'int',
-            'form_id' => 'required|int',
+            'form_id' => 'required|unique:telegram_bots,form_id',
         ]));
 
         if($bot->setWebhook()) {
@@ -65,7 +70,8 @@ class TelegramBotController extends Controller
     public function edit(Telegrambot $bot, Request $request)
     {
         return view('bot/edit', [
-            'bot' => $bot
+            'bot' => $bot,
+            'forms' => Form::query()->where('id', $bot->form->id)->orWhereDoesntHave('bots')->get()
         ]);
     }
 
@@ -80,7 +86,7 @@ class TelegramBotController extends Controller
             'api_token' => 'required',
             'moderation_group' => 'int',
             'description' => 'max:1000',
-            'form_id' => 'required|int',
+            'form_id' => 'required|unique:telegram_bots,form_id,'.$bot->id,
         ]));
 
         if($bot->setWebhook()) {

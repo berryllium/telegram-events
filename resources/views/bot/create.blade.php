@@ -39,7 +39,7 @@
             <label for="form_id" class="form-label">{{ __('webapp.webapp_form') }}</label>
             <select class="form-select" id="form_id" name="form_id">
                 <option value=""></option>
-                @foreach(\App\Models\Form::all() as $form)
+                @foreach($forms as $form)
                     <option value="{{ $form->id }}" {{ $form->id == old('form') ? 'selected' : ''}}>{{ $form->name }}</option>
                 @endforeach
             </select>
