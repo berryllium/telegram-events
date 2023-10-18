@@ -7,6 +7,7 @@ use App\Models\TelegramBot;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
@@ -85,14 +86,25 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
+        $data = [
+            'name' => $request->get('name'),
+            'email' => $request->get('email'),
+        ];
         $constrains = [
             'name' => 'required',
             'email' => 'required|unique:users,email,'.$user->id,
         ];
-        if($request->get('password') || $request->get('password_confirmation')) {
+
+        if($data['password'] = $request->get('password')) {
             $constrains['password'] = 'required|confirmed|min:6';
+            $valid_data = Validator::make($data, $constrains);
+            $valid_data->addCustomValues(['password' =>  Hash::make($request->get('password'))]);
+        } else {
+            $valid_data =  Validator::make($data, $constrains);
         }
-        $user->update($request->validate($constrains));
+
+
+        $user->update($valid_data->getData());
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('bots'));
 
