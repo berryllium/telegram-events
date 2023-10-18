@@ -38,7 +38,7 @@
         </tr>
     @endforeach
 </table>
-@if($entities['value'] instanceof LengthAwarePaginator)
+@if(is_object($entities['value']) && in_array('Illuminate\Contracts\Pagination\Paginator', class_implements($entities['value'])))
     <div class="row">
         <div class="col-6">{{ $entities['value']->links() }}</div>
     </div>

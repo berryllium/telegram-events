@@ -18,7 +18,9 @@ class ChannelController extends Controller
     public function index()
     {
 
-        return view('channel/index', ['channels' => Channel::query()->where('telegram_bot_id', session('bot'))->paginate(20)]);
+        return view('channel/index', [
+            'channels' => Channel::query()->where('telegram_bot_id', session('bot'))->paginate(20)
+        ]);
     }
 
     /**
