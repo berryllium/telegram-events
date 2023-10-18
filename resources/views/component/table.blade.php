@@ -16,6 +16,14 @@
                 @endif
             @endforeach
             <td class="align-middle text-nowrap">
+                @if($entities['name'] == 'form')
+                    <form action="{{ route($entities['name'] . '.copy', $entity)  }}" method="post" class="d-inline m-1">
+                        @csrf
+                        <button class="btn btn-warning" type="submit">
+                            <i class="bi bi-copy" role="button" onclick="this.parentNode.submit()"></i>
+                        </button>
+                    </form>
+                @endif
                 <a href="{{ route($entities['name'] . '.edit', $entity) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>
                 </a>

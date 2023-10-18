@@ -24,7 +24,7 @@ class FormController extends Controller
     /**
      * Show the form for creating a new resource.
      */
-    public function create()
+    public function create(Request $request)
     {
         return view('form/create');
     }
@@ -83,5 +83,15 @@ class FormController extends Controller
             $form->delete();
             return redirect(route('form.index'))->with('success', __('webapp.record_deleted'));
         }
+    }
+
+    public function copy(Form $form) {
+        $newForm = $form->replicate();
+        $newForm->name = $form->name . ' - ' . __('webapp.replica');
+        $newForm->pushQuietly();
+        foreach ($form->fields as $field) {
+            $newForm->fields()->create($field->toArray());
+        }
+        return redirect(route('form.edit', $newForm->id))->with('success', __('webapp.record_added'));
     }
 }

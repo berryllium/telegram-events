@@ -19,13 +19,16 @@ class Form extends Model
         'description'
     ];
 
+    /**
+     * @return array<Field>
+     */
     public function fields(): HasMany
     {
         return $this->hasMany(Field::class);
     }
 
-    public function bot() : HasOne {
-        return $this->hasOne(TelegramBot::class);
+    public function bots() : HasMany {
+        return $this->HasMany(TelegramBot::class);
     }
 
     protected static function boot()

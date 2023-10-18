@@ -39,7 +39,7 @@ class FormPolicy
      */
     public function update(User $user, Form $form): bool
     {
-        return $form->bot && $user->telegram_bots->contains($form->bot->id);
+        return $form->bots && $user->telegram_bots->intersect($form->bots);
     }
 
     /**
