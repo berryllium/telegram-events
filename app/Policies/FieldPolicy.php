@@ -40,7 +40,7 @@ class FieldPolicy
      */
     public function update(User $user, Field $field): bool
     {
-        return $user->hasRole('admin') && $user->telegram_bots->contains($field->form->bot->id);
+        return $user->hasRole('admin') && $user->telegram_bots->intersect($field->form->bots);
     }
 
     /**
@@ -48,7 +48,7 @@ class FieldPolicy
      */
     public function delete(User $user, Field $field): bool
     {
-        return $user->hasRole('admin') && $user->telegram_bots->contains($field->form->bot->id);
+        return $user->hasRole('admin') && $user->telegram_bots->intersect($field->form->bots);
     }
 
     /**
@@ -56,7 +56,7 @@ class FieldPolicy
      */
     public function restore(User $user, Field $field): bool
     {
-        return $user->hasRole('admin') && $user->telegram_bots->contains($field->form->bot->id);
+        return $user->hasRole('admin') && $user->telegram_bots->intersect($field->form->bots);
     }
 
     /**
@@ -64,6 +64,6 @@ class FieldPolicy
      */
     public function forceDelete(User $user, Field $field): bool
     {
-        return $user->hasRole('admin') && $user->telegram_bots->contains($field->form->bot->id);
+        return $user->hasRole('admin') && $user->telegram_bots->intersect($field->form->bots);
     }
 }

@@ -2,7 +2,7 @@
 @section('content')
     @php /** @var \App\Models\Field $field */ @endphp
     <h1 class="pt-2 text-center">{{ $form->name }}</h1>
-    <form id="webapp-form" type="post" action="{{ route('webapp', $bot) }}">
+    <form id="webapp-form" enctype="multipart/form-data" type="post" action="{{ route('webapp', $bot) }}">
         @foreach($form->fields()->orderBy('sort', 'asc')->get() as $k => $field)
                 @switch($field->type)
                     @case('string')

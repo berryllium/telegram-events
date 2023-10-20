@@ -6,6 +6,7 @@ use App\Models\Dictionary;
 use App\Models\Field;
 use App\Models\Form;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class FieldController extends Controller
 {
@@ -81,14 +82,21 @@ class FieldController extends Controller
      */
     public function update(Request $request, Form $form, Field $field)
     {
-        $data = $request->validate([
+        $rules = [
             'name' => 'required|min:2',
             'sort' => 'required|int',
-        ]);
+            'code' => 'required'
+        ];
+
+        $data = $request->toArray();
+
         if($field->type == 'place' || $field->type == 'address') {
             $data['code'] = $field->type;
+        } else {
+            $data['code'] = $request->get('code');
         }
-        $field->update($data);
+
+        $field->update(Validator::validate($data, $rules));
 
         if($dictionary_id = (int) $request->get('dictionary_id')) {
             $field->dictionary_id = $dictionary_id;
