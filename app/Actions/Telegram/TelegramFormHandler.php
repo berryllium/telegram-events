@@ -77,9 +77,7 @@ class TelegramFormHandler
 
     private function prepareField(Field $field, string $value)
     {
-        if(in_array($field->type,['string', 'number', 'text', 'radio', 'select'])) {
-            return $value;
-        } elseif($field->type == 'date') {
+        if($field->type == 'date') {
             return Carbon::parse($value)->format('d.m.Y H:i:s');
         } elseif($field->type == 'checkbox') {
             return $value ? 'Да' : 'Нет';
@@ -87,8 +85,9 @@ class TelegramFormHandler
             return Place::query()->find($value) ?? null;
         } elseif($field->type == 'address') {
             return Place::query()->find($value)->address ?? null;
+        } else {
+            return is_scalar($value) ? $value : '';
         }
-        return '';
     }
 
 }

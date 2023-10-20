@@ -60,6 +60,25 @@
                             </select>
                         </div>
                         @break
+                    @case('tags')
+                        <div data-role="tags">
+                            <div class="form-group mb-1">
+                                <label for="tag-{{ $k }}">{{ $field->name }}</label>
+                                <textarea class="form-control" id="tag-{{ $k }}" rows="3" name="{{ $field->code }}"></textarea>
+                            </div>
+                            <div class="form-group mb-3">
+                                <label for="field-{{ $k }}" >{{ __('webapp.tag_set') }}</label>
+                                <select class="form-control" id="field-{{ $k }}" data-select="2" data-live-search="true" multiple>
+                                    @foreach($field->dictionary->dictionary_values as $value)
+                                        @php
+                                            $set = explode(':', $value->value, 2);
+                                        @endphp
+                                        <option value="{{ trim($set[1]) }}">{{ trim($set[0]) }}</option>
+                                    @endforeach
+                                </select>
+                            </div>
+                        </div>
+                        @break
                     @case('place')
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>

@@ -56,6 +56,7 @@ return [
     'sending_title' => 'Sending message #:message',
     'status' => 'Status',
     'success' => 'Success',
+    'tag_set' => 'Tags set',
     'template_code' => 'Placeholder',
     'title' => 'Title',
     'type' => 'Type',
@@ -121,5 +122,18 @@ return [
     'fields' => [
         'add' => 'Add Field',
         'edit' => 'Edit Field',
-    ]
+    ],
+    'types' => [
+        'string' => 'string',
+        'text' => 'text',
+        'number' => 'number',
+        'date' => 'date',
+        'checkbox' => 'checkbox',
+        'radio' => 'radio',
+        'select' => 'select',
+        'place' => 'place',
+        'address' => 'address',
+        'files' => 'files',
+        'tags' => 'tags',
+    ],
 ];

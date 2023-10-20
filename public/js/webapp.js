@@ -35,4 +35,13 @@ window.addEventListener('load', () => {
         $('[name="address"]').val($(this).val()).trigger('change')
     })
 
+    $('[data-role="tags"] select').on('select2:select', function (e) {
+        const textarea =  $(this).closest('[data-role="tags"]').find('textarea')
+        textarea.val(textarea.val() + ' ' + e.params.data.id)
+    }).on('select2:unselect', function (e) {
+        const textarea =  $(this).closest('[data-role="tags"]').find('textarea')
+        const pattern = new RegExp(`[ ,]*${e.params.data.id}`)
+        textarea.val(textarea.val().replace(pattern, ''))
+    });
+
 })
