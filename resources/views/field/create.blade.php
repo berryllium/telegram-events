@@ -46,6 +46,10 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="required" name="required" value="1" {{ old('required') ? 'checked' : ''}}>
+            <label for="required" class="form-check-label">{{ __('webapp.required') }}</label>
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>
 @endsection

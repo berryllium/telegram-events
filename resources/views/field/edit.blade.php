@@ -49,6 +49,10 @@
                 @enderror
             </div>
         @endif
+        <div class="mb-3 form-check">
+            <input type="checkbox" class="form-check-input" id="required" name="required" value="1" {{ $field->required ? 'checked' : ''}}>
+            <label for="required" class="form-check-label">{{ __('webapp.required') }}</label>
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection

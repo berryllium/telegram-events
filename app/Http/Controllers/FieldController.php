@@ -40,14 +40,16 @@ class FieldController extends Controller
     public function store(Form $form, Request $request)
     {
         /** @var Field $field */
+        $data = $request->validate([
+            'name' => 'required',
+            'code' => 'required',
+            'sort' => 'int',
+            'type' => 'required|in:' . implode(',', array_keys(Field::$types))
+        ]);
+        $data['required'] = !!$request->get('required');
         $field = $form->fields()->save(
             Field::make(
-                $request->validate([
-                    'name' => 'required',
-                    'code' => 'required',
-                    'sort' => 'int',
-                    'type' => 'required|in:' . implode(',', array_keys(Field::$types))
-                ])
+                $data
             )
         );
         if($field->canHaveDictionary && $dictionary_id = (int) $request->get('dictionary_id')) {
@@ -85,10 +87,12 @@ class FieldController extends Controller
         $rules = [
             'name' => 'required|min:2',
             'sort' => 'required|int',
-            'code' => 'required'
+            'code' => 'required',
+            'required' => ''
         ];
 
         $data = $request->toArray();
+        $data['required'] = isset($data['required']);
 
         if($field->type == 'place' || $field->type == 'address') {
             $data['code'] = $field->type;

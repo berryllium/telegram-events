@@ -48,6 +48,7 @@ return [
     'record_deleted' => 'Record has been successfully deleted',
     'record_updated' => 'Record has been successfully updated',
     'replica' => 'Replica',
+    'required' => 'Required',
     'role' => 'Role',
     'retry' => 'Retry',
     'search' => 'Search',

@@ -8,18 +8,18 @@
                     @case('string')
                             <div class="form-group mb-3">
                                 <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code }}" type="text" value="" placeholder="">
+                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code }}" type="text" value="" placeholder="" {{ $field->required ? 'data-required' : '' }}>
                             </div>
                         @break
                     @case('number')
                             <div class="form-group mb-3">
                                 <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code }}" type="number" value="" placeholder="">
+                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code }}" type="number" value="" placeholder="" {{ $field->required ? 'data-required' : '' }}>
                             </div>
                         @break
                     @case('checkbox')
                             <div class="form-check mb-3">
-                                <input id="field-{{ $k }}" type="checkbox" class="form-check-input" name="{{ $field->code }}">
+                                <input id="field-{{ $k }}" type="checkbox" class="form-check-input" name="{{ $field->code }}" {{ $field->required ? 'data-required' : '' }}>
                                 <label class="form-check-label" for="field-{{ $k }}">{{ $field->name }}</label>
                             </div>
                         @break
@@ -29,7 +29,7 @@
                                 <label class="form-check-label" for="field-{{ $k }}">{{ $field->name }}</label>
                                 @foreach($field->dictionary->dictionary_values as $value)
                                     <div class="form-check mb-2">
-                                        <input class="form-check-input" id="field-{{ $k }}-{{ $value->id }}" type="radio" name="{{ $field->code }}" value="{{ $value->value }}">
+                                        <input class="form-check-input" id="field-{{ $k }}-{{ $value->id }}" type="radio" name="{{ $field->code }}" value="{{ $value->value }}" {{ $field->required ? 'data-required' : '' }}>
                                         <label class="form-check-label" for="field-{{ $k }}-{{ $value->id }}">
                                             {{ $value->value }}
                                         </label>
@@ -47,13 +47,13 @@
                     @case('date')
                             <div class="form-group mb-3">
                                 <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                                <input id="field-{{ $k }}" class="form-control" type="datetime-local" name="{{ $field->code }}" value="" placeholder="">
+                                <input id="field-{{ $k }}" class="form-control" type="datetime-local" name="{{ $field->code }}" value="" placeholder="" {{ $field->required ? 'data-required' : '' }}>
                             </div>
                         @break
                     @case('select')
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
+                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true" {{ $field->required ? 'data-required' : '' }}>
                                 @foreach($field->dictionary->dictionary_values as $value)
                                     <option value="{{ $value->value }}">{{ $value->value }}</option>
                                 @endforeach
@@ -64,7 +64,7 @@
                         <div data-role="tags">
                             <div class="form-group mb-1">
                                 <label for="tag-{{ $k }}">{{ $field->name }}</label>
-                                <textarea class="form-control" id="tag-{{ $k }}" rows="3" name="{{ $field->code }}"></textarea>
+                                <textarea class="form-control" id="tag-{{ $k }}" rows="3" name="{{ $field->code }}" {{ $field->required ? 'data-required' : '' }}></textarea>
                             </div>
                             <div class="form-group mb-3">
                                 <label for="field-{{ $k }}" >{{ __('webapp.tag_set') }}</label>
@@ -82,7 +82,7 @@
                     @case('place')
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
+                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true" data-required>
                                 @foreach($places as $place)
                                     <option value="{{ $place->id }}">{{ $place->name }}</option>
                                 @endforeach
@@ -92,7 +92,7 @@
                     @case('address')
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
-                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true">
+                            <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true" {{ $field->required ? 'data-required' : '' }}>
                                 @foreach($addresses as $address)
                                     <option value="{{ $address->id }}">{{ $address->address }}</option>
                                 @endforeach
@@ -102,7 +102,7 @@
                     @case('files')
                         <div class="form-group mb-3">
                             <label for="field-{{ $k }}" class="form-label">{{ $field->name }}</label>
-                            <input id="field-{{ $k }}" class="form-control" name="files[]" type="file" multiple>
+                            <input id="field-{{ $k }}" class="form-control" name="files[]" type="file" multiple {{ $field->required ? 'data-required' : '' }}>
                         </div>
                         @break
                 @endswitch

@@ -43,6 +43,10 @@ class TelegramFormHandler
                 $fields['place'] = $place->name;
             }
 
+            if(isset($fields['only_date']) && $fields['only_date'] && $fields['date']) {
+                $fields['date'] = Carbon::parse($fields['date'])->format('d.m.Y');
+            }
+
             $text = Blade::render($telegramBot->form->template, $fields);
 
             $validator = Validator::make(

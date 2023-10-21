@@ -8,6 +8,10 @@ window.addEventListener('load', () => {
 
     Telegram.WebApp.onEvent("mainButtonClicked", async function(){
         if(ajaxObj) return
+        if(!validateForm()) {
+            alert(form.data('error-message') ? form.data('error-message') : 'Заполните обязательные поля!')
+            return
+        }
         ajaxObj = $.ajax({
             url: form.attr("action"),
             type: 'POST',
@@ -43,5 +47,38 @@ window.addEventListener('load', () => {
         const pattern = new RegExp(`[ ,]*${e.params.data.id}`)
         textarea.val(textarea.val().replace(pattern, ''))
     });
+
+    $('[name="only_date"]').change(function(){
+        const dateInput =  $('[name="date"]')
+        const current = dateInput.val()
+        if($(this).prop('checked')) {
+            dateInput.attr('type', 'date').val(current ? current.split('T')[0] : '')
+        } else {
+            dateInput.attr('type', 'datetime-local').val(current ? current + 'T00:00' : '')
+        }
+    })
+
+    function validateForm() {
+        let isValid = true
+        form.find('[data-required]').each(function(){
+            console.log($(this))
+            const el = $(this)
+            if(!el.val()) {
+                setError(el)
+                isValid = false
+            } else {
+                unsetError(el)
+            }
+        })
+        return isValid
+    }
+
+    function setError(el) {
+        el.addClass('is-invalid')
+    }
+
+    function unsetError(el) {
+        el.removeClass('is-invalid')
+    }
 
 })
