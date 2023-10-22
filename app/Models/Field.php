@@ -19,6 +19,7 @@ class Field extends Model
         'code',
         'type',
         'sort',
+        'required',
         'dictionary_id'
     ];
 
@@ -32,7 +33,9 @@ class Field extends Model
         'select' => 'Выпадающий список',
         'place' => 'Место',
         'address' => 'Адрес',
-        'files' => 'Файлы'
+        'files' => 'Файлы',
+        'tags' => 'Теги',
+        'price' => 'Цена',
     ];
 
     public function form(): BelongsTo
@@ -49,6 +52,6 @@ class Field extends Model
     }
 
     public function getCanHaveDictionaryAttribute() {
-        return !!in_array($this->type, ['select', 'radio']);
+        return !!in_array($this->type, ['select', 'radio', 'tags']);
     }
 }

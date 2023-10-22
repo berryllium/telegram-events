@@ -43,7 +43,8 @@ class PlaceController extends Controller
             'additional_info' => '',
         ]);
 
-        TelegramBot::find(session('bot'))->places()->create($data);
+        $place = TelegramBot::find(session('bot'))->places()->create($data);
+        $place->channels()->sync($request->input('channels'));
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
     }

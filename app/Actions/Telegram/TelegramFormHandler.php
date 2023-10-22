@@ -34,6 +34,12 @@ class TelegramFormHandler
                 }
             }
 
+
+            if(isset($data['price_type']) && $data['price_type']) {
+                $fields['price_from'] = $data['price_type'] == 'min' || $data['price_type'] == 'range' ? $fields['price'] : '';
+                $fields['price_to'] = $data['price_type'] == 'range' && isset($data['price_to']) ? $data['price_to'] : '';
+            }
+
             if(isset($fields['place']) && $fields['place']) {
                 /** @var Place $place */
                 $place = $fields['place'];
@@ -41,6 +47,10 @@ class TelegramFormHandler
                 $fields['place_working_hours'] = $place->working_hours;
                 $fields['place_additional_info'] = $place->additional_info;
                 $fields['place'] = $place->name;
+            }
+
+            if(isset($fields['only_date']) && $fields['only_date'] && $fields['date']) {
+                $fields['date'] = Carbon::parse($fields['date'])->format('d.m.Y');
             }
 
             $text = Blade::render($telegramBot->form->template, $fields);
@@ -77,9 +87,7 @@ class TelegramFormHandler
 
     private function prepareField(Field $field, string $value)
     {
-        if(in_array($field->type,['string', 'number', 'text', 'radio', 'select'])) {
-            return $value;
-        } elseif($field->type == 'date') {
+        if($field->type == 'date') {
             return Carbon::parse($value)->format('d.m.Y H:i:s');
         } elseif($field->type == 'checkbox') {
             return $value ? 'Да' : 'Нет';
@@ -87,8 +95,9 @@ class TelegramFormHandler
             return Place::query()->find($value) ?? null;
         } elseif($field->type == 'address') {
             return Place::query()->find($value)->address ?? null;
+        } else {
+            return is_scalar($value) ? $value : '';
         }
-        return '';
     }
 
 }

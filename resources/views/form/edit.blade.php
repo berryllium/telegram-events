@@ -3,7 +3,7 @@
 @section('content')
     <p class="text-center">
         <strong>{{ __('webapp.attention') }}</strong>
-        {{ __('webapp.forms.notice') }}
+        {!! __('webapp.forms.notice') !!}
     </p>
     <form method="post" action="{{ route('form.update', [$form]) }}">
         <input type="hidden" name="tg_channel" value="1">
