@@ -34,6 +34,12 @@ class TelegramFormHandler
                 }
             }
 
+
+            if(isset($data['price_type']) && $data['price_type']) {
+                $fields['price_from'] = $data['price_type'] == 'min' || $data['price_type'] == 'range' ? $fields['price'] : '';
+                $fields['price_to'] = $data['price_type'] == 'range' && isset($data['price_to']) ? $data['price_to'] : '';
+            }
+
             if(isset($fields['place']) && $fields['place']) {
                 /** @var Place $place */
                 $place = $fields['place'];

@@ -58,6 +58,28 @@ window.addEventListener('load', () => {
         }
     })
 
+    $('[name="price_type"]').change(function(){
+        const block = $(this).closest('.price')
+        const blockPrice =  block.find('[data-role="price"]')
+        const blockPriceTo =  block.find('[data-role="price_to"]')
+        const blockFrom =  blockPrice.find('[data-role="from"]')
+        const blockTo =  blockPriceTo.find('[data-role="to"]')
+
+        if($(this).val() === 'range') {
+            blockFrom.show()
+            blockPriceTo.show().find('input').attr('data-required', 1)
+            blockTo.show()
+        } else if($(this).val() === 'min') {
+            blockFrom.show()
+            blockPriceTo.hide().find('input').removeAttr('data-required')
+            blockTo.hide()
+        } else {
+            blockFrom.hide()
+            blockPriceTo.hide().find('input').removeAttr('data-required')
+            blockTo.hide()
+        }
+    })
+
     function validateForm() {
         let isValid = true
         form.find('[data-required]').each(function(){

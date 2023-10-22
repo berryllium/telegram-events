@@ -35,6 +35,7 @@ class Field extends Model
         'address' => 'Адрес',
         'files' => 'Файлы',
         'tags' => 'Теги',
+        'price' => 'Цена',
     ];
 
     public function form(): BelongsTo
