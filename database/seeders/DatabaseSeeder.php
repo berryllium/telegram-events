@@ -14,8 +14,8 @@ class DatabaseSeeder extends Seeder
     {
          $this->call([
              RoleSeeder::class,
-             UserSeeder::class,
              TelegramBotSeeder::class,
+             UserSeeder::class,
              ChannelSeeder::class,
              DictionarySeeder::class,
              FormSeeder::class,

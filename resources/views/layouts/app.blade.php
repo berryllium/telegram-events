@@ -30,7 +30,7 @@
 
                     @if($userBots->count() > 1)
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ $bot->name }}
+                            {{ $bot ? $bot->name : ''  }}
                         </button>
                         <ul class="dropdown-menu">
                             @foreach(\App\Models\TelegramBot::all() as $bot)
@@ -39,7 +39,7 @@
                         </ul>
                     @else
                         <a class="navbar-brand" href="{{ url('/') }}">
-                            {{ $bot->name }}
+                            {{ $bot ? $bot->name : '' }}
                         </a>
                     @endif
                 @else
