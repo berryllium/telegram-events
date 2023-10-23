@@ -100,10 +100,7 @@
                         </div>
                         @break
                     @case('files')
-                        <div class="form-group mb-3">
-                            <label for="field-{{ $k }}" class="form-label">{{ $field->name }}</label>
-                            <input id="field-{{ $k }}" class="form-control" name="files[]" type="file" multiple {{ $field->required ? 'data-required' : '' }}>
-                        </div>
+                        <x-uploader name="{{ $field->name }}"></x-uploader>
                         @break
                     @case('price')
                         <div class="price">
@@ -131,6 +128,11 @@
         <div class="form-group mb-3">
             <label for="schedule" >{{ __('webapp.publish_date') }}</label>
             <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
+        </div>
+        <div class="d-flex d-none justify-content-center align-items-center position-fixed vw-100 vh-100 top-0 bg-light" data-role="spinner">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only"></span>
+            </div>
         </div>
         <div class="btn btn-primary mt-2 mb-5" data-role="copy-block"> {{ __('webapp.add_date') }}</div>
     </form>
