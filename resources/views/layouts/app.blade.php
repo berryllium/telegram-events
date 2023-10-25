@@ -33,7 +33,7 @@
                             {{ $bot ? $bot->name : ''  }}
                         </button>
                         <ul class="dropdown-menu">
-                            @foreach(\App\Models\TelegramBot::all() as $bot)
+                            @foreach($userBots as $bot)
                                 <li><a class="dropdown-item text-warning-emphasis" href="{{ route('bot_switch', $bot) }}">{{ $bot->name }}</a></li>
                             @endforeach
                         </ul>
