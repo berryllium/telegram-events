@@ -78,7 +78,7 @@ class TelegramFormHandler
             }
 
         } catch (\Exception $exception) {
-            TechBotFacade::send($exception->getMessage() . " bot: {$telegramBot->name}");
+            TechBotFacade::send($exception->getMessage());
             return response()->json(['error' => $exception->getMessage()]);
         }
 
