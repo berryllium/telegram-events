@@ -110,7 +110,7 @@ class TelegramRequestHandler
             }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
-            TechBotFacade::send(implode(', ', [$exception->getMessage(), $exception->getFile(), $exception->getLine()]));
+            TechBotFacade::send(implode(', ', [$exception->getMessage(), " chat: {$chat_id}, bot: {$message->bot->name} " ,$exception->getFile(), $exception->getLine()]));
         }
 
         return response()->json(['status' => 'ok']);
