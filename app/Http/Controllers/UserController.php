@@ -95,7 +95,8 @@ class UserController extends Controller
             'email' => 'required|unique:users,email,'.$user->id,
         ];
 
-        if($data['password'] = $request->get('password')) {
+        if($request->get('password')) {
+            $data['password'] = $request->get('password');
             $constrains['password'] = 'required|confirmed|min:6';
             $valid_data = Validator::make($data, $constrains);
             $valid_data->addCustomValues(['password' =>  Hash::make($request->get('password'))]);
