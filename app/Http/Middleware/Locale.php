@@ -32,8 +32,8 @@ class Locale
                 }
             }
         }
-
-        App::setLocale($lang ?? Config('app.locale'));
+        // you can use $lang instead of Config in the Feature
+        App::setLocale(Config('app.locale'));
         return $next($request);
     }
 }
