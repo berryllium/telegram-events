@@ -1,6 +1,7 @@
 window.addEventListener('load', () => {
     const webApp =  window.Telegram.WebApp
     const form = $('#webapp-form')
+    const spinner = $('[data-role="spinner"]')
     let ajaxObj = false
     webApp.expand()
     webApp.MainButton.text = "Send";
@@ -8,14 +9,24 @@ window.addEventListener('load', () => {
 
     Telegram.WebApp.onEvent("mainButtonClicked", async function(){
         if(ajaxObj) return
+
         if(!validateForm()) {
             alert(form.data('error-message') ? form.data('error-message') : 'Заполните обязательные поля!')
             return
         }
+
+        spinner.removeClass('d-none')
+        const formData = new FormData(form[0])
+        if(typeof fileCollection != "undefined" && fileCollection &&  Object.keys(fileCollection).length) {
+            for (let i in fileCollection) {
+                formData.append("files[]", fileCollection[i]);
+            }
+        }
+
         ajaxObj = $.ajax({
             url: form.attr("action"),
             type: 'POST',
-            data: new FormData(form[0]),
+            data: formData,
             success: function (response) {
                 if(response.message_id) {
                     webApp.sendData(JSON.stringify(response))
@@ -28,6 +39,7 @@ window.addEventListener('load', () => {
             },
             complete: function() {
                 ajaxObj = false
+                spinner.addClass('d-none')
             },
             cache: false,
             contentType: false,
