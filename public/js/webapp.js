@@ -17,11 +17,11 @@ window.addEventListener('load', () => {
 
         spinner.removeClass('d-none')
         const formData = new FormData(form[0])
-        if(typeof fileCollection != "undefined" && fileCollection && fileCollection.length) (
-            fileCollection.forEach(function(file){
-                formData.append("files[]", file);
-            })
-        )
+        if(typeof fileCollection != "undefined" && fileCollection &&  Object.keys(fileCollection).length) {
+            for (let i in fileCollection) {
+                formData.append("files[]", fileCollection[i]);
+            }
+        }
 
         ajaxObj = $.ajax({
             url: form.attr("action"),

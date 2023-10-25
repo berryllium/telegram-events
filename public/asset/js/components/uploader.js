@@ -44,7 +44,7 @@ window.onload = function(){
         <li id="file-item-${i}" class="list-group-item d-flex justify-content-between align-items-center">
             <span class="w-75">
                 <span id="file-img-box-${i}" class="d-inline-block w-25 me-2 border border-light-gray text-center">${renderPreview(file, i)}</span>
-                <span>${file.name.substring(0,20)}${file.name.length > 20 ? '...' : ''}</span>
+                <span>${file.name.substring(0,15)}${file.name.length > 15 ? '...' : ''}</span>
             </span>
             <i class="bi bi-trash" data-file="${i}" data-role="delete-file"></i>
         </li>`
