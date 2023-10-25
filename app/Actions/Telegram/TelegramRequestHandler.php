@@ -97,6 +97,7 @@ class TelegramRequestHandler
                 );
 
                 if($message->message_files->count()) {
+                    /** @var Message $message */
                     $mediaArr = TechBotFacade::createMedia($message);
                     $botApi->sendMediaGroup($chat_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
                     $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
@@ -110,7 +111,7 @@ class TelegramRequestHandler
             }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
-            TechBotFacade::send(implode(', ', [$exception->getMessage(), " chat: {$chat_id}, bot: {$message->bot->name} " ,$exception->getFile(), $exception->getLine()]));
+            TechBotFacade::send(implode(', ', [$exception->getMessage() ,$exception->getFile(), $exception->getLine()]));
         }
 
         return response()->json(['status' => 'ok']);
