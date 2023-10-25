@@ -23,7 +23,7 @@
         </div>
         <div class="mb-3">
             <label for="api_token" class="form-label">{{ __('webapp.api_token') }}</label>
-            <input type="text" class="form-control" id="api_token" name="api_token" value="{{ old('api_token') }}">
+            <input type="text" class="form-control" id="api_token" name="api_token" value="{{ uniqid() }}">
             @error('api_token')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
