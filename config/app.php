@@ -214,4 +214,13 @@ return [
     */
     'post_max_message' => env('POST_MAX_MESSAGE', 1023),
 
+    /*
+    |--------------------------------------------------------------------------
+    | Messages storage period (days)
+    |--------------------------------------------------------------------------
+    |
+    */
+    'sent_messages_storage_period' => env('SENT_MESSAGES_STORAGE_PERIOD', 7),
+    'messages_storage_period' => env('MESSAGES_STORAGE_PERIOD', 60),
+
 ];
