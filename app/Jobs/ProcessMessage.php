@@ -14,6 +14,9 @@ use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Exception;
+use TelegramBot\Api\HttpException;
+use TelegramBot\Api\InvalidArgumentException;
 
 class ProcessMessage implements ShouldQueue
 {
@@ -48,29 +51,57 @@ class ProcessMessage implements ShouldQueue
         }
     }
 
+    /**
+     * @throws \Exception
+     */
     protected function sendVK() {
         $vk = new VKService(config('app.vk_token'),$this->channel->tg_id, '');
-        if($this->message->message_files->count()) {
-            foreach ($this->message->message_files as $file) {
-                /** @var MessageFile $file */
-                if ($file->type == 'image') {
-                    $vk->addPhoto($file->path);
-                } elseif ($file->type == 'video') {
-                    $vk->addVideo($file->path);
+        try {
+            if($this->message->message_files->count()) {
+                foreach ($this->message->message_files as $file) {
+                    /** @var MessageFile $file */
+                    if ($file->type == 'image') {
+                        $vk->addPhoto($file->path);
+                    } elseif ($file->type == 'video') {
+                        $vk->addVideo($file->path);
+                    }
                 }
             }
+            $vk->Post(strip_tags($this->message->text));
+        } catch (\Exception $exception) {
+            TechBotFacade::send(__('webapp.error_sending_vk', [
+                'id' => $this->message->id,
+                'channel' => $this->channel->name,
+                'bot' => $this->message->telegram_bot->name
+            ]));
+            throw($exception);
         }
-        $vk->Post(strip_tags($this->message->text));
+
     }
 
+    /**
+     * @throws Exception
+     * @throws HttpException
+     * @throws InvalidArgumentException
+     */
     protected function sendTG() {
         $bot = new BotApi($this->message->telegram_bot->api_token);
-        if($this->message->message_files->count()) {
-            $mediaArr = TechBotFacade::createMedia($this->message);
-            $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
-        } else {
-            $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
+        try {
+            if($this->message->message_files->count()) {
+                $mediaArr = TechBotFacade::createMedia($this->message);
+                $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+            } else {
+                $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
+            }
+        } catch (HttpException $exception) {
+            TechBotFacade::send(__('webapp.error_sending_tg', [
+                'id' => $this->message->id,
+                'channel' => $this->channel->name,
+                'bot' => $this->message->telegram_bot->name
+            ]));
+            throw($exception);
         }
+
     }
 
     protected function updateMessageStatus($error = null)

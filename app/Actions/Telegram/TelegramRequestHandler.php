@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\HttpException;
 use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 
 class TelegramRequestHandler
@@ -96,18 +97,28 @@ class TelegramRequestHandler
                     "#author_type# #author_link# ".__('webapp.has_posted')." #message_link#"
                 );
 
-                if($message->message_files->count()) {
-                    /** @var Message $message */
-                    $mediaArr = TechBotFacade::createMedia($message);
-                    $botApi->sendMediaGroup($chat_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
-                    $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
-                } else {
-                    $botApi->sendMessage($chat_id, $message->text, 'HTML');
-                    $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
-                }
+                try {
+                    if ($message->message_files->count()) {
+                        /** @var Message $message */
+                        $mediaArr = TechBotFacade::createMedia($message);
+                        $botApi->sendMediaGroup($chat_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+                        $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+                    } else {
+                        $botApi->sendMessage($chat_id, $message->text, 'HTML');
+                        $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
+                    }
 
-                $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
-                $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id']);
+                    $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
+                    $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id']);
+                } catch (HttpException $exception) {
+                    $msg_error = __('webapp.error_sending_moderation', [
+                        'id' => $message->id,
+                        'g_id' => $message->telegram_bot->moderation_group,
+                        'bot' => $message->telegram_bot->name
+                    ]);
+                    Log::error($msg_error);
+                    TechBotFacade::send($msg_error);
+                }
             }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
