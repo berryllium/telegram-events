@@ -36,6 +36,7 @@ return [
     'email' => 'Email',
     'error' => 'Ошибка',
     'error_sending_channels' => 'Не удалось отправить в каналы: :channels',
+    'error_max_days' => 'Нельзя запланировать отправку сообщения более, чем на :days дней!',
     'files' => 'Файлы',
     'form' => 'Форма',
     'from' => 'от',

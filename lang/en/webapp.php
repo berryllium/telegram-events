@@ -32,6 +32,8 @@ return [
     'edit_channel' => 'Edit Channel',
     'email' => 'Email',
     'error' => 'Error',
+    'error_sending_channels' => 'Could not to send in channels: :channels',
+    'error_max_days' => 'Нельзя запланировать отправку сообщения более, чем на :days дней!',
     'files' => 'Files',
     'form' => 'Form',
     'from' => 'from',

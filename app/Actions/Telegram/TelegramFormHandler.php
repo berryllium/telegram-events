@@ -25,6 +25,16 @@ class TelegramFormHandler
             $data = $request->toArray();
             $fields = [];
 
+            foreach ($data['schedule'] as $date) {
+                $date = $date ? Carbon::parse($date) : Carbon::now();
+                $diff = $date->diffInDays(Carbon::now());
+                if($diff >= config('app.messages_storage_period')) {
+                    return response()->json(['error' => __('webapp.error_max_days', [
+                        'days' => config('app.messages_storage_period')
+                    ])]);
+                }
+            }
+
             foreach ($telegramBot->form->fields as $field) {
                 if($field->code == 'files') continue;
                 if(isset($data[$field->code]) && $data[$field->code]) {
