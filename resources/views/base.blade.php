@@ -12,8 +12,8 @@
                     <a class="text-warning-emphasis nav-link{{ request()->path() == 'form' ? ' active' : '' }}"  href="{{ route('form.index') }}">{{ __('menu.forms') }}</a>
                 </li>
             @endif
-            @if(session('bot'))
-                @if($form = \App\Models\TelegramBot::find(session('bot'))?->form?->id)
+            @if(session('bot') && $bot = \App\Models\TelegramBot::find(session('bot')))
+                @if(property_exists($bot, 'form') && $form = $bot->form)
                     <li class="nav-item">
                         <a class="nav-link{{ request()->segment(1) == 'form' && request()->segment(2) ? ' active' : '' }}"  href="{{ route('form.edit', $form) }}">{{ __('menu.form') }}</a>
                     </li>
