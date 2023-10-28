@@ -72,6 +72,7 @@ return [
     'status' => 'Статус',
     'success' => 'Успех',
     'channel_id' => 'ID Канала',
+    'choose_bot' => 'Выберите бота',
     'edit_channel' => 'Редактирование канала',
     'title' => 'Название',
     'to' => 'до',

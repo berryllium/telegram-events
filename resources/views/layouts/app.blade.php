@@ -30,7 +30,7 @@
 
                     @if($userBots->count() > 1)
                         <button class="btn btn-outline-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            {{ $bot ? $bot->name : ''  }}
+                            {{ $bot ? $bot->name : __('webapp.choose_bot')  }}
                         </button>
                         <ul class="dropdown-menu">
                             @foreach($userBots as $bot)

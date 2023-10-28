@@ -76,6 +76,7 @@ return [
     'title' => 'Title',
     'type' => 'Type',
     'channel_id' => 'Channel ID',
+    'choose_bot' => 'Choose the bot',
     'trusted_author' => '❗Trusted author❗',
     'update' => 'Update',
     'user' => 'User',
