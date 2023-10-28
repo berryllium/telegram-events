@@ -24,7 +24,7 @@
             <div class="dropdown">
                 @if(auth()->user())
                     @php
-                        $bot = \App\Models\TelegramBot::find(session('bot'))->first();
+                        $bot = \App\Models\TelegramBot::find(session('bot'));
                         $userBots = auth()->user()->hasRole('supervisor') ? \App\Models\TelegramBot::all() : auth()->user()->telegram_bots;
                     @endphp
 
