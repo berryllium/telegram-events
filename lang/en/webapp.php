@@ -69,6 +69,7 @@ return [
     'sort' => 'Sort',
     'sending_time' => 'Sending time',
     'sending_title' => 'Sending message #:message',
+    'show_deleted' => 'Show deleted',
     'status' => 'Status',
     'success' => 'Success',
     'tag_set' => 'Tags set',
@@ -98,7 +99,8 @@ return [
         'scheduled_dispatch_time' => 'Scheduled dispatch time',
         'real_dispatch_time' => 'Real dispatch time',
         'sending_allowed' => 'Sending allowed',
-        'title' => 'Messages'
+        'title' => 'Messages',
+        'deleted' => 'Message deleted',
     ],
     'users' => [
         'list' => 'Users list',

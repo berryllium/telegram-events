@@ -22,4 +22,13 @@
             @endforeach
         </select>
     </div>
+    <div class="col-lg-2 col-6 my-1">
+        <div class="form-check">
+            <input id="deleted" class="form-check-input" type="checkbox" value="1" name="deleted" {{ request('deleted') ? 'checked' : '' }}>
+            <label class="form-check-label" for="deleted">
+                {{ __('webapp.show_deleted') }}
+            </label>
+        </div>
+    </div>
+
 @endsection

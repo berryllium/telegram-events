@@ -6,22 +6,34 @@
 
     <table class="table table-striped d-block d-md-table overflow-x-auto">
         <tr>
+            <th>#</th>
             <th>{{ __('webapp.author') }}</th>
             <th>{{ __('webapp.message_text') }}</th>
             <th>{{ __('webapp.sending_time') }}</th>
-            <th>{{ __('webapp.status') }}</th>
             <th class="action-cell">{{ __('webapp.actions') }}</th>
         </tr>
 
-        @foreach($schedules as $schedule)
-            <tr>
-                <td>{{ $schedule->message->author->name }}</td>
-                <td>{{ Str::of(strip_tags($schedule->message->text))->limit(50) }}</td>
-                <td>{{ $schedule->sending_date }}</td>
-                <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
+        @foreach($messages as $message)
+            <tr class="{{ $message->trashed() ? 'opacity-25' : '' }}">
+                <td>{{ $message->id }}</td>
+                <td>{{ $message->author->name }}</td>
+                <td>{{ Str::of(strip_tags($message->text))->limit(50) }}</td>
+                <td>
+                    <table class="table">
+                        @foreach($message->message_schedules as $schedule)
+                            <tr class="{{ $schedule->trashed() ? 'opacity-25' : '' }}">
+                                <td>{{ $schedule->sending_date }}</td>
+                                <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
+                            </tr>
+                        @endforeach
+                    </table>
+                </td>
                 <td class="align-middle text-nowrap">
-                    @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
-                        <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
+                    <a href="{{ route('message.edit', $message) }}" class="btn btn-primary m-1">
+                        <i class="bi bi-pen" role="button"></i>
+                    </a>
+                    @if(!$message->trashed() and auth()->user()->hasAnyRole('supervisor', 'admin'))
+                        <form action="{{ route('message.destroy', $message) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
                             @csrf
                             @method('delete')
                             <button class="btn btn-danger" type="submit">
@@ -29,13 +41,10 @@
                             </button>
                         </form>
                     @endif
-                    <a href="{{ route('message.edit', $schedule->message) }}" class="btn btn-primary m-1">
-                        <i class="bi bi-pen" role="button"></i>
-                    </a>
                 </td>
             </tr>
         @endforeach
     </table>
-    <div class="row"><div class="col-6">{{ $schedules->links() }}</div></div>
+    <div class="row"><div class="col-6">{{ $messages->links() }}</div></div>
 
 @endsection

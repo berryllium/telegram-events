@@ -24,11 +24,12 @@ class MessageController extends Controller
             'status',
             'from',
             'to',
+            'deleted'
         ]);
         $filters['telegram_bot'] = session('bot');
 
         return view('message.index', [
-            'schedules' => MessageSchedule::with('message.author')->filter($filters)->paginate(20),
+            'messages' => Message::with('author', 'message_schedules')->filter($filters)->paginate(20),
         ]);
     }
 
@@ -90,7 +91,10 @@ class MessageController extends Controller
      */
     public function destroy(Message $message)
     {
+        foreach ($message->message_files as $file) {
+            $file->delete();
+        }
         $message->delete();
-        return redirect(route('messages.index'))->with('success', __('webapp.message_deleted'));
+        return redirect(route('message.index'))->with('success', __('webapp.messages.deleted'));
     }
 }
