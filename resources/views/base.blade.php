@@ -30,6 +30,9 @@
                 <li class="nav-item">
                     <a class="nav-link{{ request()->segment(1) == 'dictionary' ? ' active' : '' }}" href="{{ route('dictionary.index') }}">{{ __('menu.dictionaries') }}</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link{{ request()->segment(1) == 'report' ? ' active' : '' }}" href="{{ route('report.index') }}">{{ __('menu.reports') }}</a>
+                </li>
             @endif
         @endif
         @if(auth()->user()->hasAnyRole('supervisor', 'admin', 'moderator') and @session('bot'))

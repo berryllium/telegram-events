@@ -58,6 +58,7 @@ return [
     'price_exact' => 'Exact price',
     'price_min' => 'Min price',
     'price_range' => 'Price range',
+    'report' => 'Report',
     'record_added' => 'Record has been successfully added',
     'record_deleted' => 'Record has been successfully deleted',
     'record_updated' => 'Record has been successfully updated',

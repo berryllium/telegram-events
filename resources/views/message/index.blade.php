@@ -21,9 +21,9 @@
                 <td>
                     <table class="table">
                         @foreach($message->message_schedules as $schedule)
-                            <tr class="{{ $schedule->trashed() ? 'opacity-25' : '' }}">
-                                <td>{{ $schedule->sending_date }}</td>
-                                <td class="table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
+                            <tr class=" {{ $schedule->trashed() ? 'opacity-25' : '' }}">
+                                <td class="col-4">{{ $schedule->sending_date }}</td>
+                                <td class="col-4 text-center table-{{ $schedule->status_class }}">{{ $schedule->status_name }}</td>
                             </tr>
                         @endforeach
                     </table>

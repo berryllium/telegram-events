@@ -56,6 +56,10 @@ class Message extends Model
         return $this->belongsTo(TelegramBot::class);
     }
 
+    public function place() : BelongsTo {
+        return $this->belongsTo(Place::class);
+    }
+
     public function author() : BelongsTo {
         return $this->belongsTo(Author::class);
     }

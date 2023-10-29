@@ -34,6 +34,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/', fn() => redirect('/message'));
     Route::get('/bot-switch/{bot}', \App\Http\Controllers\BotSwitchController::class)->name('bot_switch');
 
+    Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
+    Route::get('/report/process', [\App\Http\Controllers\ReportController::class, 'process'])->name('report.process')->withTrashed();
+
     Route::get('/test', \App\Http\Controllers\TestController::class);
 });
 
