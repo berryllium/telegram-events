@@ -16,6 +16,7 @@ abstract class Report
             ->where('created_at', '<=', $to)
             ->where('telegram_bot_id', session('bot'))
             ->filter(['deleted' => true])
+            ->select('id', 'author_id', 'place_id')
             ->with('message_schedules')
             ->with('author')
             ->get();
