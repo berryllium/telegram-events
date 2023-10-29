@@ -17,6 +17,7 @@ class PlaceReport extends Report
 
         $messages = $this->getMessagesForPeriod($from, $to);
         foreach($messages as $message) {
+            if(!$message->place_id) continue;
             if(!isset($places[$message->place_id])) {
                 $places[$message->place_id] = [
                     'name' => $message->place->name,
