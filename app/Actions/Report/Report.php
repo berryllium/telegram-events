@@ -11,11 +11,13 @@ abstract class Report
     abstract protected function process();
 
     protected function getMessagesForPeriod($from, $to) {
-        return Message::query()->filter([
-            'from' => $from,
-            'to' => $to,
-            'deleted' => true,
-            'telegram_bot' => session('bot'),
-        ])->with('message_schedules')->with('message_schedules')->get();
+        return Message::query()
+            ->where('created_at', '>=', $from)
+            ->where('created_at', '<=', $to)
+            ->where('telegram_bot', session('bot'))
+            ->filter(['deleted' => true])
+            ->with('message_schedules')
+            ->with('author')
+            ->get();
     }
 }
