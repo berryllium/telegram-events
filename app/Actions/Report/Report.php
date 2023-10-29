@@ -14,7 +14,7 @@ abstract class Report
         return Message::query()
             ->where('created_at', '>=', $from)
             ->where('created_at', '<=', $to)
-            ->where('telegram_bot', session('bot'))
+            ->where('telegram_bot_id', session('bot'))
             ->filter(['deleted' => true])
             ->with('message_schedules')
             ->with('author')
