@@ -90,9 +90,9 @@ class ProcessMessage implements ShouldQueue
 
     /**
      * @return string link
-     * @throws Exception
      * @throws HttpException
      * @throws InvalidArgumentException
+     * @throws \Exception
      */
     protected function sendTG() : string {
         Log::info('sending', ['tg']);
