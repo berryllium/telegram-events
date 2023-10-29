@@ -104,6 +104,7 @@ class ProcessMessage implements ShouldQueue
             } else {
                 $tg_message = $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
             }
+            if(is_array($tg_message)) $tg_message = reset($tg_message);
             /** @var \TelegramBot\Api\Types\Message  $tg_message */
             return strtr('<a href="https://t.me/c/CID/MID">TEXT</a>', [
                 'CID' => substr($tg_message->getChat()->getId(), 4),
