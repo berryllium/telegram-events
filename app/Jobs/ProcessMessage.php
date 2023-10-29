@@ -111,7 +111,7 @@ class ProcessMessage implements ShouldQueue
                 'MID' => $tg_message->getMessageId(),
                 'TEXT' => __('webapp.tg_link_text')
             ]);
-        } catch (HttpException $exception) {
+        } catch (\Exception $exception) {
             TechBotFacade::send(__('webapp.error_sending_tg', [
                 'id' => $this->message->id,
                 'channel' => $this->channel->name,
