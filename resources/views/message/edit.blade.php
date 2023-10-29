@@ -57,10 +57,11 @@
             </div>
         </div>
 
-
+        @if(!$msg->trashed())
         <div>
             <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
         </div>
+        @endif
     </form>
 
     <h3 class="mt-4">{{ __('webapp.messages.schedule') }}</h3>

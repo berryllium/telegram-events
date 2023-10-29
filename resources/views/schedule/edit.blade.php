@@ -11,8 +11,10 @@
                     <th>{{ __('webapp.status') }}</th>
                     <th>{{ __('webapp.link') }}</th>
                     <th>{{ __('webapp.error') }}</th>
-                    <th>{{ __('webapp.retry') }}</th>
-                    <th>{{ __('webapp.delete') }}</th>
+                    @if(!$schedule->trashed())
+                        <th>{{ __('webapp.retry') }}</th>
+                        <th>{{ __('webapp.delete') }}</th>
+                    @endif
                 </tr>
                 @foreach($schedule->channels as $channel)
                     <tr>
@@ -28,6 +30,7 @@
                         </td>
                         <td>{!! $channel->pivot->link !!}</td>
                         <td>{{ $channel->pivot->error }}</td>
+                        @if(!$schedule->trashed())
                         <td>
                             @if($channel->pivot->error)
                                 <label><input type="radio" name="act[{{ $channel->id }}][retry]"></label>
@@ -38,6 +41,7 @@
                                 <label><input type="radio" name="act[{{ $channel->id }}][delete]"></label>
                             @endif
                         </td>
+                        @endif
                     </tr>
                 @endforeach
             </table>
@@ -46,6 +50,8 @@
             <label for="sending_date" class="form-label">{{ __('webapp.sending_time') }}</label>
             <input id="sending_date" type="datetime-local" class="form-control" name="sending_date" value="{{ $schedule->sending_date }}">
         </div>
-        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
+        @if(!$schedule->trashed())
+            <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
+        @endif
     </form>
 @endsection

@@ -10,7 +10,7 @@
     </tr>
     @php $counter = 1; @endphp
     @foreach($schedules as $schedule)
-        <tr>
+        <tr class="{{ $schedule->trashed() ? 'opacity-25' : '' }}">
             <td>{{ $counter ++ }}</td>
             <td>{{ $schedule->sending_date }}</td>
             <td>{{ $schedule->status == 'success' ? $schedule->updated_at : '' }}</td>
@@ -25,6 +25,7 @@
                 <a href="{{ route('message_schedule.edit', $schedule) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>
                 </a>
+                @if(!$schedule->trashed())
                 <form action="{{ route('message_schedule.destroy', $schedule) }}" method="post" class="d-inline m-1" data-action="delete" data-text="{{ __('webapp.deletion_confirm') }}">
                     @csrf
                     @method('delete')
@@ -32,6 +33,7 @@
                         <i class="bi bi-trash" role="button" onclick="this.parentNode.submit()"></i>
                     </button>
                 </form>
+                @endif
             </td>
         </tr>
     @endforeach
