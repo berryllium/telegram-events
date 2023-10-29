@@ -77,7 +77,8 @@ class TelegramFormHandler
             $message = $telegramBot->messages()->create([
                 'data' => json_encode($data),
                 'text' => $text,
-                'allowed' => false
+                'place_id' => isset($place) ? $place->id : null,
+                'allowed' => false,
             ]);
 
             if(isset($files)) {

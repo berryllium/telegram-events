@@ -18,7 +18,8 @@ class Message extends Model
     protected $fillable = [
         'text',
         'data',
-        'allowed'
+        'allowed',
+        'place_id',
     ];
 
     public function getDataAttribute($value)
