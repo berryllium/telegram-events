@@ -34,7 +34,7 @@ class MessageSchedule extends Model
     }
 
     public function channels() {
-        return $this->belongsToMany(Channel::class)->withPivot(['sent', 'error']);
+        return $this->belongsToMany(Channel::class)->withPivot(['sent', 'error', 'link']);
     }
 
     public function message() {

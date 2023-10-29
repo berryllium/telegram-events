@@ -9,6 +9,7 @@
                 <tr>
                     <th>{{ __('webapp.channels') }}</th>
                     <th>{{ __('webapp.status') }}</th>
+                    <th>{{ __('webapp.link') }}</th>
                     <th>{{ __('webapp.error') }}</th>
                     <th>{{ __('webapp.retry') }}</th>
                     <th>{{ __('webapp.delete') }}</th>
@@ -25,6 +26,7 @@
                                 {{ __('webapp.process') }}
                             @endif
                         </td>
+                        <td>{!! $channel->pivot->link !!}</td>
                         <td>{{ $channel->pivot->error }}</td>
                         <td>
                             @if($channel->pivot->error)

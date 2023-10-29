@@ -192,7 +192,7 @@ class VKService
         $post_id  = $response['response']['post_id'];
         $this->sendlog("VK: Итоговые переменные gr_id: " . $gr_id . " post_id: " . $post_id);
         $this->sendlog("Запись успешно опубликована! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>");
-        return "Бот опубликовал автоматически запись в группе вконтакте! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>";
+        return "https://vk.com/wall-{$gr_id}_{$post_id}";
 
     }
 

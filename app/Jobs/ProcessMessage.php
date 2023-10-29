@@ -13,6 +13,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Exception;
 use TelegramBot\Api\HttpException;
@@ -40,21 +41,25 @@ class ProcessMessage implements ShouldQueue
         try {
             $this->message = $this->messageSchedule->message;
             if($this->queue == 'vk') {
-                $this->sendVK();
+                $link = $this->sendVK();
             } elseif($this->queue == 'tg') {
-                $this->sendTG();
+                $link = $this->sendTG();
+            } else {
+                $link = '';
             }
-            $this->updateMessageStatus();
+            $this->updateMessageStatus(link: $link);
         } catch (\Exception $exception) {
-            $this->updateMessageStatus($exception->getMessage());
+            $this->updateMessageStatus(error: $exception->getMessage());
             throw $exception;
         }
     }
 
     /**
+     * @return string link
      * @throws \Exception
      */
-    protected function sendVK() {
+    protected function sendVK(): string
+    {
         $vk = new VKService(config('app.vk_token'),$this->channel->tg_id, '');
         try {
             if($this->message->message_files->count()) {
@@ -67,7 +72,11 @@ class ProcessMessage implements ShouldQueue
                     }
                 }
             }
-            $vk->Post(strip_tags($this->message->text));
+
+            return strtr('<a href="LINK">TEXT</a>', [
+                'LINK' => $vk->Post(strip_tags($this->message->text)),
+                'TEXT' => __('webapp.tg_link_text')
+            ]);
         } catch (\Exception $exception) {
             TechBotFacade::send(__('webapp.error_sending_vk', [
                 'id' => $this->message->id,
@@ -80,19 +89,27 @@ class ProcessMessage implements ShouldQueue
     }
 
     /**
+     * @return string link
      * @throws Exception
      * @throws HttpException
      * @throws InvalidArgumentException
      */
-    protected function sendTG() {
+    protected function sendTG() : string {
+        Log::info('sending', ['tg']);
         $bot = new BotApi($this->message->telegram_bot->api_token);
         try {
             if($this->message->message_files->count()) {
                 $mediaArr = TechBotFacade::createMedia($this->message);
-                $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
+                $tg_message = $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
             } else {
-                $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
+                $tg_message = $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
             }
+            /** @var \TelegramBot\Api\Types\Message  $tg_message */
+            return strtr('<a href="https://t.me/c/CID/MID">TEXT</a>', [
+                'CID' => substr($tg_message->getChat()->getId(), 4),
+                'MID' => $tg_message->getMessageId(),
+                'TEXT' => __('webapp.tg_link_text')
+            ]);
         } catch (HttpException $exception) {
             TechBotFacade::send(__('webapp.error_sending_tg', [
                 'id' => $this->message->id,
@@ -104,10 +121,11 @@ class ProcessMessage implements ShouldQueue
 
     }
 
-    protected function updateMessageStatus($error = null)
+    protected function updateMessageStatus($link = null, $error = null)
     {
         $this->messageSchedule->channels()->updateExistingPivot($this->channel->id, [
             'error' => $error,
+            'link' => $link,
             'sent' => true
         ]);
 
