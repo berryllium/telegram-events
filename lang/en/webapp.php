@@ -76,6 +76,7 @@ return [
     'tag_set' => 'Tags set',
     'tg_link_text' => 'Go to the message',
     'to' => 'to',
+    'total' => 'Total',
     'template_code' => 'Placeholder',
     'title' => 'Title',
     'type' => 'Type',

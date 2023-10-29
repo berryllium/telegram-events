@@ -7,6 +7,13 @@ use Carbon\Carbon;
 class AuthorReport extends Report
 {
     public function handle($data) {
+        $total = [
+            'total_messages' => 0,
+            'total_sending' => 0,
+            'success_sending' => 0,
+            'wait_sending' => 0,
+            'error_sending' => 0,
+        ];
         $authors = [];
         $from = Carbon::parse($data['from']);
         $to = Carbon::parse($data['to']);
@@ -29,15 +36,20 @@ class AuthorReport extends Report
                 ];
             }
             $authors[$message->author_id]['total_messages'] ++;
+            $total['total_messages'] ++;
             foreach ($message->message_schedules as $schedule) {
                 $authors[$message->author_id]['total_sending'] ++;
                 $authors[$message->author_id]["{$schedule->status}_sending"]++;
+
+                $total['total_sending'] ++;
+                $total["{$schedule->status}_sending"]++;
             }
         }
         return view('report.result_author', [
             'authors' => $authors,
             'title' => __('webapp.report') . ' - ' . __('webapp.author'),
-            'period' => "$from - $to"
+            'period' => "$from - $to",
+            'total' => $total
         ]);
     }
 

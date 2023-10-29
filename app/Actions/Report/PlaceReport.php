@@ -7,6 +7,13 @@ use Carbon\Carbon;
 class PlaceReport extends Report
 {
     public function handle($data) {
+        $total = [
+            'total_messages' => 0,
+            'total_sending' => 0,
+            'success_sending' => 0,
+            'wait_sending' => 0,
+            'error_sending' => 0,
+        ];
         $places = [];
         $from = Carbon::parse($data['from']);
         $to = Carbon::parse($data['to']);
@@ -30,15 +37,20 @@ class PlaceReport extends Report
                 ];
             }
             $places[$message->place_id]['total_messages'] ++;
+            $total['total_messages'] ++;
             foreach ($message->message_schedules as $schedule) {
                 $places[$message->place_id]['total_sending'] ++;
                 $places[$message->place_id]["{$schedule->status}_sending"]++;
+                
+                $total['total_sending'] ++;
+                $total["{$schedule->status}_sending"]++;
             }
         }
         return view('report.result_place', [
             'places' => $places,
             'title' => __('webapp.report') . ' - ' . __('webapp.places.place'),
-            'period' => "$from - $to"
+            'period' => "$from - $to",
+            'total' => $total
         ]);
     }
 

@@ -21,5 +21,13 @@
                 <td>{{ $author['error_sending'] }}</td>
             </tr>
         @endforeach
+        <tr class="table-dark">
+            <td>{{ __('webapp.total') }}</td>
+            <td>{{ $total['total_messages'] }}</td>
+            <td>{{ $total['total_sending'] }}</td>
+            <td>{{ $total['success_sending'] }}</td>
+            <td>{{ $total['wait_sending'] }}</td>
+            <td>{{ $total['error_sending'] }}</td>
+        </tr>
     </table>
 @endsection
