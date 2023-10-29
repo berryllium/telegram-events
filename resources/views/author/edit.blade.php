@@ -4,6 +4,9 @@
     <form method="post" action="{{ route('author.update', $author) }}">
         @csrf
         @method('put')
+        @if($author->username)
+            <div class="mb-3">{{ __('webapp.login') }} - <a href="https://t.me/{{ $author->username }}" target="_blank">{{ $author->username }}</a></div>
+        @endif
         <div class="mb-3">
             <label for="title" class="form-label">{{ __('webapp.name') }}</label>
             <input type="text" class="form-control" id="title" name="title" value="{{ $pivot->title }}">
