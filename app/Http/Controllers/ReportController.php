@@ -20,10 +20,10 @@ class ReportController extends Controller
             'type' => 'required',
         ]);
 
-        if($data['type'] == 'author') {
-            return (new AuthorReport)->handle($data);
-        } elseif($data['type'] == 'place') {
-            return (new PlaceReport)->handle($data);
+        $report = ucfirst($data['type']);
+        $class = "\\App\\Actions\\Report\\{$report}Report";
+        if(class_exists($class)) {
+            return (new $class)->handle($data);
         }
         return back()->with('error', __('webapp.error'));
     }

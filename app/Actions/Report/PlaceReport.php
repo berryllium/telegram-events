@@ -53,9 +53,4 @@ class PlaceReport extends Report
             'total' => $total
         ]);
     }
-
-    protected function process()
-    {
-
-    }
 }

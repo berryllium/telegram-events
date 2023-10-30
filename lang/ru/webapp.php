@@ -181,5 +181,7 @@ return [
         'success_sending' => 'Успешных отправок',
         'wait_sending' => 'Ожидание отправки',
         'error_sending' => 'Ошибка отправки',
+        'edited_messages' => 'Отредактированные сообщения',
+        'deleted_messages' => 'Удаленные сообщения',
     ]
 ];

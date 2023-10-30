@@ -52,9 +52,4 @@ class AuthorReport extends Report
             'total' => $total
         ]);
     }
-
-    protected function process()
-    {
-
-    }
 }

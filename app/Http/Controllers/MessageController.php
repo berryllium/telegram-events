@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Message;
 use App\Models\MessageFile;
+use App\Models\MessageLog;
 use App\Models\MessageSchedule;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
@@ -82,6 +83,12 @@ class MessageController extends Controller
             }
         }
 
+        MessageLog::create([
+            'message_id' => $message->id,
+            'user_id' => auth()->user()->getAuthIdentifier(),
+            'telegram_bot_id' => session('bot'),
+            'action' => 'edit',
+        ]);
 
         return back()->with('success', __('webapp.record_updated'));
     }
@@ -95,6 +102,13 @@ class MessageController extends Controller
             $file->delete();
         }
         $message->delete();
+
+        MessageLog::create([
+            'message_id' => $message->id,
+            'user_id' => auth()->user()->getAuthIdentifier(),
+            'telegram_bot_id' => session('bot'),
+            'action' => 'delete',
+        ]);
         return redirect(route('message.index'))->with('success', __('webapp.messages.deleted'));
     }
 }

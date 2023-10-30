@@ -159,4 +159,17 @@ return [
         'tags' => 'tags',
         'price' => 'price',
     ],
+    'reports' => [
+        'from' => 'From',
+        'to' => 'To',
+        'get' => 'Get report',
+        'time_error' => 'Check dates',
+        'total_messages' => 'Total messages',
+        'total_sending' => 'Total sending',
+        'success_sending' => 'Successful sending',
+        'wait_sending' => 'Wait Pending',
+        'error_sending' => 'Error Sending',
+        'edited_messages' => 'Edited messages',
+        'deleted_messages' => 'Deleted messages',
+    ]
 ];

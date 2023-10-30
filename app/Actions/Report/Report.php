@@ -8,7 +8,6 @@ use Illuminate\Support\Collection;
 abstract class Report
 {
     protected Collection $messages;
-    abstract protected function process();
 
     protected function getMessagesForPeriod($from, $to) {
         return Message::query()

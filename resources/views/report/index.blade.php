@@ -8,6 +8,7 @@
             <select name="type" id="type" class="form-select">
                 <option value="author">{{ __('webapp.author') }}</option>
                 <option value="place">{{ __('webapp.places.place') }}</option>
+                <option value="user">{{ __('webapp.user') }}</option>
             </select>
             @error('type')
             <div class="form-text text-danger">{{ $message }}</div>
