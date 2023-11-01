@@ -6,6 +6,7 @@
         <tr>
             <th>{{ __('webapp.author') }}</th>
             <th class="action-cell">{{ __('webapp.name') }}</th>
+            <th class="action-cell">{{ __('webapp.auto_moderation') }}</th>
             <th class="action-cell">{{ __('webapp.description') }}</th>
             <th class="action-cell">{{ __('webapp.actions') }}</th>
         </tr>
@@ -14,6 +15,7 @@
             <tr>
                 <td>{{ $pivot->author->name }}</td>
                 <td>{{ $pivot->title }}</td>
+                <td>{{ $pivot->author->trusted ? 'Да' : 'Нет' }}</td>
                 <td>{{ $pivot->description }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))

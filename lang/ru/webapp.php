@@ -4,6 +4,7 @@ return [
     'add' => 'Добавить',
     'add_files' => 'Добавить',
     'additional_info' => 'Дополнительная информация',
+    'auto_moderation' => 'Автомодерация',
     'bot' => 'Бот',
     'bot_chosen' => 'Выбран режим редактирования бота :bot',
     'bot_chosen_error' => 'Бот :bot не выбран',
