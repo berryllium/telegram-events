@@ -15,7 +15,7 @@
             <tr>
                 <td>{{ $pivot->author->name }}</td>
                 <td>{{ $pivot->title }}</td>
-                <td>{{ $pivot->author->trusted ? 'Да' : 'Нет' }}</td>
+                <td>{{ $pivot->trusted ? 'Да' : 'Нет' }}</td>
                 <td>{{ $pivot->description }}</td>
                 <td class="align-middle text-nowrap">
                     @if(auth()->user()->hasAnyRole('supervisor', 'admin'))
