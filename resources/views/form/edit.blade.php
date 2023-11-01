@@ -25,7 +25,7 @@
         </div>
         <div class="mb-3">
             <label for="template" class="form-label">{{ __('webapp.forms.template') }}</label>
-            <textarea class="form-control" id="template" name="template" rows="5">{{ $form->template }}</textarea>
+            <textarea class="form-control" id="template" name="template" rows="20">{{ $form->template }}</textarea>
             @error('template')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror

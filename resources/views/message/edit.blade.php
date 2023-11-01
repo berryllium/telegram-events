@@ -8,7 +8,7 @@
         <div class="mb-3 col-lg-6">
             <div class="col-12"><h3 class="mt-4">{{ __('webapp.message_text') }}</h3></div>
             <label for="text" class="d-none"></label>
-            <textarea class="form-control d-none" id="text" name="text" rows="20" data-editor="ck">
+            <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">
                 {{ $msg->htmlText }}
             </textarea>
             @error('text')
