@@ -53,4 +53,38 @@
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
+
+    <form action="{{ route('pin', ['bot' => $bot]) }}" method="post" id="pin_form" class="mt-5">
+        @csrf
+        <h3>{{ __('webapp.pin_link') }}</h3>
+        <div class="select-group mb-3">
+            <label for="pin_channel" class="form-label">{{ __('webapp.pin_channel') }}</label>
+            <select class="form-select" name="pin_channel" id="pin_channel">
+                <option>{{ __('webapp.choose_channel') }}</option>
+                @foreach($bot->channels as $channel)
+                    @if($channel->type == 'tg')
+                        <option value="{{ $channel->tg_id }}">{{ $channel->name }}</option>
+                    @endif
+                @endforeach
+            </select>
+            @error('pin_channel')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="pin_button" class="form-label">{{ __('webapp.pin_button') }}</label>
+            <input type="text" class="form-control" id="pin_button" name="pin_button">
+            @error('pin_button')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="form-group mb-3">
+            <label for="pin-text" class="form-label">{{ __('webapp.pin_text') }}</label>
+            <textarea class="form-control" name="pin_text" id="pin-text" rows="3"></textarea>
+            @error('pin_text')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <button type="submit" form="pin_form" class="btn btn-primary">{{ __('webapp.pin') }}</button>
+    </form>
 @endsection

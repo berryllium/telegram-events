@@ -2,11 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Channel;
 use App\Models\Form;
 use App\Models\TelegramBot;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Http\Request;
 use TelegramBot\Api\BotApi;
+use TelegramBot\Api\Types\Inline\InlineKeyboardMarkup;
+use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 
 class TelegramBotController extends Controller
 {
@@ -109,5 +112,30 @@ class TelegramBotController extends Controller
 
         $bot->delete();
         return redirect(route('bot.index'))->with('success', __('webapp.record_deleted'));
+    }
+
+    public function pin(TelegramBot $bot, Request $request) {
+
+        $data = $request->validate([
+            'pin_channel' => 'required|int',
+            'pin_button' => 'required',
+            'pin_text' => 'required',
+        ]);
+
+        try {
+            $botApi = new BotApi($bot->api_token);
+            $keyboard = new InlineKeyboardMarkup(
+                [
+                    [
+                        ['text' => $data['pin_text'], 'url'=> "https://t.me/{$botApi->getMe()->getUsername()}"]
+                    ]
+                ]
+            );
+            $message = $botApi->sendMessage($data['pin_channel'], __('webapp.greeting'), null, false, null, $keyboard);
+            $botApi->pinChatMessage($data['pin_channel'], $message->getMessageId());
+        } catch (\Exception $exception) {
+            return back()->with('error', $exception->getMessage());
+        }
+        return back()->with('success', __('webapp.pin_success'));
     }
 }

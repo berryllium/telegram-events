@@ -47,6 +47,10 @@ class TelegramBot extends Model
         return $this->hasMany(Place::class);
     }
 
+    public function channels() : HasMany {
+        return $this->hasMany(Channel::class);
+    }
+
     public function setWebhook() : bool {
         try {
             $botApi = new BotApi($this->api_token);

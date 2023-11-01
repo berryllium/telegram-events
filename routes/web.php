@@ -30,6 +30,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/dictionary', \App\Http\Controllers\DictionaryController::class);
 
     Route::post('/form/copy/{form}', '\App\Http\Controllers\FormController@copy')->name('form.copy');
+    Route::post('/pin/{bot}',  '\App\Http\Controllers\TelegramBotController@pin')->name('pin');
 
     Route::get('/', fn() => redirect('/message'));
     Route::get('/bot-switch/{bot}', \App\Http\Controllers\BotSwitchController::class)->name('bot_switch');
