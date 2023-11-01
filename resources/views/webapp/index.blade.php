@@ -94,7 +94,7 @@
                             <label for="field-{{ $k }}" >{{ $field->name }}</label>
                             <select class="form-control" id="field-{{ $k }}" name="{{ $field->code }}" data-select="2" data-live-search="true" {{ $field->required ? 'data-required' : '' }}>
                                 @foreach($addresses as $address)
-                                    <option value="{{ $address->id }}">{{ $address->address }}</option>
+                                    <option value="{{ $address->id }}" {{ $places->first()->id == $address->id ? 'selected' : '' }}>{{ $address->address }}</option>
                                 @endforeach
                             </select>
                         </div>
