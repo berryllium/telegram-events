@@ -30,7 +30,7 @@ class MessageController extends Controller
         $filters['telegram_bot'] = session('bot');
 
         return view('message.index', [
-            'messages' => Message::with('author', 'message_schedules')->filter($filters)->paginate(20),
+            'messages' => Message::with('author', 'message_schedules')->filter($filters)->paginate(20)->withQueryString(),
         ]);
     }
 

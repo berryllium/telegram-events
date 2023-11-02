@@ -20,7 +20,7 @@ class DictionaryController extends Controller
         return view('dictionary.index', [
             'dictionaries' => Dictionary::query()
                 ->where('telegram_bot_id', session('bot'))
-                ->paginate(20)
+                ->paginate(20)->withQueryString()
         ]);
     }
 

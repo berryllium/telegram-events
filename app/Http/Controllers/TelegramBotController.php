@@ -24,7 +24,7 @@ class TelegramBotController extends Controller
     public function index()
     {
         return view('bot/index', [
-            'bots' => TelegramBot::with('form')->paginate(20)
+            'bots' => TelegramBot::with('form')->paginate(20)->withQueryString()
         ]);
     }
 

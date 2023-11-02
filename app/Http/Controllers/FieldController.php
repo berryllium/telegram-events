@@ -20,7 +20,7 @@ class FieldController extends Controller
     public function index(Form $form)
     {
 
-        return view('field/index', ['fields' => $form->fields()->paginate(20), 'form' => $form]);
+        return view('field/index', ['fields' => $form->fields()->paginate(20)->withQueryString(), 'form' => $form]);
     }
 
     /**
