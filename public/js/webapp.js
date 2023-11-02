@@ -77,18 +77,28 @@ window.addEventListener('load', () => {
         const blockFrom =  blockPrice.find('[data-role="from"]')
         const blockTo =  blockPriceTo.find('[data-role="to"]')
 
-        if($(this).val() === 'range') {
-            blockFrom.show()
-            blockPriceTo.show().find('input').attr('data-required', 1)
-            blockTo.show()
-        } else if($(this).val() === 'min') {
-            blockFrom.show()
-            blockPriceTo.hide().find('input').removeAttr('data-required')
-            blockTo.hide()
+        if($(this).val() === 'free' || $(this).val() === 'no') {
+            blockPrice.hide()
+            blockPriceTo.hide()
+            blockPrice.find('input').removeAttr('data-required')
+            blockPriceTo.find('input').removeAttr('data-required')
         } else {
-            blockFrom.hide()
-            blockPriceTo.hide().find('input').removeAttr('data-required')
-            blockTo.hide()
+            blockPrice.show()
+            blockPrice.find('input').attr('data-required', 1)
+
+            if($(this).val() === 'range') {
+                blockFrom.show()
+                blockPriceTo.show().find('input').attr('data-required', 1)
+                blockTo.show()
+            } else if($(this).val() === 'min') {
+                blockFrom.show()
+                blockPriceTo.hide().find('input').removeAttr('data-required')
+                blockTo.hide()
+            } else if($(this).val() === 'exact') {
+                blockFrom.hide()
+                blockPriceTo.hide().find('input').removeAttr('data-required')
+                blockTo.hide()
+            }
         }
     })
 

@@ -103,24 +103,7 @@
                         <x-uploader name="{{ $field->name }}"></x-uploader>
                         @break
                     @case('price')
-                        <div class="price">
-                            <div class="form-group mb-3">
-                                <label for="price-{{ $k }}" >{{ __('webapp.price_type') }}</label>
-                                <select class="form-control" id="price-{{ $k }}" name="price_type" data-select="2" data-minimum-results-for-search="Infinity">
-                                    <option value="min">{{ __('webapp.price_min') }}</option>
-                                    <option value="exact">{{ __('webapp.price_exact') }}</option>
-                                    <option value="range">{{ __('webapp.price_range') }}</option>
-                                </select>
-                            </div>
-                            <div class="form-group mb-3" data-role="price">
-                                <label for="price-{{ $k }}">{{ __('webapp.price') }} <span data-role="from">{{ __('webapp.from') }}</span></label>
-                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code }}" type="number" value="" placeholder="" {{ $field->required ? 'data-required' : '' }}>
-                            </div>
-                            <div class="form-group mb-3" style="display:none;" data-role="price_to">
-                                <label for="price-{{ $k }}">{{ __('webapp.price') }} <span data-role="to">{{ __('webapp.to') }}</label>
-                                <input id="field-{{ $k }}" class="form-control" name="{{ $field->code . '_to' }}" type="number" value="" placeholder="">
-                            </div>
-                        </div>
+                        <x-price isRequired="{{ $field->required }}"  defaultType="{{ $form->default_price_type }}"></x-price>
                         @break
                 @endswitch
         @endforeach

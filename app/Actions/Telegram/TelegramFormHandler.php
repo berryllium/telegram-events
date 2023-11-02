@@ -44,10 +44,17 @@ class TelegramFormHandler
                 }
             }
 
-
             if(isset($data['price_type']) && $data['price_type']) {
-                $fields['price_from'] = $data['price_type'] == 'min' || $data['price_type'] == 'range' ? $fields['price'] : '';
-                $fields['price_to'] = $data['price_type'] == 'range' && isset($data['price_to']) ? $data['price_to'] : '';
+                $fields['price'] = $data['price'] ?? '';
+                $fields['price_from'] = $fields['price_to'] = '';
+                if($data['price_type'] == 'free') {
+                    $fields['price'] == __('webapp.price_free');
+                } elseif($data['price_type'] == 'range') {
+                    $fields['price_from'] = $fields['price'];
+                    $fields['price_to'] = $data['price_to'];
+                } elseif($data['price_type'] == 'min') {
+                    $fields['price_from'] = $fields['price'];
+                }
             }
 
             if(isset($fields['place']) && $fields['place']) {
