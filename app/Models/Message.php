@@ -79,7 +79,7 @@ class Message extends Model
             ->when(
                 $filters['search'] ?? false,
                 fn ($query, $value) => $query->where(
-                    fn($q) => $q->where('text', 'like', "%$value%"))->orWhereHas('message.author',
+                    fn($q) => $q->where('text', 'like', "%$value%"))->orWhereHas('author',
                     fn($q) => $q->where('name', 'like', "%$value%")
                 )
             )
