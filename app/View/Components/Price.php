@@ -12,7 +12,7 @@ class Price extends Component
      * Create a new component instance.
      */
     public function __construct(
-        private readonly string $isRequired,
+        private string $isRequired,
         private readonly string $defaultType
     ){}
 
@@ -34,6 +34,7 @@ class Price extends Component
             $showFrom = false;
             $showTo = false;
         } else if($this->defaultType == 'free' || $this->defaultType == 'no') {
+            $this->isRequired = false;
             $showPrice = false;
             $showPriceTo = false;
             $showFrom = false;

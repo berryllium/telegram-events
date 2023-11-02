@@ -48,7 +48,7 @@ class TelegramFormHandler
                 $fields['price'] = $data['price'] ?? '';
                 $fields['price_from'] = $fields['price_to'] = '';
                 if($data['price_type'] == 'free') {
-                    $fields['price'] == __('webapp.price_free');
+                    $fields['price'] = __('webapp.price_free');
                 } elseif($data['price_type'] == 'range') {
                     $fields['price_from'] = $fields['price'];
                     $fields['price_to'] = $data['price_to'];

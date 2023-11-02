@@ -127,11 +127,11 @@ class TelegramBotController extends Controller
             $keyboard = new InlineKeyboardMarkup(
                 [
                     [
-                        ['text' => $data['pin_text'], 'url'=> "https://t.me/{$botApi->getMe()->getUsername()}"]
+                        ['text' => $data['pin_button'], 'url'=> "https://t.me/{$botApi->getMe()->getUsername()}"]
                     ]
                 ]
             );
-            $message = $botApi->sendMessage($data['pin_channel'], __('webapp.greeting'), null, false, null, $keyboard);
+            $message = $botApi->sendMessage($data['pin_channel'], $data['pin_text'], null, false, null, $keyboard);
             $botApi->pinChatMessage($data['pin_channel'], $message->getMessageId());
         } catch (\Exception $exception) {
             return back()->with('error', $exception->getMessage());
