@@ -21,7 +21,7 @@ class CheckSessionBot
                 auth()->logout();
             } elseif(!session('bot')) {
                 $bot = $request->user()->telegram_bots->count() ? $request->user()->telegram_bots->first() : TelegramBot::first();
-                session('bot', $bot->id);
+                session(['bot' => $bot->id]);
             }
         }
 
