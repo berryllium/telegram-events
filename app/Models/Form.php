@@ -4,9 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Form extends Model
 {
@@ -16,7 +14,16 @@ class Form extends Model
         'name',
         'code',
         'template',
-        'description'
+        'description',
+        'default_price_type'
+    ];
+
+    public static array $price_types = [
+        'range',
+        'min',
+        'exact',
+        'free',
+        'no'
     ];
 
     /**

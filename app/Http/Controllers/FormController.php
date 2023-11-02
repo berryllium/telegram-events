@@ -36,7 +36,9 @@ class FormController extends Controller
     {
         Form::create($request->validate([
             'name' => 'required|min:2',
+            'template' => 'max:1000',
             'description' => 'max:1000',
+            'default_price_type' => ''
         ]));
         return redirect(route('form.index'))->with('success', __('webapp.record_added'));
     }
@@ -68,6 +70,7 @@ class FormController extends Controller
             'name' => 'required|min:2',
             'template' => 'max:1000',
             'description' => 'max:1000',
+            'default_price_type' => ''
         ]));
         return back()->with('success', __('webapp.record_updated'));
     }
