@@ -25,7 +25,7 @@
         <div class="col-lg-6">
             <div><h3 class="mt-4">{{ __('webapp.files') }}</h3></div>
             @if($msg->message_files->count())
-                <div class="d-flex align-middle">
+                <div class="d-flex align-middle flex-wrap">
                     @foreach($msg->message_files as $file)
                         <div class="file col-3 pe-1 pb-1 align-self-end">
                             <div class="border p-2">
