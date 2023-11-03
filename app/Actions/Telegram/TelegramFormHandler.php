@@ -17,9 +17,14 @@ class TelegramFormHandler
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
             if($request->hasFile('files')) {
+                if(count($request->file('files')) > 10) {
+                    throw new \Exception(__('webapp.max_files_count'));
+                }
+
                 $request->validate(
                     ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
                 );
+
                 $files = $request->file('files');
             }
             $data = $request->toArray();

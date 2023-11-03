@@ -53,6 +53,7 @@ return [
     'message_accepted' => 'Сообщение принято',
     'message_text' => 'Текст сообщения',
     'moderation_group' => 'Группа модерации',
+    'max_files_count' => 'Максимальное число файлов - 10',
     'name' => 'Имя',
     'password' => 'Пароль',
     'pin' => 'Закрепить',
