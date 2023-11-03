@@ -180,9 +180,9 @@ class VKService
         $json = file_get_contents("https://api.vk.com/method/wall.post?" . http_build_query($post_params));
         $response = json_decode($json, true);
         $this->sendlog("Ответ от VK: " . print_r($json,true));
-        if(isset($response['error'])) {
+        if(isset($response['error']) || !isset($response['response']['post_id'])) {
             if(isset($response['error']['error_msg']) && $response['error']['error_msg']) {
-                throw new \Exception($response['error']['error_msg']);
+                throw new \Exception($response['error']['error_msg'] ?? 'vk error');
             } else {
                 throw new \Exception(print_r($response, 1));
             }
