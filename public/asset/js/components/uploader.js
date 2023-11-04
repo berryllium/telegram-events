@@ -32,8 +32,9 @@ window.onload = function(){
     })
 
     function checkFile(file) {
-        if(file.size > 1024 * 1024 * 50) {
-            alert(`Файл ${file.name} слишком большой, максимум 50 мегабайт`)
+        const limit = getType(file) === 'image' ? 10 : 50;
+        if(file.size > 1024 * 1024 * limit) {
+            alert(`Файл ${file.name} слишком большой, максимум для этого типа файлов -  ${limit} мегабайт`)
             return false
         }
         return true;
@@ -51,19 +52,22 @@ window.onload = function(){
     }
 
     function renderPreview(file, i) {
-        const type = file.type.split('/')[0]
-        if(type === 'image') {
+        if(getType(file) === 'image') {
             const reader = new FileReader();
             reader.readAsDataURL(file);
             reader.onloadend = function() {
                 $(`#file-img-box-${i}`).html(`<img src="${reader.result}" class="w-100">`)
             }
             return '<i class="bi bi-camera fs-1 p-2"></i>'
-        } else if(type === 'video') {
+        } else if(getType(file) === 'video') {
             return '<i class="bi bi-camera-reels fs-1 p-2"></i>'
         } else {
             return '<i class="bi bi-file-text fs-1 p-2 ></i>'
         }
+    }
+
+    function getType(file) {
+        return file.type.split('/')[0]
     }
 
 }
