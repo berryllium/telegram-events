@@ -36,7 +36,7 @@ class FormController extends Controller
     {
         Form::create($request->validate([
             'name' => 'required|min:2',
-            'template' => 'max:1000',
+            'template' => 'max:' . config('app.post_max_message', 1000),
             'description' => 'max:1000',
             'default_price_type' => ''
         ]));
@@ -68,7 +68,7 @@ class FormController extends Controller
     {
         $form->update($request->validate([
             'name' => 'required|min:2',
-            'template' => 'max:1000',
+            'template' => 'max:' . config('app.post_max_message', 1000),
             'description' => 'max:1000',
             'default_price_type' => ''
         ]));
