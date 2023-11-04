@@ -18,7 +18,7 @@ class TelegramFormHandler
         try {
             if($request->hasFile('files')) {
                 if(count($request->file('files')) > 10) {
-                    throw new \Exception(__('webapp.max_files_count'));
+                    return response()->json(['error' => __('webapp.max_files_count')]);
                 }
 
                 $request->validate(
