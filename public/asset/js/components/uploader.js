@@ -32,7 +32,7 @@ window.onload = function(){
     })
 
     function checkFile(file) {
-        if(file.size > 1048576 * 50) {
+        if(file.size > 1024 * 1024 * 50) {
             alert(`Файл ${file.name} слишком большой, максимум 50 мегабайт`)
             return false
         }
