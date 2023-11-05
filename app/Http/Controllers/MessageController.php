@@ -61,7 +61,7 @@ class MessageController extends Controller
 
         $message->allowed = (bool) $request->get('allowed');
 
-        $has_files = $request->hasFile('current_files');
+        $has_files = $request->hasFile('files') || $request->get('current_files');
         $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
         $message->update($request->validate(
             ['text' => ['required', "max:$max_length", new ValidMessage()]],
