@@ -16,7 +16,10 @@ class TelegramFormHandler
 {
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
+            $has_files = false;
+
             if($request->hasFile('files')) {
+                $has_files = true;
                 if(count($request->file('files')) > 10) {
                     return response()->json(['error' => __('webapp.max_files_count')]);
                 }
@@ -77,10 +80,11 @@ class TelegramFormHandler
 
             $text = Blade::render($telegramBot->form->template, $fields);
 
+            $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
             $validator = Validator::make(
                 ['text' => $text],
-                ['text' => 'max:'. config('app.post_max_message')],
-                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - config('app.post_max_message')])],
+                ['text' => "max:$max_length"],
+                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - $max_length])],
             );
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first()]);
