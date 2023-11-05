@@ -46,6 +46,20 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="tag_set" class="form-label">{{ __('webapp.tag_set') }}</label>
+            <select class="form-select" id="tag_set" name="tag_set" data-select="2">
+                <option value=""></option>
+                @foreach(\App\Models\Dictionary::where('telegram_bot_id', session('bot'))->get() as $tag_set)
+                    <option value="{{ $tag_set->id }}" {{ $place->tag_set == $tag_set->id ? 'selected' : ''}}>
+                        {{ $tag_set->name }}
+                    </option>
+                @endforeach
+            </select>
+            @error('tag_set')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $place->description }}</textarea>
             @error('description')

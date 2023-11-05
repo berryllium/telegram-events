@@ -41,6 +41,7 @@ class PlaceController extends Controller
             'description' => 'max:1000',
             'working_hours' => '',
             'additional_info' => '',
+            'tag_set' => '',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
@@ -78,6 +79,7 @@ class PlaceController extends Controller
             'description' => 'max:1000',
             'working_hours' => '',
             'additional_info' => '',
+            'tag_set' => '',
         ]));
         $place->channels()->sync($request->input('channels'));
         return back()->with('success', __('webapp.record_updated'));
@@ -90,5 +92,18 @@ class PlaceController extends Controller
     {
         $place->delete();
         return redirect(route('place.index'))->with('success', __('webapp.record_deleted'));
+    }
+
+    public function getPlaceTagSets(Place $place) {
+        if($place->tag) {
+            foreach ($place->tag->dictionary_values as $tag) {
+                $set = explode(':', $tag->value, 2);
+                $tag_sets[trim($set[1])] = [
+                    'value' => trim($set[0]),
+                    'type' => 'shop',
+                ];
+            }
+        }
+        return response()->json($tag_sets ?? []);
     }
 }

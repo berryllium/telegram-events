@@ -38,6 +38,8 @@ Route::middleware('auth')->group(function(){
     Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
     Route::get('/report/process', [\App\Http\Controllers\ReportController::class, 'process'])->name('report.process')->withTrashed();
 
+    Route::post('/place/{place}/tags', '\App\Http\Controllers\PlaceController@getPlaceTagSets')->name('place_tags');
+
     Route::get('/test', \App\Http\Controllers\TestController::class);
 });
 

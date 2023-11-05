@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Place extends Model
 {
@@ -17,6 +18,7 @@ class Place extends Model
         'description',
         'working_hours',
         'additional_info',
+        'tag_set'
     ];
 
     public function telegram_bot() : BelongsTo {
@@ -33,5 +35,9 @@ class Place extends Model
 
     public function authors() : BelongsToMany {
         return $this->belongsToMany(Author::class);
+    }
+
+    public function tag() : HasOne {
+        return $this->hasOne(Dictionary::class, 'id', 'tag_set');
     }
 }
