@@ -45,7 +45,9 @@ class PlaceController extends Controller
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
-        $place->channels()->sync($request->input('channels'));
+
+        $channels = array_filter($request->input('channels'));
+        $place->channels()->sync($channels);
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
     }
@@ -81,7 +83,10 @@ class PlaceController extends Controller
             'additional_info' => '',
             'tag_set' => '',
         ]));
-        $place->channels()->sync($request->input('channels'));
+
+        $channels = array_filter($request->input('channels'));
+        $place->channels()->sync($request->input('channels') ?: []);
+
         return back()->with('success', __('webapp.record_updated'));
     }
 

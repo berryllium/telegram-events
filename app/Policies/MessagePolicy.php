@@ -3,6 +3,7 @@
 namespace App\Policies;
 
 use App\Models\Message;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
@@ -10,6 +11,12 @@ use Illuminate\Auth\Access\Response;
 class MessagePolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $message = request()->route('message');
+        if(!$message) return null;
+        return $message->telegram_bot;
+    }
 
     /**
      * Determine whether the user can view any models.

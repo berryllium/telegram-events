@@ -3,13 +3,21 @@
 namespace App\Policies;
 
 use App\Models\Place;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
 
-class PlacePolicy
+class PlacePolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $place = request()->route('place');
+        if(!$place) return null;
+        return $place->telegram_bot;
+    }
+
     /**
      * Determine whether the user can view any models.
      */

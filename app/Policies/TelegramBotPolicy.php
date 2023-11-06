@@ -7,9 +7,14 @@ use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
 
-class TelegramBotPolicy
+class TelegramBotPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot()
+    {
+        return null;
+    }
 
     /**
      * Determine whether the user can view any models.

@@ -3,13 +3,19 @@
 namespace App\Policies;
 
 use App\Models\Author;
+use App\Models\TelegramBot;
 use App\Models\TelegramBotAuthor;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 
-class AuthorPolicy
+class AuthorPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        return null;
+    }
+
     /**
      * Determine whether the user can view any models.
      */

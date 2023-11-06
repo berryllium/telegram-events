@@ -3,13 +3,20 @@
 namespace App\Policies;
 
 use App\Models\Channel;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
 
-class ChannelPolicy
+class ChannelPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $channel = request()->route('channel');
+        if(!$channel) return null;
+        return $channel->telegram_bot;
+    }
 
     /**
      * Determine whether the user can view any models.

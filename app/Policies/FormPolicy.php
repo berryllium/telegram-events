@@ -3,12 +3,19 @@
 namespace App\Policies;
 
 use App\Models\Form;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 
-class FormPolicy
+class FormPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $message = request()->route('message');
+        if(!$message) return null;
+        return $message->telegram_bot;
+    }
 
     /**
      * Determine whether the user can view any models.

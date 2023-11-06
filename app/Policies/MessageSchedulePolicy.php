@@ -3,13 +3,20 @@
 namespace App\Policies;
 
 use App\Models\MessageSchedule;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
 
-class MessageSchedulePolicy
+class MessageSchedulePolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $schedule = request()->route('message_schedule');
+        if(!$schedule) return null;
+        return $schedule->message->telegram_bot;
+    }
 
     /**
      * Determine whether the user can view any models.

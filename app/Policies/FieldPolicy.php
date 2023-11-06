@@ -6,10 +6,20 @@ use App\Models\Field;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
+use Illuminate\Support\Collection;
 
-class FieldPolicy
+class FieldPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot()
+    {
+        $field = request()->route('field');
+        if(!$field) return null;
+        $bots = $field->form->bots;
+        $matchedBotPos = $bots->pluck('id')->search(session('bot'));
+        return $matchedBotPos !== false ? null : $bots->first();
+    }
 
     /**
      * Determine whether the user can view any models.

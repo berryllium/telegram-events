@@ -3,13 +3,20 @@
 namespace App\Policies;
 
 use App\Models\Dictionary;
+use App\Models\TelegramBot;
 use App\Models\User;
 use App\Traits\SupervisorPolicyTrait;
 use Illuminate\Auth\Access\Response;
 
-class DictionaryPolicy
+class DictionaryPolicy extends AbstractModelPolicy
 {
     use SupervisorPolicyTrait;
+
+    public function getBot() : ?TelegramBot {
+        $dictionary = request()->route('dictionary');
+        if(!$dictionary) return null;
+        return $dictionary->telegram_bot;
+    }
 
     /**
      * Determine whether the user can view any models.
