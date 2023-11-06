@@ -11,9 +11,9 @@ class BotSwitchController extends Controller
         $user = auth()->user();
         if($user && $user->telegram_bots->contains($bot) || $user->hasRole('supervisor')) {
             session(['bot' => $bot->id]);
-            return redirect('/')->with('success', __('webapp.bot_chosen', ['bot' => $bot->name]));
+            return back()->with('success', __('webapp.bot_chosen', ['bot' => $bot->name]));
         } else {
-            return redirect('/')->with('error', __('webapp.bot_chosen_error', ['bot' => $bot->name]));
+            return back()->with('error', __('webapp.bot_chosen_error', ['bot' => $bot->name]));
         }
     }
 }
