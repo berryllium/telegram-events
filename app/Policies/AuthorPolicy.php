@@ -13,7 +13,11 @@ class AuthorPolicy extends AbstractModelPolicy
     use SupervisorPolicyTrait;
 
     public function getBot() : ?TelegramBot {
-        return null;
+        $author = request()->route('author');
+        if(!$author) return null;
+        $bots = $author->telegram_bots;
+        $matchedBotPos = $bots->pluck('id')->search(session('bot'));
+        return $matchedBotPos !== false ? null : $bots->first();
     }
 
     /**

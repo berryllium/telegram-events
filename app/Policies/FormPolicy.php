@@ -12,9 +12,7 @@ class FormPolicy extends AbstractModelPolicy
     use SupervisorPolicyTrait;
 
     public function getBot() : ?TelegramBot {
-        $message = request()->route('message');
-        if(!$message) return null;
-        return $message->telegram_bot;
+        return null;
     }
 
     /**
