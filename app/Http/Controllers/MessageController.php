@@ -69,7 +69,7 @@ class MessageController extends Controller
         ));
 
         foreach ($message->message_files as $file) {
-            if (!in_array($file->id, $request->get('current_files'))) {
+            if (!in_array($file->id, $request->get('current_files') ?: [])) {
                 $file->delete();
             }
         }
