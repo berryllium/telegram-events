@@ -15,10 +15,14 @@ class PlaceController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
+        $search = $request->get('search');
         return view('place/index', [
-            'places' => Place::query()->where('telegram_bot_id', session('bot'))->paginate(20)
+            'places' => Place::query()
+                ->where('telegram_bot_id', session('bot'))
+                ->when($search, fn($query) => $query->where('name', 'like', "%$search%"))
+                ->paginate(20)
         ]);
     }
 
