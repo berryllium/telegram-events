@@ -1,4 +1,4 @@
-window.onload = function(){
+window.addEventListener('load', function(){
     const fileInput = $('#file')
     const listBlock = $('[data-role="fileList"]')
     window.fileCollection = []
@@ -70,4 +70,4 @@ window.onload = function(){
         return file.type.split('/')[0]
     }
 
-}
+})

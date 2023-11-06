@@ -1,4 +1,4 @@
-window.onload = function() {
+window.addEventListener('load', function(){
     const select =  $('[data-role="tags"] select')
 
     select.select2({
@@ -51,4 +51,4 @@ window.onload = function() {
             }
         })
     }
-}
+})
