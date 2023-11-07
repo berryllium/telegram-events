@@ -16,7 +16,7 @@
         @foreach($messages as $message)
             <tr class="{{ $message->trashed() ? 'opacity-25' : '' }}">
                 <td>{{ $message->id }}</td>
-                <td>{{ $message->author->name }}</td>
+                <td>{{ $message->author?->name }}</td>
                 <td>{{ Str::of(strip_tags($message->text))->limit(50) }}</td>
                 <td>
                     <table class="table">

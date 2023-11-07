@@ -1,5 +1,5 @@
 @extends('base')
-@section('title', __('webapp.messages.edit', ['author' => $msg->author->name]) )
+@section('title', __('webapp.messages.edit', ['author' => $msg->author?->name]) )
 @section('content')
     <form method="post" class="row" action="{{ route('message.update', $msg) }}" enctype="multipart/form-data">
         @csrf

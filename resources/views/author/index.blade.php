@@ -13,7 +13,7 @@
 
         @foreach($pivots as $pivot)
             <tr>
-                <td>{{ $pivot->author->name }}</td>
+                <td>{{ $pivot->author?->name }}</td>
                 <td>{{ $pivot->title }}</td>
                 <td>{{ $pivot->trusted ? 'Да' : 'Нет' }}</td>
                 <td>{{ $pivot->description }}</td>

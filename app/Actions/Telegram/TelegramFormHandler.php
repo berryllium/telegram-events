@@ -79,7 +79,7 @@ class TelegramFormHandler
             }
 
             $text = Blade::render($telegramBot->form->template, $fields);
-
+            $text = htmlspecialchars_decode($text);
             $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
             $validator = Validator::make(
                 ['text' => $text],
