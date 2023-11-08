@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageLog;
 use App\Models\MessageSchedule;
+use App\Rules\MultibyteLength;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
 
@@ -64,7 +65,7 @@ class MessageController extends Controller
         $has_files = $request->hasFile('files') || $request->get('current_files');
         $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
         $message->update($request->validate(
-            ['text' => ['required', "max:$max_length", new ValidMessage()]],
+            ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length)]],
             ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
         ));
 

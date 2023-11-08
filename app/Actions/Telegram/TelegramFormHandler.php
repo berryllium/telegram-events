@@ -7,6 +7,7 @@ use App\Models\Field;
 use App\Models\MessageFile;
 use App\Models\Place;
 use App\Models\TelegramBot;
+use App\Rules\MultibyteLength;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
@@ -83,7 +84,7 @@ class TelegramFormHandler
             $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
             $validator = Validator::make(
                 ['text' => $text],
-                ['text' => "max:$max_length"],
+                ['text' => new MultibyteLength($max_length)],
                 ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - $max_length])],
             );
             if ($validator->fails()) {
