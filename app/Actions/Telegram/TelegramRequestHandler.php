@@ -10,6 +10,7 @@ use App\Models\Place;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\HttpException;
@@ -55,6 +56,9 @@ class TelegramRequestHandler
                 Log::info('$web_app_data', [$web_app_data]);
                 $web_app_data = json_decode($web_app_data, true);
                 $message = Message::query()->find($web_app_data['message_id']);
+                if(!$message) {
+                    throw new \Exception('message not found');
+                }
                 $message->author_id = $author->id;
                 $trusted = $author->telegram_bots()
                     ->wherePivot('trusted', true)
@@ -65,10 +69,14 @@ class TelegramRequestHandler
 
                 if(isset($message->data->place)) {
                     $place = Place::find($message->data->place);
-                    $channels = $place->channels;
 
                     if($author->places()->where('telegram_bot_id', $bot->id)->count() < 1) {
                         $author->places()->attach($message->data->place);
+                    }
+
+                    $channels = $place->channels ? $place->channels->pluck('id')->toArray() : [];
+                    if(isset($message->data->channels) && $message->data->channels) {
+                        $channels = array_merge($channels, $message->data->channels);
                     }
 
                     if($channels) {

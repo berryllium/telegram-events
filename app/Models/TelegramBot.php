@@ -32,7 +32,7 @@ class TelegramBot extends Model
     }
 
     public function authors() : BelongsToMany {
-        return $this->belongsToMany(Author::class)->withPivot(['trusted', 'title', 'description']);
+        return $this->belongsToMany(Author::class)->withPivot(['trusted', 'title', 'description', 'can_select_channels']);
     }
 
     public function messages() {

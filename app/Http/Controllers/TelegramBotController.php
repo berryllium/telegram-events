@@ -72,9 +72,12 @@ class TelegramBotController extends Controller
      */
     public function edit(Telegrambot $bot, Request $request)
     {
+        $botApi = new BotApi($bot->api_token);
+        $botInfo = $botApi->getWebhookInfo();
         return view('bot/edit', [
             'bot' => $bot,
-            'forms' => Form::query()->where('id', $bot->form->id)->orWhereDoesntHave('bots')->get()
+            'forms' => Form::query()->where('id', $bot->form->id)->orWhereDoesntHave('bots')->get(),
+            'info' => $botInfo
         ]);
     }
 

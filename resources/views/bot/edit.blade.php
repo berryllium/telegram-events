@@ -51,6 +51,12 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        @if(config('app.debug'))
+        <div class="mb-3">
+            <div>Info</div>
+            <div>@dump($info)</div>
+        </div>
+        @endif
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 

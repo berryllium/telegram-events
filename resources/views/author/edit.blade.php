@@ -34,6 +34,11 @@
             @enderror
         </div>
         <div class="mb-3">
+            <input type="hidden" name="can_select_channels" value="0">
+            <input id="can_select_channels" type="checkbox" class="form-check-input" name="can_select_channels" value="1" {{ $pivot->can_select_channels ? 'checked' : '' }}>
+            <label class="form-check-label" for="can_select_channels">{{ __('webapp.can_select_channels') }}</label>
+        </div>
+        <div class="mb-3">
             <input type="hidden" name="trusted" value="0">
             <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $pivot->trusted ? 'checked' : '' }}>
             <label class="form-check-label" for="trusted">{{ __('webapp.trusted_author') }}</label>

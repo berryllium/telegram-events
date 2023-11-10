@@ -21,6 +21,7 @@ return [
     'attention' => 'Внимание!',
     'tag_set' => 'Набор тегов',
     'type' => 'Тип',
+    'can_select_channels' => 'Может выбирать каналы',
     'channels' => 'Каналы',
     'channel_name' => 'Название канала',
     'channel_type' => 'Тип канала',

@@ -62,6 +62,7 @@ class AuthorController extends Controller
         $bot = TelegramBot::find(session('bot'));
         $bot->authors()->updateExistingPivot($author->id, $request->validate([
             'trusted' => 'int',
+            'can_select_channels' => 'int',
             'title' => 'required|max:255',
             'description' => 'max:1000',
         ]));

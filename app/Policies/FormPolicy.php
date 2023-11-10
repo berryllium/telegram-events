@@ -12,7 +12,10 @@ class FormPolicy extends AbstractModelPolicy
     use SupervisorPolicyTrait;
 
     public function getBot() : ?TelegramBot {
-        return null;
+        $form = request()->route('form');
+        if(!$form) return null;
+        $matchedBotPos = $form->bots->pluck('id')->search(session('bot'));
+        return $matchedBotPos !== false ? null : $form->bots->first();
     }
 
     /**
