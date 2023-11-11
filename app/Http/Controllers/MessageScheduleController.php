@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Jobs\ProcessMessage;
 use App\Models\Message;
+use App\Models\MessageLog;
 use App\Models\MessageSchedule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
@@ -51,7 +52,10 @@ class MessageScheduleController extends Controller
      */
     public function edit(MessageSchedule $messageSchedule)
     {
-        return view('schedule.edit', ['schedule' => $messageSchedule]);
+        return view('schedule.edit', [
+            'schedule' => $messageSchedule,
+            'channels' => $messageSchedule->message->telegram_bot->channels->diff($messageSchedule->channels)
+        ]);
     }
 
     /**
@@ -66,6 +70,10 @@ class MessageScheduleController extends Controller
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
 
+        if($new_channels = $request->input('new_channels')) {
+            $messageSchedule->channels()->attach($new_channels);
+        }
+
         if($act = $request->get('act')) {
             foreach ($act as $channel_id => $actions) {
                 if(isset($actions['delete'])) {
@@ -77,7 +85,7 @@ class MessageScheduleController extends Controller
             }
         }
 
-        return redirect(route('message.edit', $messageSchedule->message))->with('success', __('webapp.record_updated'));
+        return back()->with('success', __('webapp.record_updated'));
     }
 
     /**

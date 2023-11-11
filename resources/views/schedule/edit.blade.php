@@ -4,7 +4,7 @@
     <form method="post" action="{{ route('message_schedule.update', $schedule) }}">
         @csrf
         @method('put')
-        <div class="mb-3">
+        <div class="mb-4">
             <table class="table table-striped d-block d-md-table overflow-x-auto">
                 <tr>
                     <th>{{ __('webapp.channels') }}</th>
@@ -37,14 +37,21 @@
                             @endif
                         </td>
                         <td>
-                            @if($channel->pivot->error)
-                                <label><input type="radio" name="act[{{ $channel->id }}][delete]"></label>
-                            @endif
+                            <label><input type="radio" name="act[{{ $channel->id }}][delete]"></label>
                         </td>
                         @endif
                     </tr>
                 @endforeach
             </table>
+        </div>
+        <div class="mb-3">
+            <label for="new_channels">{{ __('webapp.add_channel') }}</label>
+            <select name="new_channels[]" id="new_channels" class="form-select" data-select="2" data-search="true" multiple>
+                @foreach($channels as $ch)
+                    <option value="{{ $ch->id }}">{{ $ch->name }} ({{ $ch->type }})</option>
+                @endforeach
+
+            </select>
         </div>
         <div class="mb-3">
             <label for="sending_date" class="form-label">{{ __('webapp.sending_time') }}</label>
