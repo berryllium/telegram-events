@@ -44,15 +44,20 @@
                 @endforeach
             </table>
         </div>
-        <div class="mb-3">
-            <label for="new_channels">{{ __('webapp.add_channel') }}</label>
-            <select name="new_channels[]" id="new_channels" class="form-select" data-select="2" data-search="true" multiple>
-                @foreach($channels as $ch)
-                    <option value="{{ $ch->id }}">{{ $ch->name }} ({{ $ch->type }})</option>
-                @endforeach
-
-            </select>
-        </div>
+        @if(!$schedule->trashed() && $schedule->status == 'wait')
+            <div class="mb-3">
+                <label for="new_channels">{{ __('webapp.add_channel') }}</label>
+                <select name="new_channels[]" id="new_channels" class="form-select" data-select="2" data-search="true" multiple>
+                    @foreach($channels as $ch)
+                        <option value="{{ $ch->id }}">{{ $ch->name }} ({{ $ch->type }})</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="mb-3">
+                <input type="checkbox" name="all_channels" class="form-check-input" id="all_channels">
+                <label for="all_channels" class="form-check-label">{{ __('webapp.add_all_bot_channels') }}</label>
+            </div>
+        @endif
         <div class="mb-3">
             <label for="sending_date" class="form-label">{{ __('webapp.sending_time') }}</label>
             <input id="sending_date" type="datetime-local" class="form-control" name="sending_date" value="{{ $schedule->sending_date }}">

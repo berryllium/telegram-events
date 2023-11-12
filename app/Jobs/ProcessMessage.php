@@ -129,28 +129,6 @@ class ProcessMessage implements ShouldQueue
             'link' => $link,
             'sent' => true
         ]);
-
-        $sendings = $this->messageSchedule->channels()->wherePivot('message_schedule_id', $this->messageSchedule->id)->get();
-        if($sendings) {
-            $failed_channels = [];
-            $error_text = '';
-            $status = 'success';
-            foreach ($sendings as $sending) {
-                if(!$sending->pivot->sent) {
-                    $status = 'process';
-                }
-                if($sending->pivot->error) {
-                    $failed_channels[] = $sending->name;
-                }
-            }
-            if($failed_channels) {
-                $status = 'error';
-                $error_text = __('webapp.error_sending_channels', ['channels' => implode(', ', $failed_channels)]);
-            }
-            $this->messageSchedule->update([
-                'status' => $status,
-                'error_text' => $error_text,
-            ]);
-        }
+        $this->messageSchedule->updateStatus();
     }
 }

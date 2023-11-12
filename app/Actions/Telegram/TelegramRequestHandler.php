@@ -74,9 +74,12 @@ class TelegramRequestHandler
                         $author->places()->attach($message->data->place);
                     }
 
-                    $channels = $place->channels ? $place->channels->pluck('id')->toArray() : [];
-                    if(isset($message->data->channels) && $message->data->channels) {
-                        $channels = array_merge($channels, $message->data->channels);
+                    if(isset($message->data->all_channels) && $message->data->all_channels) {
+                        $channels = $message->telegram_bot->channels;
+                    } elseif(isset($message->data->channels) && $message->data->channels) {
+                        $channels = $message->data->channels;
+                    }else {
+                        $channels = $place->channels;
                     }
 
                     if($channels) {

@@ -100,6 +100,10 @@
                     @endforeach
                 </select>
             </div>
+            <div class="mb-3">
+                <input type="checkbox" name="all_channels" class="form-check-input" id="all_channels">
+                <label for="all_channels" class="form-check-label">{{ __('webapp.add_all_bot_channels') }}</label>
+            </div>
         @endif
 
         <div class="form-group mb-3">
