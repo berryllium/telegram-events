@@ -39,8 +39,8 @@ class SendMessages extends Command
 ;
             foreach ($messageSchedules as $messageSchedule) {
                 foreach ($messageSchedule->channels as $channel) {
-                    ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
                     $messageSchedule->update(['status' => 'process']);
+                    ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
                 }
             }
             sleep(3);
