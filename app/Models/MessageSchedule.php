@@ -42,6 +42,7 @@ class MessageSchedule extends Model
     }
 
     public function updateStatus() {
+        $this->refresh();
         $sendings = $this->channels;
         if($sendings) {
             $failed_channels = [];
