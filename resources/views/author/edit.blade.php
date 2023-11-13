@@ -21,7 +21,7 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-4">
             <label for="form" class="form-label">{{ __('webapp.places.places') }}</label>
             <select class="form-select" id="form" name="places[]" multiple data-select="2">
                 <option value=""></option>
@@ -33,10 +33,22 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-2">
             <input type="hidden" name="can_select_channels" value="0">
             <input id="can_select_channels" type="checkbox" class="form-check-input" name="can_select_channels" value="1" {{ $pivot->can_select_channels ? 'checked' : '' }}>
             <label class="form-check-label" for="can_select_channels">{{ __('webapp.can_select_channels') }}</label>
+        </div>
+        <div class="mb-4">
+            <label for="channels" class="form-label">{{ __('webapp.channels') }}</label>
+            <select class="form-select" id="channels" name="channels[]" multiple data-select="2">
+                <option value=""></option>
+                @foreach($channels as $channel)
+                    <option value="{{ $channel->id }}" {{ $author->channels->contains($channel->id) ? 'selected' : ''}}>{{ $channel->name }}</option>
+                @endforeach
+            </select>
+            @error('form')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
         </div>
         <div class="mb-3">
             <input type="hidden" name="trusted" value="0">

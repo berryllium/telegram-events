@@ -51,6 +51,7 @@ class AuthorController extends Controller
             'author' => $author,
             'pivot' => $pivot,
             'places' => $bot->places()->get(),
+            'channels' => $bot->channels()->get(),
         ]);
     }
 
@@ -69,16 +70,27 @@ class AuthorController extends Controller
 
         $newPlaces = $request->get('places') ?? [];
         $oldPlaces = $author->places()->where('telegram_bot_id', $bot->id)->get();
-
         foreach ($oldPlaces as $place) {
             if(!in_array($place->id, $newPlaces)) {
                 $author->places()->detach($place);
             }
         }
-
         foreach ($newPlaces as $place) {
             if(!$oldPlaces->contains($place)) {
                 $author->places()->attach($place);
+            }
+        }
+
+        $newChannels = $request->get('channels') ?? [];
+        $oldChannels = $author->channels()->where('telegram_bot_id', $bot->id)->get();
+        foreach ($oldChannels as $channel) {
+            if(!in_array($channel->id, $newChannels)) {
+                $author->channels()->detach($channel);
+            }
+        }
+        foreach ($newChannels as $channel) {
+            if(!$oldChannels->contains($channel)) {
+                $author->channels()->attach($channel);
             }
         }
 

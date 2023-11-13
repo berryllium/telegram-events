@@ -91,11 +91,11 @@
                     @break
             @endswitch
         @endforeach
-        @if($can_select_channels)
+        @if($can_select_channels and $channels->count())
             <div class="form-group mb-3">
                 <label for="channels" >{{ __('webapp.channels') }}</label>
                 <select class="form-control" id="channels" name="channels[]" data-select="2" data-live-search="true" multiple>
-                    @foreach($bot->channels as $channel)
+                    @foreach($channels as $channel)
                         <option value="{{ $channel->id }}">{{ $channel->name }} ({{ $channel->type }})</option>
                     @endforeach
                 </select>

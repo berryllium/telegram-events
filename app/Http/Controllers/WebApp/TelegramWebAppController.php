@@ -18,12 +18,14 @@ class TelegramWebAppController extends Controller
         $author = Author::find($request->get('author'));
         $places = new Collection();
         $can_select_channels = false;
+        $channels = [];
 
         if($author) {
             $places = $telegramBot->places->intersect($author->places);
             $pivot = $author->telegram_bots->find($telegramBot)->pivot;
             if($pivot->can_select_channels) {
                 $can_select_channels = true;
+                $channels = $author->channels()->where('telegram_bot_id', $telegramBot->id)->get();
             }
         }
 
@@ -33,6 +35,7 @@ class TelegramWebAppController extends Controller
             'places' => $places->count() ? $places : $telegramBot->places,
             'addresses' => $telegramBot->places()->select('id', 'address')->get(),
             'can_select_channels' => $can_select_channels,
+            'channels' => $channels,
         ]);
     }
 

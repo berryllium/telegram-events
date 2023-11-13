@@ -27,6 +27,10 @@ class Author extends Model
         return $this->belongsToMany(Place::class);
     }
 
+    public function channels() : BelongsToMany {
+        return $this->belongsToMany(Channel::class);
+    }
+
     public function telegram_bots() : BelongsToMany {
         return $this->belongsToMany(TelegramBot::class)->withPivot(['trusted', 'title', 'description', 'can_select_channels']);
     }

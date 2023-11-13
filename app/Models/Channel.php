@@ -32,6 +32,10 @@ class Channel extends Model
         return $this->hasMany(Place::class);
     }
 
+    public function authors() : BelongsToMany {
+        return $this->belongsToMany(Author::class);
+    }
+
     public function telegram_bot() : BelongsTo {
         return $this->belongsTo(TelegramBot::class);
     }
