@@ -54,7 +54,7 @@
         @if(config('app.debug'))
         <div class="mb-3">
             <div>Info</div>
-            <div>@dump($info)</div>
+            <div>{{ $info->pendingUpdateCount }}</div>
         </div>
         @endif
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
