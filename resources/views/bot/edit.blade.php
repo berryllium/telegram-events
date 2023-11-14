@@ -54,7 +54,7 @@
         @if($info)
         <div class="mb-3">
             <div>Info</div>
-            <div>{{ $info->pendingUpdateCount }}</div>
+            <div>{{ $info }}</div>
         </div>
         @endif
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>

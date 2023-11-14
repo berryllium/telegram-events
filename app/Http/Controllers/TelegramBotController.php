@@ -74,7 +74,7 @@ class TelegramBotController extends Controller
     {
         $botApi = new BotApi($bot->api_token);
         try {
-            $botInfo =$botApi->getWebhookInfo();
+            $botInfo = $botApi->getWebhookInfo()->getPendingUpdateCount();
         } catch (\Exception $exception) {
             $botInfo = __('webapp.error');
         }
