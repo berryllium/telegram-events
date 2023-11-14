@@ -76,11 +76,11 @@ class MessageScheduleController extends Controller
             $messageSchedule->channels()->attach($new_channels);
         }
 
-        if($act = $request->get('act')) {
-            foreach ($act as $channel_id => $actions) {
-                if(isset($actions['delete'])) {
+        if($actions = $request->get('act')) {
+            foreach ($actions as $channel_id => $action) {
+                if($action == 'delete') {
                     $messageSchedule->channels()->detach($channel_id);
-                } elseif(isset($actions['retry'])) {
+                } elseif($action == 'retry') {
                     $channel = $messageSchedule->channels()->find($channel_id);
                     ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
                 }

@@ -33,11 +33,11 @@
                         @if(!$schedule->trashed())
                         <td>
                             @if($channel->pivot->error)
-                                <label><input type="radio" name="act[{{ $channel->id }}][retry]"></label>
+                                <label><input type="radio" name="act[{{ $channel->id }}]" value="retry"></label>
                             @endif
                         </td>
                         <td>
-                            <label><input type="radio" name="act[{{ $channel->id }}][delete]"></label>
+                            <label><input type="radio" name="act[{{ $channel->id }}]" value="delete"></label>
                         </td>
                         @endif
                     </tr>
