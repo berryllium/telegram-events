@@ -51,7 +51,7 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        @if(config('app.debug'))
+        @if($info)
         <div class="mb-3">
             <div>Info</div>
             <div>{{ $info->pendingUpdateCount }}</div>
