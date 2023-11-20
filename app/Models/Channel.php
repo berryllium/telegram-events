@@ -25,7 +25,9 @@ class Channel extends Model
         'name',
         'type',
         'description',
-        'telegram_bot_id'
+        'telegram_bot_id',
+        'show_place',
+        'show_address',
     ];
 
     public function places() : HasMany {

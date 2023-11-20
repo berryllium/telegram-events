@@ -30,6 +30,16 @@
             @enderror
         </div>
         <div class="mb-3">
+            <input type="hidden" name="show_place" value="0">
+            <input id="show_place" type="checkbox" class="form-check-input" name="show_place" value="1" {{ $channel->show_place ? 'checked' : '' }}>
+            <label class="form-check-label" for="show_place">{{ __('webapp.show_place') }}</label>
+        </div>
+        <div class="mb-3">
+            <input type="hidden" name="show_address" value="0">
+            <input id="show_address" type="checkbox" class="form-check-input" name="show_address" value="1" {{ $channel->show_address ? 'checked' : '' }}>
+            <label class="form-check-label" for="show_address">{{ __('webapp.show_address') }}</label>
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $channel->description }}</textarea>
             @error('description')

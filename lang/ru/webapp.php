@@ -86,6 +86,8 @@ return [
     'search' => 'Поиск',
     'sort' => 'Сортировка',
     'show_deleted' => 'Показывать удаленные',
+    'show_place' => 'Показывать место',
+    'show_address' => 'Показывать адрес',
     'status' => 'Статус',
     'success' => 'Успех',
     'channel_id' => 'ID Канала',

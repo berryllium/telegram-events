@@ -71,6 +71,8 @@ return [
     'sending_time' => 'Sending time',
     'sending_title' => 'Sending message #:message',
     'show_deleted' => 'Show deleted',
+    'show_place' => 'Show place',
+    'show_address' => 'Show address',
     'status' => 'Status',
     'success' => 'Success',
     'tag_set' => 'Tags set',
