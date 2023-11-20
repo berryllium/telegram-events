@@ -24,6 +24,7 @@ class ProcessMessage implements ShouldQueue
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
     
     protected Message $message;
+    protected $preparedText;
 
     /**
      * Create a new job instance.
@@ -40,6 +41,7 @@ class ProcessMessage implements ShouldQueue
     {
         try {
             $this->message = $this->messageSchedule->message;
+            $this->prepareText();
             if($this->queue == 'vk') {
                 $link = $this->sendVK();
             } elseif($this->queue == 'tg') {
@@ -74,7 +76,7 @@ class ProcessMessage implements ShouldQueue
             }
 
             return strtr('<a href="LINK">TEXT</a>', [
-                'LINK' => $vk->Post(strip_tags($this->message->text)),
+                'LINK' => $vk->Post(strip_tags($this->preparedText)),
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
@@ -102,7 +104,7 @@ class ProcessMessage implements ShouldQueue
                 $mediaArr = TechBotFacade::createMedia($this->message);
                 $tg_message = $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
             } else {
-                $tg_message = $bot->sendMessage($this->channel->tg_id, $this->message->text, 'HTML');
+                $tg_message = $bot->sendMessage($this->channel->tg_id, $this->preparedText, 'HTML');
             }
             if(is_array($tg_message)) $tg_message = reset($tg_message);
             /** @var \TelegramBot\Api\Types\Message  $tg_message */
@@ -130,5 +132,17 @@ class ProcessMessage implements ShouldQueue
             'sent' => true
         ]);
         $this->messageSchedule->updateStatus();
+    }
+
+    private function prepareText(): void
+    {
+        $text = $this->message->text;
+        if(!$this->channel->show_place) {
+            $text = preg_replace("/.*🏢.*\n.*\n/u", "", $text);
+        }
+        if(!$this->channel->show_address) {
+            $text = preg_replace("/.*📍.*\n.*\n/u", "", $text);
+        }
+        $this->preparedText = $text;
     }
 }
