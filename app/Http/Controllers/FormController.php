@@ -36,7 +36,7 @@ class FormController extends Controller
     {
         Form::create($request->validate([
             'name' => 'required|min:2',
-            'template' => 'max:' . config('app.post_without_files_max_message', 1000),
+            'template' => 'required|max:' . config('app.post_without_files_max_message', 1000),
             'description' => 'max:2000',
             'default_price_type' => ''
         ]));
@@ -68,7 +68,7 @@ class FormController extends Controller
     {
         $form->update($request->validate([
             'name' => 'required|min:2',
-            'template' => 'max:' . config('app.post_without_files_max_message', 1000),
+            'template' => 'required|max:' . config('app.post_without_files_max_message', 1000),
             'description' => 'max:2000',
             'default_price_type' => ''
         ]));
