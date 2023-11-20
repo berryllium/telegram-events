@@ -22,18 +22,10 @@ class Locale
     {
         if($request->cookie('lang')) {
             $lang = $request->cookie('lang');
-        } elseif($accept_lang = $request->server('HTTP_ACCEPT_LANGUAGE')) {
-            $accept_lang = explode(';', $accept_lang);
-            $accept_lang = reset($accept_lang);
-            $accept_lang = explode(',', $accept_lang);
-            foreach ($accept_lang as $value) {
-                if(in_array($value, self::LOCALES)) {
-                    $lang = $value;
-                }
-            }
+        } else {
+            $lang = Config::get('app.locale');
         }
-        // you can use $lang instead of Config in the Feature
-        App::setLocale(Config('app.locale'));
+        App::setLocale($lang);
         return $next($request);
     }
 }
