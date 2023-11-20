@@ -12,6 +12,14 @@ window.addEventListener('load', function(){
         $(this).prev().after($(this).prev().clone())
     })
 
+    $(document).on('click', '[data-role="delete-block"]', function(){
+        if($('[data-role="block"]').length > 1) {
+            $(this).closest('[data-role="block"]').remove()
+        } else {
+            alert('Должна быть хотя бы одна дата отправки!')
+        }
+    })
+
     $('[data-action="delete"]').submit(function(){
         if(!confirm(($(this).data('text')) ? ($(this).data('text')) : 'Delete?')) {
             return false

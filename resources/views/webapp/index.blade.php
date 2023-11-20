@@ -106,9 +106,12 @@
             </div>
         @endif
 
-        <div class="form-group mb-3">
+        <div class="form-group mb-3" data-role="block">
             <label for="schedule" >{{ __('webapp.publish_date') }}</label>
-            <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
+            <div class="d-flex">
+                <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
+                <i class="bi bi-trash p-2 ps-4" data-role="delete-block"></i>
+            </div>
         </div>
         <div class="btn btn-primary mt-2 mb-5" data-role="copy-block"> {{ __('webapp.add_date') }}</div>
             <div class="d-flex d-none justify-content-center align-items-center position-fixed vw-100 vh-100 top-0 bg-light" data-role="spinner">
