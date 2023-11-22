@@ -93,6 +93,7 @@ class FormController extends Controller
         $newForm->name = $form->name . ' - ' . __('webapp.replica');
         $newForm->pushQuietly();
         foreach ($form->fields as $field) {
+            $field->dictionary_id = null;
             $newForm->fields()->create($field->toArray());
         }
         return redirect(route('form.edit', $newForm->id))->with('success', __('webapp.record_added'));
