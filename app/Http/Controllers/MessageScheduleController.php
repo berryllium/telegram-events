@@ -83,6 +83,7 @@ class MessageScheduleController extends Controller
                 } elseif($action == 'retry') {
                     $channel = $messageSchedule->channels()->find($channel_id);
                     $channel->pivot->error = null;
+                    $channel->pivot->sent = 0;
                     $channel->pivot->save();
                     ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
                 }
