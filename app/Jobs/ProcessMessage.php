@@ -68,6 +68,7 @@ class ProcessMessage implements ShouldQueue
     protected function sendVK(): string
     {
         $vk = new VKService(config('app.vk_token'),$this->channel->tg_id, '');
+        usleep(100000);
         try {
             if($this->message->message_files->count()) {
                 foreach ($this->message->message_files as $file) {
