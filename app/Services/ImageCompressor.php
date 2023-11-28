@@ -2,15 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Message;
-use App\Models\MessageFile;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Constraint;
 use Intervention\Image\Facades\Image;
-use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Types\InputMedia\ArrayOfInputMedia;
-use TelegramBot\Api\Types\InputMedia\InputMediaPhoto;
-use TelegramBot\Api\Types\InputMedia\InputMediaVideo;
 
 class ImageCompressor
 {
@@ -20,9 +14,10 @@ class ImageCompressor
             $image = Image::make($path);
             if($image->width() > 1920) {
                 $image->resize(1920, null, function ($constraint) {
+                    /** @var Constraint $constraint */
                     $constraint->aspectRatio();
                 });
-                $image->save($path_new);
+                $image->save($path_new, 80);
             }
             Log::info('File has been compressed ' . $path_new);
         } catch (\Exception $exception) {
