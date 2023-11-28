@@ -2,6 +2,7 @@
 
 namespace App\Actions\Telegram;
 
+use App\Facades\ImageCompressorFacade;
 use App\Facades\TechBotFacade;
 use App\Models\Field;
 use App\Models\MessageFile;
@@ -114,6 +115,7 @@ class TelegramFormHandler
             if(isset($files)) {
                 foreach ($files as $file) {
                     $path = $file->store('public/media');
+                    ImageCompressorFacade::compress($path);
                     $message->message_files()->save(new MessageFile(['filename' => $path]));
                 }
             }

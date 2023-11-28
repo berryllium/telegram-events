@@ -183,6 +183,7 @@ return [
 
     'aliases' => Facade::defaultAliases()->merge([
          'TechBotFacade' => \App\Facades\TechBotFacade::class,
+         'ImageCompressorFacade' => \App\Facades\ImageCompressorFacade::class,
     ])->toArray(),
 
 

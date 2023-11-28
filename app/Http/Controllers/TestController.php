@@ -2,19 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use TelegramBot\Api\BotApi;
+use App\Facades\ImageCompressorFacade;
+use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): void
     {
-        $bot = new BotApi(config('app.service_bot.token'));
-        $messageTgObj = $bot->sendMessage(-1001690629442, 'test', 'HTML');
-        $link = strtr("https://t.me/c/CID/MID", [
-            'CID' => substr($messageTgObj->getChat()->getId(), 4),
-            'MID' => $messageTgObj->getMessageId()
-        ]);
-
-        dd($messageTgObj->getMessageId());
+        $res = ImageCompressorFacade::compress(Storage::path('public/media/test.jpg'), Storage::path('public/media/test1.jpg'));
+        dd($res);
     }
 }
