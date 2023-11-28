@@ -32,7 +32,7 @@ window.addEventListener('load', function(){
     })
 
     function checkFile(file) {
-        const limit = getType(file) === 'image' ? 10 : 50;
+        const limit = getType(file) === 'image' ? 20 : 50;
         if(file.size > 1024 * 1024 * limit) {
             alert(`Файл ${file.name} слишком большой, максимум для этого типа файлов -  ${limit} мегабайт`)
             return false

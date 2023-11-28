@@ -24,6 +24,7 @@ class ImageCompressor
                 });
                 $image->save($path_new);
             }
+            Log::info('File has been compressed ' . $path_new);
         } catch (\Exception $exception) {
             Log::error('Can not compress file ' . $path . ' ' . $exception->getMessage());
         }
