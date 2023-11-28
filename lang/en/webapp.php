@@ -34,6 +34,7 @@ return [
     'error' => 'Error',
     'error_sending_channels' => 'Could not to send in channels: :channels',
     'error_max_days' => 'You can\'t specify delay more than :days days!',
+    'error_max_files_size' => 'Max files size is :limit Mb!',
     'error_sending_tg' => "Can't send message :id to the channel :channel for the bot :bot",
     'error_sending_vk' => "Can't send message :id to the channel :channel for the bot :bot",
     'error_sending_moderation' => "Can't send message :id to the group :g_id for the bot :bot",

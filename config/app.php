@@ -214,6 +214,7 @@ return [
     */
     'post_max_message' => env('POST_MAX_MESSAGE', 1024),
     'post_without_files_max_message' => env('POST_WITHOUT_FILES_MAX_MESSAGE', 4096),
+    'post_max_files_size' => env('POST_MAX_FILES_SIZE', 50),
 
     /*
     |--------------------------------------------------------------------------

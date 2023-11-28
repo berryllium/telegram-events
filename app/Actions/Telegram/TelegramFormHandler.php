@@ -30,6 +30,18 @@ class TelegramFormHandler
                 );
 
                 $files = $request->file('files');
+
+                $totalSize = 0;
+                foreach ($files as $file) {
+                    $totalSize += $file->getSize();
+                }
+
+                if($totalSize > 50 * 1024 * 1024) {
+                    return response()->json(['error' => __('webapp.error_max_files_size', [
+                        'limit' => config('app.post_max_files_size')
+                    ])]);
+                }
+
             }
             $data = $request->toArray();
             $fields = [];

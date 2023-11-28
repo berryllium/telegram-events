@@ -40,6 +40,7 @@ return [
     'error' => 'Ошибка',
     'error_sending_channels' => 'Не удалось отправить в каналы: :channels',
     'error_max_days' => 'Нельзя запланировать отправку сообщения более, чем на :days дней!',
+    'error_max_files_size' => 'Максимальный общий размер всех файлов :limit мегабайт!',
     'error_sending_tg' => "Не удалость отправить сообщение :id в ТГ канал :channel для бота :bot",
     'error_sending_vk' => "Не удалость отправить сообщение :id в ВК канал :channel для бота :bot",
     'error_sending_moderation' => "Не удалость отправить сообщение :id в группу модерации :g_id для бота :bot",
