@@ -52,13 +52,14 @@ class ProcessMessage implements ShouldQueue
             $this->updateMessageStatus(link: $link);
         } catch (\Exception $exception) {
             if ($this->attempts() < 3) {
-                $this->release(300);
+                $this->release(60);
             } else {
                 $this->updateMessageStatus(error: $exception->getMessage());
                 $this->delete();
                 throw $exception;
             }
         }
+        sleep(1);
     }
 
     /**
@@ -68,7 +69,6 @@ class ProcessMessage implements ShouldQueue
     protected function sendVK(): string
     {
         $vk = new VKService(config('app.vk_token'),$this->channel->tg_id, '');
-        usleep(100000);
         try {
             if($this->message->message_files->count()) {
                 foreach ($this->message->message_files as $file) {
@@ -103,7 +103,6 @@ class ProcessMessage implements ShouldQueue
      * @throws \Exception
      */
     protected function sendTG() : string {
-        Log::info('sending', ['tg']);
         $bot = new BotApi($this->message->telegram_bot->api_token);
         try {
             if($this->message->message_files->count()) {
