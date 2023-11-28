@@ -23,7 +23,5 @@ class ImageCompressor
         } catch (\Exception $exception) {
             Log::error('Can not compress file ' . $path . ' ' . $exception->getMessage());
         }
-
     }
-
 }

@@ -43,7 +43,7 @@ class TelegramFormHandler
                     $this->file_paths[] = $path;
                 }
 
-                if(true || $totalSize > 50 * 1024 * 1024) {
+                if($totalSize > 50 * 1024 * 1024) {
                     return response()->json(['error' => __('webapp.error_max_files_size', [
                         'limit' => config('app.post_max_files_size', 50),
                         'size' => round($totalSize / 1024 / 1024, 2)
