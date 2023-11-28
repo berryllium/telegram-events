@@ -51,10 +51,10 @@ class ProcessMessage implements ShouldQueue
             }
             $this->updateMessageStatus(link: $link);
         } catch (\Exception $exception) {
+            $this->updateMessageStatus(error: $exception->getMessage());
             if ($this->attempts() < 3) {
-                $this->release(60);
+                $this->release(10);
             } else {
-                $this->updateMessageStatus(error: $exception->getMessage());
                 $this->delete();
                 throw $exception;
             }
