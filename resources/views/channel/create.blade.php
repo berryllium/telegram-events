@@ -39,6 +39,11 @@
             <label class="form-check-label" for="show_address">{{ __('webapp.show_address') }}</label>
         </div>
         <div class="mb-3">
+            <input type="hidden" name="show_work_hours" value="0">
+            <input id="show_work_hours" type="checkbox" class="form-check-input" name="show_work_hours" value="1" checked>
+            <label class="form-check-label" for="show_work_hours">{{ __('webapp.show_work_hours') }}</label>
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ old('description') }}</textarea>
             @error('description')
