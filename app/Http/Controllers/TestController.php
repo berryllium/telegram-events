@@ -2,19 +2,31 @@
 
 namespace App\Http\Controllers;
 
-use TelegramBot\Api\BotApi;
+use App\Facades\ImageCompressorFacade;
+use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
-    public function __invoke()
+    public function __invoke(): void
     {
-        $bot = new BotApi(config('app.service_bot.token'));
-        $messageTgObj = $bot->sendMessage(-1001690629442, 'test', 'HTML');
-        $link = strtr("https://t.me/c/CID/MID", [
-            'CID' => substr($messageTgObj->getChat()->getId(), 4),
-            'MID' => $messageTgObj->getMessageId()
-        ]);
+        $text = <<<STR
 
-        dd($messageTgObj->getMessageId());
+салют
+
+🏢 <b>Место: consequatur</b>
+
+📍 <b>Адрес: 848 Stanton MallMoenview, WY 20052</b>
+
+🕒 <b>Часы работы: Ежедневно, 08:00–20:00</b>
+
+ЦенаЖ 	Бесплатно
+STR;
+
+        $text = preg_replace("/.*🏢.*[\r\n]+\s?/um", "", $text);
+        $text = preg_replace("/.*📍.*[\r\n]+\s?/um", "", $text);
+        $text = preg_replace("/.*🕒.*[\r\n]+\s?/um", "", $text);
+
+        dd($text);
+
     }
 }

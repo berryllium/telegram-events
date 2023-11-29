@@ -2,6 +2,7 @@
 
 namespace App\Actions\Telegram;
 
+use App\Facades\ImageCompressorFacade;
 use App\Facades\TechBotFacade;
 use App\Models\Field;
 use App\Models\MessageFile;
@@ -11,10 +12,13 @@ use App\Rules\MultibyteLength;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class TelegramFormHandler
 {
+    private $file_paths = [];
+
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
             $has_files = false;
@@ -26,19 +30,23 @@ class TelegramFormHandler
                 }
 
                 $request->validate(
-                    ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
+                    ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv'],
                 );
 
                 $files = $request->file('files');
 
                 $totalSize = 0;
                 foreach ($files as $file) {
-                    $totalSize += $file->getSize();
+                    $path = $file->store('public/media');
+                    ImageCompressorFacade::compress(Storage::path($path));
+                    $totalSize += filesize(Storage::path($path));
+                    $this->file_paths[] = $path;
                 }
 
                 if($totalSize > 50 * 1024 * 1024) {
                     return response()->json(['error' => __('webapp.error_max_files_size', [
-                        'limit' => config('app.post_max_files_size')
+                        'limit' => config('app.post_max_files_size', 50),
+                        'size' => round($totalSize / 1024 / 1024, 2)
                     ])]);
                 }
 
@@ -110,14 +118,16 @@ class TelegramFormHandler
                 'allowed' => false,
             ]);
 
-            if(isset($files)) {
-                foreach ($files as $file) {
-                    $path = $file->store('public/media');
+            if($this->file_paths) {
+                foreach ($this->file_paths as $path) {
                     $message->message_files()->save(new MessageFile(['filename' => $path]));
                 }
             }
 
         } catch (\Exception $exception) {
+            foreach ($this->file_paths as $path) {
+                Storage::delete($path);
+            }
             TechBotFacade::send($exception->getMessage());
             return response()->json(['error' => $exception->getMessage()]);
         }

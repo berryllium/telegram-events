@@ -43,6 +43,7 @@ class ChannelController extends Controller
             'description' => 'max:1000',
             'show_place' => 'int',
             'show_address' => 'int',
+            'show_work_hours' => 'int',
         ]);
         $data['telegram_bot_id'] = session('bot');
 
@@ -81,6 +82,7 @@ class ChannelController extends Controller
             'description' => 'max:1000',
             'show_place' => 'required|int',
             'show_address' => 'required|int',
+            'show_work_hours' => 'required|int',
         ]));
         return back()->with('success', __('webapp.record_updated'));
     }

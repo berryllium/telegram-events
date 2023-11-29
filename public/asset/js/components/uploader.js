@@ -32,7 +32,7 @@ window.addEventListener('load', function(){
     })
 
     function checkFile(file) {
-        const limit = getType(file) === 'image' ? 10 : 50;
+        const limit = getType(file) === 'image' ? 20 : 50;
         if(file.size > 1024 * 1024 * limit) {
             alert(`Файл ${file.name} слишком большой, максимум для этого типа файлов -  ${limit} мегабайт`)
             return false
@@ -45,7 +45,7 @@ window.addEventListener('load', function(){
         <li id="file-item-${i}" class="list-group-item d-flex justify-content-between align-items-center">
             <span class="w-75">
                 <span id="file-img-box-${i}" class="d-inline-block w-25 me-2 border border-light-gray text-center">${renderPreview(file, i)}</span>
-                <span>${file.name.substring(0,15)}${file.name.length > 15 ? '...' : ''}</span>
+                <span>${file.name.substring(0,7)}${file.name.length > 15 ? '...' : ''} (${(file.size / 1024 / 1024).toFixed(2)}Mb)</span>
             </span>
             <i class="bi bi-trash" data-file="${i}" data-role="delete-file"></i>
         </li>`
