@@ -18,6 +18,15 @@ class MultibyteLength implements ValidationRule
      */
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
+        // TODO вынести очистку тегов в отдельный метод и применить его тут и в классе Message
+        $value = preg_replace(
+            ['/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'],
+            ['', "\r\n", "\r\n", '<b>', '</b>'],
+            $value
+        );
+        $value = trim($value, "&nbsp;\r\n");
+        $value = str_replace('&nbsp;', "\r\n", $value);
+
         if(mb_strlen($value) > $this->max) {
             $fail('validation.max.string')->translate(['max' => $this->max]);
         }
