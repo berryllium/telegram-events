@@ -22,6 +22,7 @@ return [
     'attention' => 'Внимание!',
     'tag_set' => 'Набор тегов',
     'type' => 'Тип',
+    'tries' => 'Попытки',
     'can_select_channels' => 'Может выбирать каналы',
     'channels' => 'Каналы',
     'channel_name' => 'Название канала',

@@ -11,6 +11,7 @@
                     <th>{{ __('webapp.status') }}</th>
                     <th>{{ __('webapp.link') }}</th>
                     <th>{{ __('webapp.error') }}</th>
+                    <th>{{ __('webapp.tries') }}</th>
                     @if(!$schedule->trashed())
                         <th>{{ __('webapp.retry') }}</th>
                         <th>{{ __('webapp.delete') }}</th>
@@ -30,6 +31,7 @@
                         </td>
                         <td>{!! $channel->pivot->link !!}</td>
                         <td>{{ $channel->pivot->error }}</td>
+                        <td>{{ $channel->pivot->tries }}</td>
                         @if(!$schedule->trashed())
                         <td>
                             @if($channel->pivot->error)
