@@ -34,6 +34,7 @@ class RetryMessages extends Command
                     ->whereNotNull('channel_message_schedule.error')
                     ->where('channel_message_schedule.tries', '<', 5)
                     ->where('channel_message_schedule.updated_at', '<', Carbon::now()->subMinutes(5))
+                    ->where('channel_message_schedule.updated_at', '>', Carbon::now()->subDay())
             )
             ->limit(100)
             ->get();
