@@ -8,11 +8,13 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageSchedule;
 use App\Services\VKService;
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Bus\Dispatchable;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\Exception;
@@ -52,12 +54,6 @@ class ProcessMessage implements ShouldQueue
             $this->updateMessageStatus(link: $link);
         } catch (\Exception $exception) {
             $this->updateMessageStatus(error: $exception->getMessage());
-            if ($this->attempts() <= 3) {
-                $this->release(10);
-            } else {
-                $this->delete();
-                throw $exception;
-            }
         }
         sleep(1);
     }
@@ -134,7 +130,9 @@ class ProcessMessage implements ShouldQueue
         $this->messageSchedule->channels()->updateExistingPivot($this->channel->id, [
             'error' => $error,
             'link' => $link,
-            'sent' => true
+            'sent' => true,
+            'tries' =>  DB::raw('tries + 1'),
+            'updated_at' => Carbon::now()
         ]);
         $this->messageSchedule->updateStatus();
     }

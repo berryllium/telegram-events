@@ -3,30 +3,19 @@
 namespace App\Http\Controllers;
 
 use App\Facades\ImageCompressorFacade;
+use App\Models\MessageSchedule;
+use Carbon\Carbon;
+use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Facades\Storage;
 
 class TestController extends Controller
 {
     public function __invoke(): void
     {
-        $text = <<<STR
-
-салют
-
-🏢 <b>Место: consequatur</b>
-
-📍 <b>Адрес: 848 Stanton MallMoenview, WY 20052</b>
-
-🕒 <b>Часы работы: Ежедневно, 08:00–20:00</b>
-
-ЦенаЖ 	Бесплатно
-STR;
-
-        $text = preg_replace("/.*🏢.*[\r\n]+\s?/um", "", $text);
-        $text = preg_replace("/.*📍.*[\r\n]+\s?/um", "", $text);
-        $text = preg_replace("/.*🕒.*[\r\n]+\s?/um", "", $text);
-
-        dd($text);
-
+        $messages = MessageSchedule::whereHas('channels', function (Builder $query) {
+            $query->whereNotNull('channel_message_schedule.error')
+                ->where('tries', '<', 5);
+        })->get();
+        dd($messages);
     }
 }

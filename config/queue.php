@@ -15,7 +15,7 @@ return [
 
     'default' => env('QUEUE_CONNECTION', 'sync'),
     'vk' => env('VK_CONNECTION', 'vk'),
-    'tg' => env('VK_CONNECTION', 'tg'),
+    'tg' => env('TG_CONNECTION', 'tg'),
 
     /*
     |--------------------------------------------------------------------------

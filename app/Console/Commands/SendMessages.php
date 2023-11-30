@@ -5,6 +5,7 @@ namespace App\Console\Commands;
 use App\Jobs\ProcessMessage;
 use App\Models\MessageSchedule;
 use Illuminate\Console\Command;
+use Illuminate\Support\Carbon;
 
 class SendMessages extends Command
 {
@@ -43,6 +44,7 @@ class SendMessages extends Command
                     ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
                 }
             }
+
             sleep(3);
         }
     }
