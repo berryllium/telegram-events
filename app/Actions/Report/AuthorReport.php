@@ -24,6 +24,7 @@ class AuthorReport extends Report
 
         $messages = $this->getMessagesForPeriod($from, $to);
         foreach($messages as $message) {
+            if(!$message->author_id) continue;
             if(!isset($authors[$message->author_id]) && $message->author) {
                 $authors[$message->author_id] = [
                     'name' => $message->author->name,
