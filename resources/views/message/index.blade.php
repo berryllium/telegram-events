@@ -8,6 +8,7 @@
         <tr>
             <th>#</th>
             <th>{{ __('webapp.author') }}</th>
+            <th>{{ __('webapp.places.place') }}</th>
             <th>{{ __('webapp.message_text') }}</th>
             <th>{{ __('webapp.sending_time') }}</th>
             <th class="action-cell">{{ __('webapp.actions') }}</th>
@@ -17,6 +18,7 @@
             <tr class="{{ $message->trashed() ? 'opacity-25' : '' }}">
                 <td>{{ $message->id }}</td>
                 <td>{{ $message->author?->name }}</td>
+                <td>{{ $places[$message->data->place] }}</td>
                 <td>{{ Str::of(strip_tags($message->text))->limit(50) }}</td>
                 <td>
                     <table class="table">

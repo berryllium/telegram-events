@@ -6,6 +6,7 @@ use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageLog;
 use App\Models\MessageSchedule;
+use App\Models\Place;
 use App\Rules\MultibyteLength;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
@@ -30,8 +31,16 @@ class MessageController extends Controller
         ]);
         $filters['telegram_bot'] = session('bot');
 
+        $messages = Message::with('author', 'message_schedules')->filter($filters)->paginate(20)->withQueryString();
+        $places_map = [];
+        $places = Place::query()->where('telegram_bot_id', session('bot'))->get();
+        foreach ($places as $place) {
+            $places_map[$place->id] = $place->name;
+        }
+
         return view('message.index', [
-            'messages' => Message::with('author', 'message_schedules')->filter($filters)->paginate(20)->withQueryString(),
+            'messages' => $messages,
+            'places' => $places_map
         ]);
     }
 
