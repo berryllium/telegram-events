@@ -29,6 +29,8 @@ return [
     'channel_type' => 'Тип канала',
     'channel_tg' => 'Телеграм',
     'channel_vk' => 'ВКонтакте',
+    'channel_ok' => 'Одноклассники',
+    'channel_in' => 'Инстаграм',
     'code' => 'Код',
     'template_code' => 'Код для вставки в шаблон',
     'confirm_password' => 'Подтверждение пароля',

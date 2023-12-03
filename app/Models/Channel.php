@@ -15,7 +15,8 @@ class Channel extends Model
 
     public static $types = [
         'tg',
-        'vk'
+        'vk',
+        'ok',
     ];
 
     protected $table = 'channels';

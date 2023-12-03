@@ -21,6 +21,8 @@ return [
     'channel_type' => 'Channel Type',
     'channel_tg' => 'Telegram',
     'channel_vk' => 'VKontakte',
+    'channel_ok' => 'Odnoklassniki',
+    'channel_in' => 'Instagram',
     'code' => 'Code',
     'confirm_password' => 'Confirm Password',
     'create' => 'Create',

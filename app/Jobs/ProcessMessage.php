@@ -7,6 +7,7 @@ use App\Models\Channel;
 use App\Models\Message;
 use App\Models\MessageFile;
 use App\Models\MessageSchedule;
+use App\Services\OKService;
 use App\Services\VKService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
@@ -48,6 +49,8 @@ class ProcessMessage implements ShouldQueue
                 $link = $this->sendVK();
             } elseif($this->queue == 'tg') {
                 $link = $this->sendTG();
+            } elseif($this->queue == 'ok') {
+                $link = $this->sendOK();
             } else {
                 $link = '';
             }
@@ -79,6 +82,40 @@ class ProcessMessage implements ShouldQueue
 
             return strtr('<a href="LINK">TEXT</a>', [
                 'LINK' => $vk->Post(strip_tags($this->preparedText)),
+                'TEXT' => __('webapp.tg_link_text')
+            ]);
+        } catch (\Exception $exception) {
+            TechBotFacade::send(__('webapp.error_sending_vk', [
+                'id' => $this->message->id,
+                'channel' => $this->channel->name,
+                'bot' => $this->message->telegram_bot->name
+            ]));
+            throw($exception);
+        }
+
+    }
+
+    /**
+     * @return string link
+     * @throws \Exception
+     */
+    protected function sendOK(): string
+    {
+        $ok = new OKService($this->channel->tg_id);
+        try {
+            if($this->message->message_files->count()) {
+                foreach ($this->message->message_files as $file) {
+                    /** @var MessageFile $file */
+                    if ($file->type == 'image') {
+                        $ok->addPhoto($file->path);
+                    } elseif ($file->type == 'video') {
+                        $ok->addVideo($file->path);
+                    }
+                }
+            }
+
+            return strtr('<a href="LINK">TEXT</a>', [
+                'LINK' => $ok->post(strip_tags($this->preparedText)),
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
