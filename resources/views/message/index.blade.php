@@ -17,8 +17,16 @@
         @foreach($messages as $message)
             <tr class="{{ $message->trashed() ? 'opacity-25' : '' }}">
                 <td>{{ $message->id }}</td>
-                <td>{{ $message->author?->name }}</td>
-                <td>{{ $places[$message->data->place] }}</td>
+                <td>
+                    @if($message->author)
+                        <a href="{{ route('author.edit', $message->author) }}">{{ $message->author?->name }}</a>
+                    @endif
+                </td>
+                <td>
+                    @if($places[$message->data->place])
+                        <a href="{{ route('place.edit', $message->data->place) }}">{{ $places[$message->data->place] }}</a>
+                    @endif
+                </td>
                 <td>{{ Str::of(strip_tags($message->text))->limit(50) }}</td>
                 <td>
                     <table class="table">
