@@ -89,10 +89,12 @@ class TelegramFormHandler
             if(isset($fields['place']) && $fields['place']) {
                 /** @var Place $place */
                 $place = $fields['place'];
-                $fields['place_address'] = $place->address;
                 $fields['place_working_hours'] = $place->working_hours;
                 $fields['place_additional_info'] = $place->additional_info;
                 $fields['place'] = $place->name;
+                $fields['address'] = $place->address_link ?
+                    "<a href=\"{$place->address_link}\">{$place->address}</a>" :
+                    $place->address;
             }
 
             if(isset($fields['only_date']) && $fields['only_date'] && $fields['date']) {

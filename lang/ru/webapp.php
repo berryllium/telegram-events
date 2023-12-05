@@ -17,6 +17,7 @@ return [
     'sending_time' => 'Время отправки',
     'sending_title' => 'Отправка сообщения #:message',
     'address' => 'Адрес',
+    'address_link' => 'Ссылка для адреса',
     'age' => 'Возраст',
     'api_token' => 'API токен',
     'attention' => 'Внимание!',
