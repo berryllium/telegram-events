@@ -6,6 +6,7 @@ use alxmsl\Odnoklassniki\API\Client;
 use alxmsl\Odnoklassniki\API\Response\Error;
 use alxmsl\Odnoklassniki\OAuth2\Response\Token;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class OKService
 {
@@ -37,8 +38,8 @@ class OKService
         ]);
 
         $count = 0;
-        foreach ($uploadParams->photo_ids as $photo_id) {
-            $fileName = 'photo_' . time() . rand(100, 999);
+        foreach ($this->photos as $path) {
+            $fileName = $this->getName($path);
             $response->attach($fileName, file_get_contents($this->photos[$count++]), $fileName);
         }
 
@@ -58,38 +59,28 @@ class OKService
         return $result;
     }
 
-    private function uploadVideos() {
-        $uploadParams = $this->call('video.getUploadUrl', ['gid' => $this->gid, 'count' => count($this->photos)]);
+    private function uploadVideo($path) {
+        $fileName = $this->getName($path);
 
-        $response = Http::withHeaders([
+        $params = [
+            'gid' => $this->gid,
+            'file_name' => $fileName,
+            'file_size' => filesize($path),
+        ];
+
+        $uploadParams = $this->call('video.getUploadUrl', $params);
+
+        Log::info('ссылка на загрузку видео ', ['request' => $params, 'response' => $uploadParams]);
+
+        $info = Http::withHeaders([
             "Content-Type:multipart/form-data"
-        ]);
+        ])
+            ->attach($fileName, file_get_contents($path), $fileName)
+            ->post($uploadParams->upload_url);
 
-        $count = 0;
+        Log::info('загрузка видео в OK', [$info->status()]);
 
-        if(!isset($uploadParams->photo_ids)) {
-            throw new \Exception(get_class($uploadParams));
-        }
-
-        foreach ($uploadParams->photo_ids as $photo_id) {
-            $fileName = 'photo_' . time() . rand(100, 999);
-            $response->attach($fileName, file_get_contents($this->photos[$count++]), $fileName);
-        }
-
-        $info = $response->post($uploadParams->upload_url)->json();
-
-        if(!isset($info['photos'])) {
-            throw new \Exception(is_object($info) ? $info->message : 'OK: sending photo error');
-        }
-
-        $result = [];
-        foreach ($info['photos'] as $photo) {
-            $result[] = [
-                'id' => $photo['token']
-            ];
-        }
-
-        return $result;
+        return $uploadParams->video_id;
     }
 
     public function addPhoto(string $path): void
@@ -117,9 +108,13 @@ class OKService
         }
 
         if($this->videos) {
+            $list = [];
+            foreach ($this->videos as $video) {
+                $list[] = ['id' => $this->uploadVideo($video)];
+            }
             $data['media'][] = [
-                'type' => 'photo',
-                'list' => $this->uploadVideos()
+                'type' => 'movie',
+                'list' => $list
             ];
         }
 
@@ -147,6 +142,11 @@ class OKService
             throw new \Exception('OK: Can not run method ' . $method);
         }
         return $response;
+    }
+
+    private function getName($path) {
+        $arr = explode('/', $path);
+        return  end($arr);
     }
 
 }
