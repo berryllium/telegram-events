@@ -4,8 +4,148 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "96c069db76aa1b2dd183f5b9c5734b2a",
+    "content-hash": "0807fad7ebdaf0b8361c0e68149d1ce2",
     "packages": [
+        {
+            "name": "alxmsl/cli",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alxmsl/Cli.git",
+                "reference": "b36ab8687fe2a48cb26497eab84d5aad0d191b1f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alxmsl/Cli/zipball/b36ab8687fe2a48cb26497eab84d5aad0d191b1f",
+                "reference": "b36ab8687fe2a48cb26497eab84d5aad0d191b1f",
+                "shasum": ""
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "alxmsl\\Cli\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "alxmsl",
+                    "email": "alexey.y.maslov@gmail.com"
+                }
+            ],
+            "description": "Simple library for php-cli script options support",
+            "keywords": [
+                "cli",
+                "command-line",
+                "posix"
+            ],
+            "support": {
+                "email": "alexey.y.maslov@gmail.com",
+                "issues": "https://github.com/alxmsl/Cli/issues",
+                "source": "https://github.com/alxmsl/Cli/tree/tests"
+            },
+            "time": "2015-07-09T10:10:18+00:00"
+        },
+        {
+            "name": "alxmsl/network",
+            "version": "v1.1.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alxmsl/Network.git",
+                "reference": "5c5b058572885303ff44f310bc7bedad683ca8c1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alxmsl/Network/zipball/5c5b058572885303ff44f310bc7bedad683ca8c1",
+                "reference": "5c5b058572885303ff44f310bc7bedad683ca8c1",
+                "shasum": ""
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "alxmsl\\Network\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "WTFPL"
+            ],
+            "authors": [
+                {
+                    "name": "alxmsl",
+                    "email": "alexey.y.maslov@gmail.com"
+                }
+            ],
+            "description": "Simple library for network HTTP requests",
+            "keywords": [
+                "api",
+                "curl",
+                "http"
+            ],
+            "support": {
+                "email": "alexey.y.maslov@gmail.com",
+                "issues": "https://github.com/alxmsl/Network/issues",
+                "source": "https://github.com/alxmsl/Network/tree/master"
+            },
+            "time": "2015-12-18T21:23:09+00:00"
+        },
+        {
+            "name": "alxmsl/odnoklassnikiclient",
+            "version": "v2.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/alxmsl/OdnoklassnikiClient.git",
+                "reference": "c648e914e8abd4d8c20d9aac26ea10854c43f768"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/alxmsl/OdnoklassnikiClient/zipball/c648e914e8abd4d8c20d9aac26ea10854c43f768",
+                "reference": "c648e914e8abd4d8c20d9aac26ea10854c43f768",
+                "shasum": ""
+            },
+            "require": {
+                "alxmsl/cli": ">=1.0.2",
+                "alxmsl/network": ">=1.1.0"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "4.7.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "alxmsl\\Odnoklassniki\\": "source/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "authors": [
+                {
+                    "name": "alxmsl",
+                    "email": "alexey.y.maslov@gmail.com"
+                }
+            ],
+            "description": "Simple client for Odnoklassniki API",
+            "keywords": [
+                "OK",
+                "odnoklassniki",
+                "odnoklassniki-api",
+                "ok-api"
+            ],
+            "support": {
+                "email": "alexey.y.maslov@gmail.com",
+                "issues": "https://github.com/alxmsl/OdnoklassnikiClient/issues",
+                "source": "https://github.com/alxmsl/OdnoklassnikiClient/tree/master"
+            },
+            "time": "2015-06-30T14:29:36+00:00"
+        },
         {
             "name": "bacon/bacon-qr-code",
             "version": "2.0.8",

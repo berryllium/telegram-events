@@ -3,6 +3,7 @@
 namespace App\Providers;
 
 use App\Services\ImageCompressor;
+use App\Services\OKService;
 use App\Services\TechBotService;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;

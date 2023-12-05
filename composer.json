@@ -11,6 +11,7 @@
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
+        "alxmsl/odnoklassnikiclient": "^2.0",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "^2.7",
         "laravel/fortify": "^1.17",
