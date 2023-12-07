@@ -39,7 +39,7 @@ class ChannelController extends Controller
         $data = $request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
-            'type' => 'required|in:tg,vk',
+            'type' => 'required|in:tg,vk,ok,in',
             'description' => 'max:1000',
             'show_place' => 'int',
             'show_address' => 'int',
@@ -78,7 +78,7 @@ class ChannelController extends Controller
         $channel->update($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
-            'type' => 'required|in:tg,vk',
+            'type' => 'required|in:tg,vk,ok,in',
             'description' => 'max:1000',
             'show_place' => 'required|int',
             'show_address' => 'required|int',
