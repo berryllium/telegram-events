@@ -1,5 +1,6 @@
 window.addEventListener('load', function(){
     const select =  $('[data-role="tags"] select')
+    const url = select.data('url')
 
     select.select2({
         templateResult: function (data, container) {
@@ -28,7 +29,7 @@ window.addEventListener('load', function(){
 
     function getPlaceTagSets(place) {
         $.ajax({
-            url: `/place/${place}/tags`,
+            url: `${url}/place/${place}/tags`,
             method: 'post',
             data: {
                 "_token": $('[name="csrf-token"]').attr('content')

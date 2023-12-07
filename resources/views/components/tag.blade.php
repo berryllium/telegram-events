@@ -5,7 +5,7 @@
     </div>
     <div class="form-group mb-3">
         <label for="field-{{ $k }}" >{{ __('webapp.tag_set') }}</label>
-        <select class="form-control" id="field-{{ $k }}" data-live-search="true" multiple>
+        <select class="form-control" id="field-{{ $k }}" data-live-search="true" data-url="{{ config('app.url') }}" multiple>
             @foreach($tag_sets as $set_id => $tag_set)
                 <option value="{{ $set_id }}" data-type="{{ $tag_set['type'] }}" class="{{ $tag_set['type'] == 'shop' ? 'text-success' : '' }}">
                     {{ $tag_set['value'] }}
