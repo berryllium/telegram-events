@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('places', function (Blueprint $table) {
-            $table->text('address_link')->default(null);
+            $table->text('address_link')->nullable()->default(null);
         });
     }
 

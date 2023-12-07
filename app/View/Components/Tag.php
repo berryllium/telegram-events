@@ -32,6 +32,7 @@ class Tag extends Component
     {
         /** @var Collection $tags */
         $tags = $this->field->dictionary->dictionary_values;
+        $tag_sets = [];
         foreach ($tags as $tag) {
             $set = explode(':', $tag->value, 2);
             $tag_sets[trim($set[1])] = [
