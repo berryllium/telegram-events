@@ -42,6 +42,7 @@ class PlaceController extends Controller
         $data = $request->validate([
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
+            'address_link' => '',
             'description' => 'max:1000',
             'working_hours' => '',
             'additional_info' => '',
@@ -82,13 +83,13 @@ class PlaceController extends Controller
         $place->update($request->validate([
             'name' => 'required|min:2|max:255',
             'address' => 'required|min:2|max:255',
+            'address_link' => '',
             'description' => 'max:1000',
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
         ]));
 
-        $channels = array_filter($request->input('channels'));
         $place->channels()->sync($request->input('channels') ?: []);
 
         return back()->with('success', __('webapp.record_updated'));

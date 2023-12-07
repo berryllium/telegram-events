@@ -15,6 +15,7 @@ class Place extends Model
     protected $fillable = [
         'name',
         'address',
+        'address_link',
         'description',
         'working_hours',
         'additional_info',

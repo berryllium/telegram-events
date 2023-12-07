@@ -18,6 +18,13 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="address_link" class="form-label">{{ __('webapp.address_link') }}</label>
+            <input type="text" class="form-control" id="address_link" name="address_link" value="{{ old('address_link') }}">
+            @error('address_link')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="working_hours" class="form-label">{{ __('webapp.working_hours') }}</label>
             <input type="text" class="form-control" id="working_hours" name="working_hours" value="{{ old('working_hours') }}">
             @error('working_hours')

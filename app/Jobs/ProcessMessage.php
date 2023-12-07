@@ -142,7 +142,7 @@ class ProcessMessage implements ShouldQueue
                 $mediaArr = TechBotFacade::createMedia($this->message);
                 $tg_message = $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
             } else {
-                $tg_message = $bot->sendMessage($this->channel->tg_id, $this->preparedText, 'HTML');
+                $tg_message = $bot->sendMessage($this->channel->tg_id, $this->preparedText, 'HTML', true);
             }
             if(is_array($tg_message)) $tg_message = reset($tg_message);
             /** @var \TelegramBot\Api\Types\Message  $tg_message */

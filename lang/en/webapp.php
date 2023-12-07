@@ -8,6 +8,7 @@ return [
     'add_post' => '🔖 Add post',
     'add_files' => 'Add files',
     'address' => 'Address',
+    'address_link' => 'Address link',
     'api_token' => 'API token',
     'attention' => 'Attention!',
     'author' => 'Author',
