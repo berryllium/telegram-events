@@ -7,14 +7,17 @@ window.addEventListener('load', function(){
                 $(container).addClass($(data.element).attr("class"));
             }
             return data.text;
-        }
+        },
+        placeholder: '',
+        allowClear: true,
+        searchInputPlaceholder: ''
     });
 
     select.on('select2:select', function (e) {
-        const textarea =  $(this).closest('[data-role="tags"]').find('textarea')
+        const textarea =  $(this).closest('[data-role="tags"]').find('textarea[name="tags"]')
         textarea.val(textarea.val() + ' ' + e.params.data.id)
     }).on('select2:unselect', function (e) {
-        const textarea =  $(this).closest('[data-role="tags"]').find('textarea')
+        const textarea =  $(this).closest('[data-role="tags"]').find('textarea[name="tags"]')
         const pattern = new RegExp(`[ ,]*${e.params.data.id}`)
         textarea.val(textarea.val().replace(pattern, ''))
     })
