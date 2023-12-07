@@ -19,5 +19,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/telegram', [\App\Http\Controllers\API\TelegramController::class, 'index'])->name('api.telegram');
+Route::post('/place/{place}/tags', [\App\Http\Controllers\API\TagController::class, 'getPlaceTagSets'])->name('api.place_tags');
 
 Route::post('git', \App\Http\Controllers\API\GitController::class)->name('api.git');

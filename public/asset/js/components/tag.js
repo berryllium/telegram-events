@@ -29,11 +29,8 @@ window.addEventListener('load', function(){
 
     function getPlaceTagSets(place) {
         $.ajax({
-            url: `${url}/place/${place}/tags`,
+            url: `${url}/api/place/${place}/tags`,
             method: 'post',
-            data: {
-                "_token": $('[name="csrf-token"]').attr('content')
-            },
             success: function(response) {
                 $('[data-role="tags"]').find('textarea').val('')
                 select.find('option').each(function(){
