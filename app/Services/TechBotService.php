@@ -21,7 +21,7 @@ class TechBotService
     }
 
     public function send(string $message) {
-        $this->client->sendMessage($this->channel, $message);
+        $this->client->sendMessage($this->channel, $message, 'HTML', true);
     }
 
     public function createMedia(Message $message) {

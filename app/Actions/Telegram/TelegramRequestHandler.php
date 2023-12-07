@@ -116,12 +116,12 @@ class TelegramRequestHandler
                         $botApi->sendMediaGroup($chat_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
                         $botApi->sendMediaGroup($message->telegram_bot->moderation_group, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
                     } else {
-                        $botApi->sendMessage($chat_id, $message->text, 'HTML');
-                        $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML');
+                        $botApi->sendMessage($chat_id, $message->text, 'HTML', true);
+                        $botApi->sendMessage($message->telegram_bot->moderation_group, $message->text, 'HTML', true);
                     }
 
-                    $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML');
-                    $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id']);
+                    $botApi->sendMessage($message->telegram_bot->moderation_group, $admin_text, 'HTML', true);
+                    $botApi->sendMessage($chat_id, __('webapp.message_accepted') . " #" . $web_app_data['message_id'], 'HTML', true);
                 } catch (HttpException $exception) {
                     $msg_error = __('webapp.error_sending_moderation', [
                         'id' => $message->id,
@@ -149,7 +149,7 @@ class TelegramRequestHandler
             ]
         );
         $botApi = new BotApi($bot->api_token);
-        $botApi->sendMessage($chat_id, __('webapp.greeting'), null, false, null, $keyboard);
+        $botApi->sendMessage($chat_id, __('webapp.greeting'), null, true, null, $keyboard);
     }
 
     private function preparePublishDates(array $dates): array
