@@ -62,7 +62,7 @@
         @endif
         <div class="mb-3">
             <label for="sending_date" class="form-label">{{ __('webapp.sending_time') }}</label>
-            <input id="sending_date" type="datetime-local" class="form-control" name="sending_date" value="{{ \Illuminate\Support\Carbon::parse(null)->format('Y-m-d H:i') }}">
+            <input id="sending_date" type="datetime-local" class="form-control" name="sending_date" value="{{ \Illuminate\Support\Carbon::parse($schedule->sending_date)->format('Y-m-d H:i') }}">
         </div>
         @if(!$schedule->trashed())
             <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
