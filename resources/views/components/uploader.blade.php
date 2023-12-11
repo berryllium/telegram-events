@@ -3,7 +3,7 @@
     <label for="file" class="drop-area d-flex justify-content-center align-items-center border border-1 border-secondary p-1">
         <i class="bi bi-cloud-arrow-up" style="font-size:72px;"></i>
     </label>
-    <ul class="list-group mb-2" data-role="fileList"></ul>
+    <ul class="list-group mb-2 mt-2" data-role="fileList"></ul>
     <input id="file" class="form-control d-none" type="file" multiple>
     <input class="form-control d-none" type="file" name="files[]" multiple>
     <div class="d-flex justify-content-around">
