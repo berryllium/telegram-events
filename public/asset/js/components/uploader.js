@@ -5,15 +5,7 @@ window.addEventListener('load', function(){
 
     // Перехватываем событие выбора файла
     fileInput.on('change', function(event) {
-        Array.prototype.forEach.call(event.target.files, function(file) {
-            if(checkFile(file)) {
-                const id = Math.random().toString(16).slice(2)
-                window.fileCollection[id] = file
-                listBlock.append(renderListItem(file, id))
-            } else {
-                return false
-            }
-        })
+        bindFiles(event.target.files)
     });
 
     // Очистка файлов
@@ -30,6 +22,21 @@ window.addEventListener('load', function(){
         $(`#file-item-${id}`).remove()
         console.log(window.fileCollection)
     })
+
+    // Перетаскивание файлов в форму
+    var dropArea = $('.drop-area');
+
+    dropArea.click(() => console.log('click'))
+
+    dropArea.on('dragenter dragover', function (e) {
+        console.log('dragenter dragover')
+        e.preventDefault();
+    });
+
+    dropArea.on('drop', function (e) {
+        e.preventDefault()
+        bindFiles(e.originalEvent.dataTransfer.files)
+    });
 
     function checkFile(file) {
         const limit = getType(file) === 'image' ? 20 : 50;
@@ -68,6 +75,18 @@ window.addEventListener('load', function(){
 
     function getType(file) {
         return file.type.split('/')[0]
+    }
+
+    function bindFiles(files) {
+        Array.prototype.forEach.call(files, function(file) {
+            if(checkFile(file)) {
+                const id = Math.random().toString(16).slice(2)
+                window.fileCollection[id] = file
+                listBlock.append(renderListItem(file, id))
+            } else {
+                return false
+            }
+        })
     }
 
 })
