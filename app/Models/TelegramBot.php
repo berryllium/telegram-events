@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 
+/**
+ * @property int $api_token
+ * @property int $moderation_group
+ */
 class TelegramBot extends Model
 {
     use HasFactory;

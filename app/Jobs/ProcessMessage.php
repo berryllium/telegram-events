@@ -18,7 +18,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Exception;
 use TelegramBot\Api\HttpException;
 use TelegramBot\Api\InvalidArgumentException;
 
@@ -55,6 +54,7 @@ class ProcessMessage implements ShouldQueue
                 $link = '';
             }
             $this->updateMessageStatus(link: $link);
+            $this->noticeAboutPost($link);
         } catch (\Exception $exception) {
             $this->updateMessageStatus(error: $exception->getMessage());
         }
@@ -187,5 +187,20 @@ class ProcessMessage implements ShouldQueue
             $text = preg_replace("/.*🕒.*[\r\n]+\s?/um", "", $text);
         }
         $this->preparedText = $text;
+    }
+
+    private function noticeAboutPost(string $link): void
+    {
+        try {
+            $text = __('webapp.notice_about_post', [
+                'link' => $link,
+                'soc_service' => __("webapp.channel_{$this->queue}")
+            ]);
+            $botApi = new BotApi($this->message->telegram_bot->api_token);
+            $botApi->sendMessage($this->message->telegram_bot->moderation_group, $text, 'HTML');
+            $botApi->sendMessage($this->message->author->tg_id, $text, 'HTML');
+        } catch (\Exception $exception) {
+            Log::error("notice user fail - {$exception->getMessage()}", ['link' => $link]);
+        }
     }
 }

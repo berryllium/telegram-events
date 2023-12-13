@@ -10,6 +10,10 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
+/**
+ * @property  TelegramBot $telegram_bot
+ * @property  Author $author
+ */
 class Message extends Model
 {
     use HasFactory;
