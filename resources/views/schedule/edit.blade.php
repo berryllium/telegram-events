@@ -19,7 +19,7 @@
                 </tr>
                 @foreach($schedule->channels as $channel)
                     <tr>
-                        <td>{{ $channel->name }}</td>
+                        <td><a href="{{ $channel->link }}">{{ $channel->name }}</a></td>
                         <td>
                             @if($channel->pivot->error)
                                 {{ __('webapp.error') }}

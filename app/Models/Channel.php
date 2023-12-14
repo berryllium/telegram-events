@@ -47,4 +47,13 @@ class Channel extends Model
     public function message_schedule() : BelongsToMany {
         return $this->belongsToMany(MessageSchedule::class)->withPivot(['sent', 'error', 'tries', 'link']);
     }
+
+    public function getLinkAttribute() {
+        if($this->type == 'ok') {
+            return "https://ok.ru/group/$this->tg_id/";
+        } elseif($this->type == 'vk') {
+            return "https://vk.com/public{$this->tg_id}/";
+        }
+        return 'https://t.me/c/' . substr($this->tg_id, 4) . '/10000000';
+    }
 }
