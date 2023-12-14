@@ -40,10 +40,12 @@ class RetryMessages extends Command
             ->get();
         ;
         foreach ($messageSchedules as $messageSchedule) {
+            $messageSchedule->update(['status' => 'process']);
             foreach ($messageSchedule->channels as $channel) {
-                $messageSchedule->update(['status' => 'process']);
-                ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
-                $this->output->info('retry id = ' . $messageSchedule->id);
+                if($channel->pivot->error) {
+                    ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
+                    $this->output->info('retry id = ' . $messageSchedule->id);
+                }
             }
         }
     }
