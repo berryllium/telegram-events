@@ -25,6 +25,10 @@ class TelegramRequestHandler
             Log::info('Telegram message ', $data);
 
             $bot = TelegramBot::query()->where('code', '=', $token)->first();
+            if(!$bot) {
+                TechBotFacade::send('Can not find the bot with token ' . $token);
+                return response()->json(['status' => 'ok']);
+            }
             if(!isset($data['message'])) {
                 return response()->json(['status' => 'ok']);
             }
@@ -131,6 +135,10 @@ class TelegramRequestHandler
                     Log::error($msg_error);
                     TechBotFacade::send($msg_error);
                 }
+            } elseif(isset($data['message']['reply_to_message'])) {
+                $comment_message_id = $data['message']['reply_to_message']['forward_from_message_id'];
+                $comment_channel_id = substr($data['message']['reply_to_message']['forward_from_chat']['id'], 4);
+                TechBotFacade::send('Новый комментарий к <a href="t.me/c/' .$comment_channel_id . '/' . $comment_message_id  .'">посту</a>"');
             }
         } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
