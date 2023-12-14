@@ -62,7 +62,6 @@ return [
     'moderation_group' => 'Группа модерации',
     'max_files_count' => 'Максимальное число файлов - 10',
     'name' => 'Имя',
-    'notice_about_post' => 'Сообщение было опубликовано в :soc_service - :link',
     'password' => 'Пароль',
     'pin' => 'Закрепить',
     'pin_link' => 'Закрепить ссылку в канале',
