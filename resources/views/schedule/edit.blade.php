@@ -19,7 +19,7 @@
                 </tr>
                 @foreach($schedule->channels as $channel)
                     <tr>
-                        <td><a href="{{ $channel->link }}">{{ $channel->name }}</a></td>
+                        <td><a href="{{ route('channel.edit', $channel) }}">{{ $channel->name }}</a></td>
                         <td>
                             @if($channel->pivot->error)
                                 {{ __('webapp.error') }}
