@@ -213,8 +213,8 @@ return [
     ],
     'comments' => [
         'vk' => 'Новый комментарий ВКонтакте 
-        В группе <a href=":channel_link">:channel</a>
-        К посту <a href=":link">сообщению</a>
-        Текст: :text',
+В группе <a href=":channel_link">:channel</a>
+К посту <a href=":link">сообщению</a>
+Текст: :text',
     ]
 ];
