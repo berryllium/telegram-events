@@ -93,6 +93,7 @@ return [
         'file' => 'Файл не должен превышать :max kilobytes.',
         'numeric' => 'The :attribute field must not be greater than :max.',
         'string' => 'Длина поля не должна превышать :max символов',
+        'string_excess' => 'Допустимая длина :max превышена на :excess символов',
     ],
     'max_digits' => 'The :attribute field must not have more than :max digits.',
     'mimes' => 'Файл может иметь только следующие типы: :values.',

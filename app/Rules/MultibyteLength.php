@@ -28,7 +28,10 @@ class MultibyteLength implements ValidationRule
         $value = str_replace('&nbsp;', "\r\n", $value);
 
         if(mb_strlen($value) > $this->max) {
-            $fail('validation.max.string')->translate(['max' => $this->max]);
+            $fail('validation.max.string_excess')->translate([
+                'max' => $this->max,
+                'excess' => mb_strlen($value) - $this->max
+            ]);
         }
     }
 }
