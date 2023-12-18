@@ -210,5 +210,11 @@ return [
         'error_sending' => 'Ошибка отправки',
         'edited_messages' => 'Отредактированные сообщения',
         'deleted_messages' => 'Удаленные сообщения',
+    ],
+    'comments' => [
+        'vk' => 'Новый комментарий ВКонтакте<br>
+        В группе <a href=":channel_link">:channel</a><br>
+        К посту <a href=":link">сообщению</a><br>
+        Текст: :text',
     ]
 ];

@@ -22,3 +22,4 @@ Route::post('/telegram', [\App\Http\Controllers\API\TelegramController::class, '
 Route::post('/place/{place}/tags', [\App\Http\Controllers\API\TagController::class, 'getPlaceTagSets'])->name('api.place_tags');
 
 Route::post('git', \App\Http\Controllers\API\GitController::class)->name('api.git');
+Route::post('vk', \App\Http\Controllers\API\VKController::class)->name('api.vk');
