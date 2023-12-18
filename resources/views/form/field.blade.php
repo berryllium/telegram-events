@@ -10,7 +10,7 @@
     @foreach($form->fields()->orderBy('sort', 'asc')->get() as $field)
         <tr>
             <td>{{ $field->name }}</td>
-            <td>{{ \App\Models\Field::$types[$field->type] }}</td>
+            <td>{{ __('webapp.types.' . $field->type) }}</td>
             <td>&lcub;&lcub;&nbsp;${{ $field->code }}&nbsp;&rcub;&rcub;</td>
             <td>{{ $field->sort }}</td>
             <td class="align-middle text-nowrap">
