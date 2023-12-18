@@ -207,6 +207,7 @@ return [
     */
     'vk_token' => env('VK_TOKEN'),
     'vk_group_secret' => env('VK_GROUP_SECRET'),
+    'vk_confirmation_code' => env('VK_CONFIRMATION_CODE'),
 
     /*
     |--------------------------------------------------------------------------
