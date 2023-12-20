@@ -8,9 +8,20 @@
         <div class="mb-3 col-lg-6">
             <div class="col-12"><h3 class="mt-4">{{ __('webapp.message_text') }}</h3></div>
             <label for="text" class="d-none"></label>
-            <textarea class="form-control d-none" id="text" name="text" rows="5" data-editor="ck">
-                {{ $msg->htmlText }}
-            </textarea>
+            <div class="text">
+                <div class="original">
+                    <input type="hidden" name="text" value="{{ $msg->text }}">
+                    <div class="text-old border border-1">{!! $msg->htmlText !!}}</div>
+                    <button class="btn btn-warning mt-1 mb-5" type="button" onclick="$('.editor').removeClass('d-none').find('textarea').attr('name', 'text');$('.original').hide()">
+                        Изменить текст сообщения
+                    </button>
+                </div>
+                <div class="editor d-none">
+                    <textarea class="form-control" id="text" rows="5" data-editor="ck">
+                        {{ $msg->htmlText }}
+                    </textarea>
+                </div>
+            </div>
             @error('text')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
