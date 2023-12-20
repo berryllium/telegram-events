@@ -10,7 +10,6 @@
             <label for="text" class="d-none"></label>
             <div class="text">
                 <div class="original">
-                    <input type="hidden" name="text" value="{{ $msg->text }}">
                     <div class="text-old border border-1">{!! $msg->htmlText !!}}</div>
                     <button class="btn btn-warning mt-1 mb-5" type="button" onclick="$('.editor').removeClass('d-none').find('textarea').attr('name', 'text');$('.original').hide()">
                         Изменить текст сообщения

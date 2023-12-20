@@ -73,10 +73,14 @@ class MessageController extends Controller
 
         $has_files = $request->hasFile('files') || $request->get('current_files');
         $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
-        $message->update($request->validate(
-            ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length)]],
-            ['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000'],
-        ));
+
+        $request->validate(['files.*' => 'mimes:jpeg,jpg,png,webp,mp4,avi,mkv|max:50000']);
+
+        if($request->has('text')) {
+            $message->update($request->validate(
+                ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length)]],
+            ));
+        }
 
         foreach ($message->message_files as $file) {
             if (!in_array($file->id, $request->get('current_files') ?: [])) {
