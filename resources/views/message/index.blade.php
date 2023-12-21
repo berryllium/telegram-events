@@ -23,7 +23,7 @@
                     @endif
                 </td>
                 <td>
-                    @if($places[$message->data->place])
+                    @if($message->data && $places[$message->data->place])
                         <a href="{{ route('place.edit', $message->data->place) }}">{{ $places[$message->data->place] }}</a>
                     @endif
                 </td>
