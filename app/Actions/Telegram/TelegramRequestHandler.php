@@ -132,7 +132,7 @@ class TelegramRequestHandler
                     Log::error($msg_error);
                     TechBotFacade::send($msg_error);
                 }
-            } elseif(isset($data['message']['reply_to_message'])) {
+            } elseif(isset($data['message']['reply_to_message']) && config('app.service_bot.comments_notification')) {
                 $this->handleComment($data);
             }
         } catch (\Exception $exception) {

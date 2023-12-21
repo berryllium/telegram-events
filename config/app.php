@@ -197,6 +197,7 @@ return [
     'service_bot' => [
         'token' => env('SERVICE_BOT_TOKEN'),
         'channel' => env('SERVICE_BOT_CHANNEL'),
+        'comments_notification' => env('SERVICE_BOT_COMMENTS_NOTIFICATION', true),
     ],
 
     /*
