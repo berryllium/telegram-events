@@ -80,6 +80,8 @@ class MessageController extends Controller
             $message->update($request->validate(
                 ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length)]],
             ));
+        } else {
+            $message->update($request->except('text'));
         }
 
         foreach ($message->message_files as $file) {
