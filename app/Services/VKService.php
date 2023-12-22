@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Facades\TechBotFacade;
 use CURLFile;
+use Illuminate\Support\Facades\Http;
 
 class VKService
 {
@@ -194,6 +195,17 @@ class VKService
         $this->sendlog("Запись успешно опубликована! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>");
         return "https://vk.com/wall-{$gr_id}_{$post_id}";
 
+    }
+
+    public function getGroupConfirmationString()
+    {
+        $response = Http::get("https://api.vk.com/method/groups.getCallbackConfirmationCode", [
+            'group_id' => $this->group_id,
+            'access_token' => $this->token,
+            'v' => '5.199',
+        ])->json();
+
+        return $response['response']['code'];
     }
 
 }
