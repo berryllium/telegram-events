@@ -205,7 +205,7 @@ class VKService
             'v' => '5.199',
         ])->json();
 
-        return $response['response']['code'];
+        return $response['response']['code'] ?? null;
     }
 
 }

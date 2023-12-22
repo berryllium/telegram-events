@@ -14,7 +14,8 @@ class VKController extends Controller
         if($request->get('type') == 'confirmation') {
             $group_id = $request->get('group_id');
             $vk = new VKService(config('app.vk_token'), $group_id, '');
-            return response($vk->getGroupConfirmationString())->header('Content-Type', 'text/plain');
+            $code = $vk->getGroupConfirmationString() ?: config('app.vk_confirmation_code');
+            return response($code)->header('Content-Type', 'text/plain');
         }
 
         $handler->handle($request);
