@@ -32,10 +32,11 @@ class VKRequestHandler
                         'text' => Str::of($data['object']['text'])->words(10, '...'),
                         'channel' => $channel ? $channel->name : 'Unknown group',
                         'channel_link' => $channel_link,
+                        'date' => date('d.m.Y H:i:s', $data['object']['date']),
                     ]));
 
                     $botApi = new BotApi($channel->telegram_bot->api_token);
-                    $botApi->sendMessage($channel->telegram_bot->moderation_group, $message, 'HTML');
+                    $botApi->sendMessage($channel->telegram_bot->moderation_group, $message, 'HTML', true);
                 } else {
                     Log::info('Cannot find channel ' . $data['group_id']);
                 }
