@@ -16,7 +16,7 @@ class VKRequestHandler
             $data = $request->toArray();
             Log::info('vk push - ' . count($data), $data);
 
-            if(false && $request->get('secret') != config()->get('app.vk_group_secret')) {
+            if($request->get('secret') != config()->get('app.vk_group_secret')) {
                 return;
             } elseif ($data['type'] == 'wall_reply_new') {
                 $channel = Channel::query()
