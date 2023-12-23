@@ -7,10 +7,12 @@ use App\Http\Controllers\Controller;
 use App\Models\Channel;
 use App\Services\VKService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class VKController extends Controller
 {
     public function __invoke(Request $request, VKRequestHandler $handler) {
+        Log::info('vk-webhook', $request->toArray());
         if($request->get('type') == 'confirmation') {
             $group_id = $request->get('group_id');
             $vk = new VKService(config('app.vk_token'), $group_id, '');
