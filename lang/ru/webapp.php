@@ -212,9 +212,7 @@ return [
         'deleted_messages' => 'Удаленные сообщения',
     ],
     'comments' => [
-        'vk' => 'Новый комментарий ВКонтакте 
-В группе <a href=":channel_link">:channel</a>
-К <a href=":link">посту</a>
+        'vk' => 'Новый комментарий ВКонтакте в группе <a href=":channel_link">:channel</a> к <a href=":link">посту</a>
 Дата: :date
 Текст: :text'
     ]
