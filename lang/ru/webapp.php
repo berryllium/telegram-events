@@ -33,6 +33,7 @@ return [
     'channel_ok' => 'Одноклассники',
     'channel_in' => 'Инстаграм',
     'code' => 'Код',
+    'comments_channel_id' => 'Телеграм канал для комментариев',
     'template_code' => 'Код для вставки в шаблон',
     'confirm_password' => 'Подтверждение пароля',
     'create' => 'Создать',

@@ -19,6 +19,7 @@ class TelegramBot extends Model
         'code',
         'api_token',
         'moderation_group',
+        'comments_channel_id',
         'description',
         'form_id'
     ];

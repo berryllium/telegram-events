@@ -38,7 +38,7 @@ class VKRequestHandler
                         ]));
 
                         $botApi = new BotApi($channel->telegram_bot->api_token);
-                        $botApi->sendMessage($channel->telegram_bot->moderation_group, $message, 'HTML', true);
+                        $botApi->sendMessage($channel->telegram_bot->comments_channel_id, $message, 'HTML', true);
                     }
                 }
             }

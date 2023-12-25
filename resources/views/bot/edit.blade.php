@@ -33,6 +33,13 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="comments_channel_id" class="form-label">{{ __('webapp.comments_channel_id') }}</label>
+            <input type="text" class="form-control" id="comments_channel_id" name="comments_channel_id" value="{{  $bot->comments_channel_id }}">
+            @error('comments_channel_id')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="form_id" class="form-label">{{ __('webapp.webapp_form') }}</label>
             <select class="form-select" id="form_id" name="form_id">
                 <option value=""></option>
