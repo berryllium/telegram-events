@@ -19,26 +19,27 @@ class VKRequestHandler
             if($request->get('secret') != config()->get('app.vk_group_secret')) {
                 return;
             } elseif ($data['type'] == 'wall_reply_new') {
-                $channel = Channel::query()
+                $channels = Channel::query()
                     ->where('tg_id', $data['group_id'])
                     ->where('type', 'vk')
-                    ->first()
-                ;
+                    ->get();
 
-                if($channel) {
-                    $channel_link = "https://vk.com/wall-{$data['group_id']}";
-                    $message = (__('webapp.comments.vk', [
-                        'link' => $channel_link . '_' . $data['object']['post_id'],
-                        'text' => Str::of($data['object']['text'])->words(10, '...'),
-                        'channel' => $channel ? $channel->name : 'Unknown group',
-                        'channel_link' => $channel_link,
-                        'date' => date('d.m.Y H:i:s', $data['object']['date']),
-                    ]));
-
-                    $botApi = new BotApi($channel->telegram_bot->api_token);
-                    $botApi->sendMessage($channel->telegram_bot->moderation_group, $message, 'HTML', true);
-                } else {
+                if ($channels->count() < 1) {
                     Log::info('Cannot find channel ' . $data['group_id']);
+                } else {
+                    foreach ($channels as $channel) {
+                        $channel_link = "https://vk.com/wall-{$data['group_id']}";
+                        $message = (__('webapp.comments.vk', [
+                            'link' => $channel_link . '_' . $data['object']['post_id'],
+                            'text' => Str::of($data['object']['text'])->words(10, '...'),
+                            'channel' => $channel ? $channel->name : 'Unknown group',
+                            'channel_link' => $channel_link,
+                            'date' => date('d.m.Y H:i:s', $data['object']['date']),
+                        ]));
+
+                        $botApi = new BotApi($channel->telegram_bot->api_token);
+                        $botApi->sendMessage($channel->telegram_bot->moderation_group, $message, 'HTML', true);
+                    }
                 }
             }
         } catch (\Exception $exception) {
