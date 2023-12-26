@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Models\Channel;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ChannelController extends Controller
 {
@@ -40,6 +41,7 @@ class ChannelController extends Controller
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'type' => 'required|in:tg,vk,ok,in',
+            'token' => '',
             'description' => 'max:1000',
             'show_place' => 'int',
             'show_address' => 'int',
@@ -75,15 +77,27 @@ class ChannelController extends Controller
      */
     public function update(Request $request, Channel $channel)
     {
+        $token = $channel->token;
         $channel->update($request->validate([
             'name' => 'required|min:2',
             'tg_id' => 'required|int',
             'type' => 'required|in:tg,vk,ok,in',
+            'token' => '',
             'description' => 'max:1000',
             'show_place' => 'required|int',
             'show_address' => 'required|int',
             'show_work_hours' => 'required|int',
         ]));
+
+        if($channel->token && $token != $channel->token) {
+            try {
+                $channel->subscribe($token);
+            } catch (\Exception $exception) {
+                Log::error('Can not assign group', ['token' => $token]);
+                return back()->with('error', __('webapp.assign_channel_error'));
+            }
+        }
+
         return back()->with('success', __('webapp.record_updated'));
     }
 

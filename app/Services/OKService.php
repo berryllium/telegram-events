@@ -149,4 +149,21 @@ class OKService
         return  end($arr);
     }
 
+
+    public static function subscribe($token)
+    {
+        $response = Http::post("https://api.ok.ru/graph/me/subscribe?access_token=$token", [
+            'url' => route('api.ok'),
+        ]);
+        Log::info('subscribe OK group', $response->json());
+    }
+
+    public static function unsubscribe($token)
+    {
+        $response = Http::post("https://api.ok.ru/graph/me/unsubscribe?access_token=$token", [
+            'url' => route('api.ok'),
+        ]);
+        Log::info('unsubscribe OK group', $response->json());
+    }
+
 }

@@ -23,3 +23,4 @@ Route::post('/place/{place}/tags', [\App\Http\Controllers\API\TagController::cla
 
 Route::post('git', \App\Http\Controllers\API\GitController::class)->name('api.git');
 Route::post('vk', \App\Http\Controllers\API\VKController::class)->name('api.vk');
+Route::post('ok', \App\Http\Controllers\API\OKController::class)->name('api.ok');

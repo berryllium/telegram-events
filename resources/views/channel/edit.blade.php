@@ -30,6 +30,13 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="token" class="form-label">{{ __('webapp.api_token') }}</label>
+            <input type="text" class="form-control" id="token" name="token" value="{{ $channel->token }}">
+            @error('token')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <input type="hidden" name="show_place" value="0">
             <input id="show_place" type="checkbox" class="form-check-input" name="show_place" value="1" {{ $channel->show_place ? 'checked' : '' }}>
             <label class="form-check-label" for="show_place">{{ __('webapp.show_place') }}</label>
