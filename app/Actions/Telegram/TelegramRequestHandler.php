@@ -184,11 +184,11 @@ class TelegramRequestHandler
                 cache(['last_comment' => $data['message']['message_id']], now()->addMinutes(10));
                 $msg_id = $data['message']['reply_to_message']['message_id'];
                 $channel = Channel::query()->where('tg_id', $data['message']['reply_to_message']['sender_chat']['id'])->first();
-                if($channel) {
+                if($channel && $channel->telegram_bot->comments_channel_id) {
                     $botApi = new BotApi($channel->telegram_bot->api_token);
                     $cid = substr($data['message']['chat']['id'], 4);
                     $text = "Новый <a href=\"https://t.me/c/{$cid}/{$msg_id}\">комментарий</a> в канале {$channel->name}";
-                    $botApi->sendMessage($channel->telegram_bot->moderation_group, $text, 'HTML', true);
+                    $botApi->sendMessage($channel->telegram_bot->comments_channel_id, $text, 'HTML', true);
                 }
             }
         } catch (\Exception $exception) {
