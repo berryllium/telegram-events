@@ -37,8 +37,10 @@ class VKRequestHandler
                             'date' => date('d.m.Y H:i:s', $data['object']['date']),
                         ]));
 
-                        $botApi = new BotApi($channel->telegram_bot->api_token);
-                        $botApi->sendMessage($channel->telegram_bot->comments_channel_id, $message, 'HTML', true);
+                        if($channel->telegram_bot->comments_channel_id) {
+                            $botApi = new BotApi($channel->telegram_bot->api_token);
+                            $botApi->sendMessage($channel->telegram_bot->comments_channel_id, $message, 'HTML', true);
+                        }
                     }
                 }
             }
