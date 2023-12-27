@@ -12,13 +12,13 @@ class OKRequestHandler
 {
     public function handle(Request $request)
     {
+        Log::info('ok test push - ', $request->toArray());
         try {
             $data = $request->toArray();
             if($data['webhookType'] == 'MESSAGE_CREATED') {
                 $group_id = OKService::getGroupIdByChatID($data['recipient']['chat_id']);
+                Log::info('ok group_id is ' . $group_id);
             }
-
-            Log::info('ok push - ' . count($data), $data);
             
             $channels = Channel::query()
                 ->where('tg_id', $group_id)
@@ -26,14 +26,16 @@ class OKRequestHandler
                 ->get();
 
             if ($channels->count() < 1) {
-                Log::info('Cannot find channel ' . $data['group_id']);
+                Log::info('Cannot find channel ' . $group_id);
             } else {
                 foreach ($channels as $channel) {
                     $message = (__('webapp.comments.ok', [
                         'channel_link' => "https://ok.ru/group/$channel->tg_id/",
                         'channel' => $channel ? $channel->name : 'Unknown group',
                         'link' => OKService::getChatUrl($data['recipient']['chat_id']),
-                        'date' => date('d.m.Y H:i:s', $data['timestamp']),
+                        'date' => date("d.m.Y H:i:s", intval($data['timestamp'] / 1000)),
+                        'sender' => $data['sender']['name'],
+                        'text' => $data['message']['text'],
                     ]));
 
                     if($channel->telegram_bot->comments_channel_id) {
