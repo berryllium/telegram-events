@@ -166,4 +166,19 @@ class OKService
         Log::info('unsubscribe OK group', $response->json());
     }
 
+    public static function getGroupIdByChatID($chatId, $token = false)
+    {
+        if(!$token) $token = config('app.ok_graph_token');
+        $response = Http::get("https://api.ok.ru/graph/me/chat/chat:C6ae3a0fa6200?access_token=$token");
+        $arr = isset($response['group_id']) ? explode(':', $response['group_id']) : [];
+        return $arr[1] ?? false;
+    }
+
+    public static function getChatUrl($chatId, $token = false)
+    {
+        if(!$token) $token = config('app.ok_graph_token');
+        $response = Http::get("https://api.ok.ru/graph/chat:C6ae3a0fa6200/url?access_token=$token");
+        return $response['url'] ?? false;
+    }
+
 }

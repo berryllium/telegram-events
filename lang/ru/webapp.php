@@ -216,6 +216,8 @@ return [
     'comments' => [
         'vk' => 'Новый комментарий ВКонтакте в группе <a href=":channel_link">:channel</a> к <a href=":link">посту</a>
 Дата: :date
-Текст: :text'
+Текст: :text',
+        'ok' =>  'Новый комментарий в Одноклассниках в группе <a href=":channel_link">:channel</a> диалог <a href=":link">посту</a>
+Дата: :date',
     ]
 ];

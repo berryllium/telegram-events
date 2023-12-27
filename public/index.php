@@ -1,5 +1,7 @@
 <?php
 
+file_put_contents($_SERVER['DOCUMENT_ROOT'] . '/text.txt', date('d.m.Y H:i:s -- ') . file_get_contents('php://input'). ' -- ' . json_encode($_REQUEST, JSON_UNESCAPED_UNICODE) . PHP_EOL, FILE_APPEND);
+
 use Illuminate\Contracts\Http\Kernel;
 use Illuminate\Http\Request;
 

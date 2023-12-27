@@ -3,9 +3,9 @@
 namespace App\Actions\OK;
 
 use App\Models\Channel;
+use App\Services\OKService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Str;
 use TelegramBot\Api\BotApi;
 
 class OKRequestHandler
@@ -14,10 +14,14 @@ class OKRequestHandler
     {
         try {
             $data = $request->toArray();
+            if($data['webhookType'] == 'MESSAGE_CREATED') {
+                $group_id = OKService::getGroupIdByChatID($data['recipient']['chat_id']);
+            }
+
             Log::info('ok push - ' . count($data), $data);
             
             $channels = Channel::query()
-                ->where('tg_id', $data['group_id'])
+                ->where('tg_id', $group_id)
                 ->where('type', 'ok')
                 ->get();
 
@@ -25,13 +29,11 @@ class OKRequestHandler
                 Log::info('Cannot find channel ' . $data['group_id']);
             } else {
                 foreach ($channels as $channel) {
-                    $channel_link = "https://ok.com/wall-{$data['group_id']}";
                     $message = (__('webapp.comments.ok', [
-                        'link' => $channel_link . '_' . $data['object']['post_id'],
-                        'text' => Str::of($data['object']['text'])->words(10, '...'),
+                        'channel_link' => "https://ok.ru/group/$channel->tg_id/",
                         'channel' => $channel ? $channel->name : 'Unknown group',
-                        'channel_link' => $channel_link,
-                        'date' => date('d.m.Y H:i:s', $data['object']['date']),
+                        'link' => OKService::getChatUrl($data['recipient']['chat_id']),
+                        'date' => date('d.m.Y H:i:s', $data['timestamp']),
                     ]));
 
                     if($channel->telegram_bot->comments_channel_id) {

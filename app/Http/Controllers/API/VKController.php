@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
-use App\Actions\OK\OKRequestHandler;
+use App\Actions\VK\VKRequestHandler;
 use App\Http\Controllers\Controller;
 use App\Services\VKService;
 use Illuminate\Http\Request;
@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Log;
 
 class VKController extends Controller
 {
-    public function __invoke(Request $request, OKRequestHandler $handler) {
+    public function __invoke(Request $request, VKRequestHandler $handler) {
         if($request->get('type') == 'confirmation') {
             Log::info('vk-webhook-confirmation', $request->toArray());
             $group_id = $request->get('group_id');
