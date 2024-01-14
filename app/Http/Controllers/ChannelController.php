@@ -46,6 +46,7 @@ class ChannelController extends Controller
             'show_place' => 'int',
             'show_address' => 'int',
             'show_work_hours' => 'int',
+            'show_links' => 'int',
         ]);
         $data['telegram_bot_id'] = session('bot');
 
@@ -87,6 +88,7 @@ class ChannelController extends Controller
             'show_place' => 'required|int',
             'show_address' => 'required|int',
             'show_work_hours' => 'required|int',
+            'show_links' => 'required|int',
         ]));
 
         if($channel->token && $token != $channel->token) {

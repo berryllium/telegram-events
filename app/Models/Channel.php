@@ -31,6 +31,7 @@ class Channel extends Model
         'show_place',
         'show_address',
         'show_work_hours',
+        'show_links',
     ];
 
     public function places() : HasMany {

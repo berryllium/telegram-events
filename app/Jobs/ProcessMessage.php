@@ -186,6 +186,9 @@ class ProcessMessage implements ShouldQueue
         if(!$this->channel->show_work_hours) {
             $text = preg_replace("/.*🕒.*[\r\n]+\s?/um", "", $text);
         }
+        if(!$this->channel->show_links) {
+            $text = preg_replace("/.*✅.*[\r\n]+\s?http.*[\r\n]+\s?/um", "", $text);
+        }
         $this->preparedText = $text;
     }
 }
