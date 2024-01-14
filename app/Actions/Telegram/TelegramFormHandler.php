@@ -92,9 +92,14 @@ class TelegramFormHandler
                 $fields['place_working_hours'] = $place->working_hours;
                 $fields['place_additional_info'] = $place->additional_info;
                 $fields['place'] = $place->name;
-                $fields['address'] = $place->address_link ?
-                    "<a href=\"{$place->address_link}\">{$place->address}</a>" :
-                    $place->address;
+                $eventPlace = Place::query()->where('id', $data['address'])->first();
+                if($eventPlace) {
+                    $fields['address'] = $eventPlace->address_link ?
+                        "<a href=\"{$eventPlace->address_link}\">{$eventPlace->address}</a>" :
+                        $eventPlace->address;
+                } else {
+                    $fields['address'] = '';
+                }
             }
 
             if(isset($fields['only_date']) && $fields['only_date'] && $fields['date']) {
