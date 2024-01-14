@@ -21,7 +21,8 @@ class TelegramBot extends Model
         'moderation_group',
         'comments_channel_id',
         'description',
-        'form_id'
+        'form_id',
+        'links',
     ];
 
     protected $casts = [

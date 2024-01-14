@@ -58,6 +58,13 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="links" class="form-label">{{ __('webapp.project_links') }}</label>
+            <textarea class="form-control" id="links" name="links" rows="5">{{ $bot->links }}</textarea>
+            @error('links')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         @if($info)
         <div class="mb-3">
             <div>Info</div>

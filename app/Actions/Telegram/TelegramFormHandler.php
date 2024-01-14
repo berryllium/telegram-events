@@ -106,7 +106,7 @@ class TelegramFormHandler
             $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
             $validator = Validator::make(
                 ['text' => $text],
-                ['text' => new MultibyteLength($max_length)],
+                ['text' => new MultibyteLength($max_length, "\r\n" . $telegramBot->links)],
                 ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - $max_length])],
             );
             if ($validator->fails()) {

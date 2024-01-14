@@ -8,7 +8,8 @@ use Illuminate\Contracts\Validation\ValidationRule;
 class MultibyteLength implements ValidationRule
 {
     public function __construct(
-        private $max
+        private $max,
+        private $extra_text = '',
     ){}
 
     /**
@@ -19,6 +20,7 @@ class MultibyteLength implements ValidationRule
     public function validate(string $attribute, mixed $value, Closure $fail): void
     {
         // TODO вынести очистку тегов в отдельный метод и применить его тут и в классе Message
+        $value .= $this->extra_text;
         $value = preg_replace(
             ['/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'],
             ['', "\r\n", "\r\n", '<b>', '</b>'],
