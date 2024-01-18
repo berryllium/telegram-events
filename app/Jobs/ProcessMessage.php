@@ -139,7 +139,7 @@ class ProcessMessage implements ShouldQueue
         $bot = new BotApi($this->message->telegram_bot->api_token);
         try {
             if($this->message->message_files->count()) {
-                $mediaArr = TechBotFacade::createMedia($this->message);
+                $mediaArr = TechBotFacade::createMedia($this->message, $this->preparedText);
                 $tg_message = $bot->sendMediaGroup($this->channel->tg_id, $mediaArr['media'], null, null, null, null, null, $mediaArr['attachments']);
             } else {
                 $tg_message = $bot->sendMessage($this->channel->tg_id, $this->preparedText, 'HTML', true);
