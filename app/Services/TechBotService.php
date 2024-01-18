@@ -24,7 +24,7 @@ class TechBotService
         $this->client->sendMessage($this->channel, $message, 'HTML', true);
     }
 
-    public function createMedia(Message $message) {
+    public function createMedia(Message $message, $text = false) {
         $media = new ArrayOfInputMedia();
         $needCaption = true;
         $attachments = [];
@@ -33,7 +33,7 @@ class TechBotService
             $attachments[$file->filename] = new \CURLFile($file->path);
 
             if($needCaption) {
-                $caption = $message->text;
+                $caption = $text ?: $message->text;
                 $parseMode = 'HTML';
                 $needCaption = false;
             } else {
