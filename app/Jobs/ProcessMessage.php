@@ -188,7 +188,7 @@ class ProcessMessage implements ShouldQueue
         }
         if($this->channel->show_links) {
             Log::info('добавляю ссылки ' . $this->message->telegram_bot->links);
-            $text .= "\r\n" . $this->message->telegram_bot->links;
+            $text .= "\r\n\r\n" . $this->message->telegram_bot->links;
         }
         $this->preparedText = $text;
     }

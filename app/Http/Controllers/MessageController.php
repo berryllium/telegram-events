@@ -78,7 +78,7 @@ class MessageController extends Controller
 
         if($request->has('text')) {
             $message->update($request->validate(
-                ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length, "\r\n" . $message->telegram_bot->links)]],
+                ['text' => ['required', new ValidMessage(), new MultibyteLength($max_length, "\r\n\r\n" . $message->telegram_bot->links)]],
             ));
         } else {
             $message->update($request->except('text'));
