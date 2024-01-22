@@ -50,7 +50,7 @@ class TelegramBotController extends Controller
             'description' => 'max:1000',
             'links' => 'max:1000',
             'moderation_group' => 'int',
-            'comments_channel_id' => 'int',
+            'comments_channel_id' => '',
             'form_id' => 'required|unique:telegram_bots,form_id',
         ]));
 
@@ -98,7 +98,7 @@ class TelegramBotController extends Controller
             'code' => 'required|alpha_dash:ascii|unique:telegram_bots,code,'.$bot->id,
             'api_token' => 'required',
             'moderation_group' => 'int',
-            'comments_channel_id' => 'int',
+            'comments_channel_id' => '',
             'description' => 'max:1000',
             'links' => 'max:1000',
             'form_id' => 'required|unique:telegram_bots,form_id,'.$bot->id,
