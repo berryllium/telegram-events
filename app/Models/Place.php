@@ -41,4 +41,9 @@ class Place extends Model
     public function tag() : HasOne {
         return $this->hasOne(Dictionary::class, 'id', 'tag_set');
     }
+
+    public function users() : BelongsToMany
+    {
+        return $this->belongsToMany(User::class);
+    }
 }

@@ -88,6 +88,10 @@ class Message extends Model
                     fn($query, $value) => $query->where('telegram_bot_id', $value)
             )
             ->when(
+                $filters['place'] ?? false,
+                fn($query, $value) => $query->whereIn('place_id', $value)
+            )
+            ->when(
                 $filters['status'] ?? false,
                 fn ($query, $value) => $query->whereHas('message_schedules',
                     fn($q) => $q->where('status', $value)

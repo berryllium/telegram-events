@@ -7,9 +7,11 @@ use App\Models\MessageFile;
 use App\Models\MessageLog;
 use App\Models\MessageSchedule;
 use App\Models\Place;
+use App\Models\User;
 use App\Rules\MultibyteLength;
 use App\Rules\ValidMessage;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MessageController extends Controller
 {
@@ -22,6 +24,8 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
+        /** @var User $user */
+        $user = Auth::user();
         $filters = $request->only([
             'search',
             'status',
@@ -30,6 +34,9 @@ class MessageController extends Controller
             'deleted'
         ]);
         $filters['telegram_bot'] = session('bot');
+        if($user->hasRole('moderator') && $user->places()->count()) {
+            $filters['place'] = $user->places->pluck('id');
+        }
 
         $messages = Message::with('author', 'message_schedules')->filter($filters)->paginate(20)->withQueryString();
         $places_map = [];

@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Place;
 use App\Models\Role;
 use App\Models\TelegramBot;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -38,7 +40,8 @@ class UserController extends Controller
     {
         return view('user.create', [
             'roles' => Role::all(),
-            'bots' => TelegramBot::all()
+            'bots' => TelegramBot::all(),
+            'places' => Place::query()->whereIn('telegram_bot_id', Auth::user()->telegram_bots->pluck('id'))->get(),
         ]);
     }
 
@@ -57,6 +60,7 @@ class UserController extends Controller
         $user = User::create($data);
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('telegram_bots'));
+        $user->places()->sync($request->input('places'));
 
         return back()->with('success', __('webapp.record_added'));
     }
@@ -77,7 +81,8 @@ class UserController extends Controller
         return view('user.edit', [
             'user' => $user,
             'roles' => Role::all(),
-            'bots' => TelegramBot::all()
+            'bots' => TelegramBot::all(),
+            'places' => Place::query()->whereIn('telegram_bot_id', $user->telegram_bots->pluck('id'))->get(),
         ]);
     }
 
@@ -108,6 +113,7 @@ class UserController extends Controller
         $user->update($valid_data->getData());
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('bots'));
+        $user->places()->sync($request->input('places'));
 
         return back()->with('success', __('webapp.record_updated'));
     }

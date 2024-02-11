@@ -53,6 +53,17 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="type" class="form-label">{{ __('webapp.places.list') }}</label>
+            <select class="form-select" id="type" name="places[]" multiple>
+                @foreach($places as $place)
+                    <option value="{{ $place->id }}" {{ old('places') && in_array($bot->id, old('places')) ? 'selected' : '' }}>{{ $place->name }}</option>
+                @endforeach
+            </select>
+            @error('places')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary"> {{ __('webapp.create') }}</button>
     </form>
 @endsection
