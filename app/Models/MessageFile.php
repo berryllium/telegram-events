@@ -35,10 +35,10 @@ class MessageFile extends Model
         return $mime[0];
     }
 
-    public static function boot() {
+    protected static function boot() {
         parent::boot();
         static::deleting(function($model){
-            Storage::delete($model->path);
+            Storage::delete($model->filename);
         });
     }
 }

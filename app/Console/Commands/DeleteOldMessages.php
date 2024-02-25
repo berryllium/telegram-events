@@ -39,9 +39,6 @@ class DeleteOldMessages extends Command
             ;
 
             if($message) {
-                foreach ($message->message_files as $file) {
-                    $file->delete();
-                }
                 $message->delete();
             } else {
                 break;
