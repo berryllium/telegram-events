@@ -33,6 +33,7 @@ class DeleteSentMessages extends Command
         while($time > time() - 50) {
             $message = Message::query()
                 ->where('created_at', '<', Carbon::now()->subDays($days)->startOfDay())
+                ->whereNull('deleted_at')
                 ->whereDoesntHave('message_schedules', fn(Builder $q) => $q->where('status', '!=', 'success'))
                 ->orderBy('id', 'desc')
                 ->limit(1)

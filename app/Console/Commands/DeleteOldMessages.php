@@ -32,6 +32,7 @@ class DeleteOldMessages extends Command
         while($time > time() - 50) {
             $message = Message::query()
                 ->where('created_at', '<', Carbon::now()->subDays($days)->startOfDay())
+                ->whereNull('deleted_at')
                 ->orderBy('id', 'desc')
                 ->limit(1)
                 ->first()
