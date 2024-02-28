@@ -112,7 +112,6 @@ class TelegramFormHandler
             $validator = Validator::make(
                 ['text' => $text],
                 ['text' => new MultibyteLength($max_length, "\r\n\r\n" . $telegramBot->links)],
-                ['text' => __('webapp.limit_error', ['value' => mb_strlen($text) - $max_length])],
             );
             if ($validator->fails()) {
                 return response()->json(['error' => $validator->errors()->first()]);
