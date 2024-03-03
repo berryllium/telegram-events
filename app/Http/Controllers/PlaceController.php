@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\MessageFile;
 use App\Models\Place;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
@@ -47,12 +48,21 @@ class PlaceController extends Controller
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
+            'domain' => '',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
 
         $channels = array_filter($request->input('channels'));
         $place->channels()->sync($channels);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $place->update(['image' => $file->store('public/media')]);
+        }
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
     }
@@ -88,9 +98,18 @@ class PlaceController extends Controller
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
+            'domain' => 'max:255|unique:places,domain,' . $place->id,
         ]));
 
         $place->channels()->sync($request->input('channels') ?: []);
+
+        if ($request->hasFile('image')) {
+            $file = $request->file('image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $place->update(['image' => $file->store('public/media')]);
+        }
 
         return back()->with('success', __('webapp.record_updated'));
     }

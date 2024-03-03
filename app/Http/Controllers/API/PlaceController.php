@@ -44,7 +44,7 @@ class PlaceController extends Controller
         ]);
     }
 
-    public function message(Place $place, Message $message)
+    public function message(Message $message)
     {
         $message = $message->load('message_files');
         if(!$message) abort(404);

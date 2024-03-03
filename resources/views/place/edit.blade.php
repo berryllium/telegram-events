@@ -1,7 +1,12 @@
 @extends('base')
 @section('title', __('webapp.places.edit'))
 @section('content')
-    <form method="post" action="{{ route('place.update', [$place]) }}">
+    @if($place->image)
+        <div class="image">
+            <img src="{{ $place->imageSrc }}" alt="{{ $place->name }}" class="mw-100">
+        </div>
+    @endif
+    <form method="post" action="{{ route('place.update', [$place]) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
         <div class="mb-3">
@@ -9,6 +14,13 @@
             <input type="text" class="form-control" id="name" name="name" value="{{ $place->name }}">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="domain" class="form-label">{{ __('webapp.places.domain') }}</label>
+            <input type="text" class="form-control" id="domain" name="domain" value="{{ $place->domain }}">
+            @error('domain')
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
@@ -72,6 +84,10 @@
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">{{ __('webapp.image') }}</label>
+            <input class="form-control" type="file" id="formFile" name="image">
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
