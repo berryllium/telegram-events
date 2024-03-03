@@ -27,7 +27,7 @@ class MessageFile extends Model
     }
 
     public function getMimeTypeAttribute() {
-        return mime_content_type($this->path);
+        return file_exists($this->path) ? mime_content_type($this->path) : 'undefined/undefined';
     }
 
     public function getTypeAttribute() {

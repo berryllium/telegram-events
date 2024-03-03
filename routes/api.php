@@ -19,8 +19,12 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('/telegram', [\App\Http\Controllers\API\TelegramController::class, 'index'])->name('api.telegram');
-Route::post('/place/{place}/tags', [\App\Http\Controllers\API\TagController::class, 'getPlaceTagSets'])->name('api.place_tags');
+Route::post('/tags/{place}', [\App\Http\Controllers\API\TagController::class, 'getPlaceTagSets'])->name('api.place_tags');
 
 Route::post('git', \App\Http\Controllers\API\GitController::class)->name('api.git');
 Route::post('vk', \App\Http\Controllers\API\VKController::class)->name('api.vk');
 Route::post('ok', \App\Http\Controllers\API\OKController::class)->name('api.ok');
+
+Route::get('/place/{place}/info', [\App\Http\Controllers\API\PlaceController::class, 'info'])->name('api.place.info');
+Route::get('/place/{place}/messages', [\App\Http\Controllers\API\PlaceController::class, 'messages'])->name('api.place.messages');
+Route::get('/place/{place}/message/{message}', [\App\Http\Controllers\API\PlaceController::class, 'message'])->name('api.place.message');
