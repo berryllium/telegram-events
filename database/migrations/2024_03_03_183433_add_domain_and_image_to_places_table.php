@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('places', function (Blueprint $table) {
             $table->string('domain')->unique()->nullable()->default(null);
             $table->string('image')->nullable()->default(null);
+            $table->string('phone')->nullable()->default(null);
+            $table->string('email')->nullable()->default(null);
         });
     }
 
@@ -23,7 +25,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('places', function (Blueprint $table) {
-            $table->dropColumn(['domain', 'image']);
+            $table->dropColumn(['domain', 'image', 'phone', 'email']);
         });
     }
 };

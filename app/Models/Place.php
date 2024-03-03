@@ -24,6 +24,12 @@ class Place extends Model
         'tag_set',
         'domain',
         'image',
+        'phone',
+        'email',
+    ];
+
+    protected $appends = [
+        'image_src'
     ];
 
     public function telegram_bot() : BelongsTo {

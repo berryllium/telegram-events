@@ -48,7 +48,9 @@ class PlaceController extends Controller
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
-            'domain' => '',
+            'domain' => 'nullable|unique:places,domain',
+            'email' => '',
+            'phone' => '',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
@@ -98,7 +100,9 @@ class PlaceController extends Controller
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
-            'domain' => 'max:255|unique:places,domain,' . $place->id,
+            'domain' => 'nullable|max:255|unique:places,domain,' . $place->id,
+            'email' => 'max:255',
+            'phone' => 'max:255',
         ]));
 
         $place->channels()->sync($request->input('channels') ?: []);

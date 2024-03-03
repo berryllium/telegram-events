@@ -39,6 +39,20 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="email" class="form-label">{{ __('webapp.email') }}</label>
+            <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+            @error('email')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">{{ __('webapp.phone') }}</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}">
+            @error('phone')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="additional_info" class="form-label">{{ __('webapp.additional_info') }}</label>
             <textarea class="form-control" id="additional_info" name="additional_info" rows="5">{{ old('additional_info') }}</textarea>
             @error('additional_info')
