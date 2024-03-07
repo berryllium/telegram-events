@@ -83,8 +83,7 @@ class TelegramRequestHandler
                         $channels = $place->channels;
                     }
 
-                    $channels = $this->checkChannels($channels, $bot->id);
-                    if($channels && $channels->count()) {
+                    if($channels) {
                         $publish_dates = $this->preparePublishDates($message->data->schedule);
                         foreach ($publish_dates as $date) {
                             /** @var MessageSchedule $messageSchedule */
@@ -195,17 +194,5 @@ class TelegramRequestHandler
         } catch (\Exception $exception) {
             Log::error('Comment Telegram Error', ['error' => $exception->getMessage()]);
         }
-    }
-
-    private function checkChannels($channels, $bot_id)
-    {
-        $result = new Collection();
-        foreach ($channels as $channel) {
-            /** @var Channel $channel */
-            if($channel->telegram_bot_id === $bot_id) {
-                $result->add($channel);
-            }
-        }
-        return $result;
     }
 }
