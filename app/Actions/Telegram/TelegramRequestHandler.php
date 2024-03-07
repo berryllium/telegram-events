@@ -78,7 +78,7 @@ class TelegramRequestHandler
                     if(isset($message->data->all_channels) && $message->data->all_channels) {
                         $channels = $author->channels()->where('telegram_bot_id', $message->telegram_bot_id)->get();
                     } elseif(isset($message->data->channels) && $message->data->channels) {
-                        $channels = new Collection($message->data->channels);
+                        $channels = $message->data->channels;
                     }else {
                         $channels = $place->channels;
                     }
@@ -91,9 +91,7 @@ class TelegramRequestHandler
                             $messageSchedule = $message->message_schedules()->create([
                                 'sending_date' => $date
                             ]);
-                            $messageSchedule->channels()->attach($channels->filter(function(Channel $ch) use($bot){
-                                return $ch->telegram_bot_id == $bot->id;
-                            }));
+                            $messageSchedule->channels()->attach($channels);
                         }
                     }
                 } else {
