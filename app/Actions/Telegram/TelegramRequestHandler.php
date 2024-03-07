@@ -78,7 +78,7 @@ class TelegramRequestHandler
                     if(isset($message->data->all_channels) && $message->data->all_channels) {
                         $channels = $author->channels()->where('telegram_bot_id', $message->telegram_bot_id)->get();
                     } elseif(isset($message->data->channels) && $message->data->channels) {
-                        $channels = $message->data->channels;
+                        $channels = new Collection($message->data->channels);
                     }else {
                         $channels = $place->channels;
                     }
