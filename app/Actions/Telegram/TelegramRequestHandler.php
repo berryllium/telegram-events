@@ -20,7 +20,7 @@ use TelegramBot\Api\Types\ReplyKeyboardMarkup;
 class TelegramRequestHandler
 {
     public function handle(Request $request) {
-//        try {
+        try {
             $data = $request->toArray();
             $token = $request->header('X-Telegram-Bot-Api-Secret-Token');
             Log::info('Telegram message ', $data);
@@ -83,15 +83,17 @@ class TelegramRequestHandler
                         $channels = $place->channels;
                     }
 
-                    $channels = $this->checkChannels($channels, $bot->id);
-                    if($channels && $channels->count()) {
+                    if($channels) {
+
                         $publish_dates = $this->preparePublishDates($message->data->schedule);
                         foreach ($publish_dates as $date) {
                             /** @var MessageSchedule $messageSchedule */
                             $messageSchedule = $message->message_schedules()->create([
                                 'sending_date' => $date
                             ]);
-                            $messageSchedule->channels()->attach($channels);
+                            $messageSchedule->channels()->attach($channels->filter(function(Channel $ch) use($bot){
+                                return $ch->telegram_bot_id == $bot->id;
+                            }));
                         }
                     }
                 } else {
@@ -136,10 +138,10 @@ class TelegramRequestHandler
             } elseif(isset($data['message']['reply_to_message']) && config('app.service_bot.comments_notification')) {
                 $this->handleComment($data);
             }
-//        } catch (\Exception $exception) {
+        } catch (\Exception $exception) {
             Log::error($exception->getMessage(), $exception->getTrace());
             TechBotFacade::send(implode(', ', [$exception->getMessage() ,$exception->getFile(), $exception->getLine()]));
-//        }
+        }
 
         return response()->json(['status' => 'ok']);
     }
@@ -195,17 +197,5 @@ class TelegramRequestHandler
         } catch (\Exception $exception) {
             Log::error('Comment Telegram Error', ['error' => $exception->getMessage()]);
         }
-    }
-
-    private function checkChannels($channels, $bot_id)
-    {
-        $result = new Collection();
-        foreach ($channels as $channel) {
-            /** @var Channel $channel */
-            if($channel->telegram_bot_id === $bot_id) {
-                $result->add($channel);
-            }
-        }
-        return $result;
     }
 }
