@@ -85,6 +85,7 @@ class TelegramRequestHandler
 
                     $channels = $channels->filter(fn(Channel $ch) => $ch->telegram_bot_id == $bot->id);
                     if($channels) {
+                        Log::info('Assign channels to the message', ['msg' => $message->id, 'ch' => $channels->toArray()]);
                         $publish_dates = $this->preparePublishDates($message->data->schedule);
                         foreach ($publish_dates as $date) {
                             /** @var MessageSchedule $messageSchedule */
