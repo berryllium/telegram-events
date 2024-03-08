@@ -4,6 +4,11 @@
     <form method="post" action="{{ route('place.update', [$place]) }}">
         @csrf
         @method('put')
+        <div class="mb-2">
+            <input type="hidden" name="active" value="0">
+            <input id="active" type="checkbox" class="form-check-input" name="active" value="1" {{ $place->active ? 'checked' : '' }}>
+            <label class="form-check-label" for="active">{{ __('webapp.active') }}</label>
+        </div>
         <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $place->name }}">
