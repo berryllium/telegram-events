@@ -36,7 +36,7 @@ class TelegramWebAppController extends Controller
             'bot' => $telegramBot,
             'form' => $telegramBot->form,
             'places' => $places,
-            'addresses' => $telegramBot->places()->select('id', 'address')->get(),
+            'addresses' => $telegramBot->places()->where('active', 1)->select('id', 'address')->get(),
             'can_select_channels' => $can_select_channels,
             'channels' => $channels,
         ]);
