@@ -111,6 +111,10 @@ class PlaceController extends Controller
 
         $place->channels()->sync($request->input('channels') ?: []);
 
+        foreach ($place->place_files as $f) {
+            $f->delete();
+        }
+
         if ($request->hasFile('image')) {
             $files = $request->file('image');
             foreach ($files as $file) {
