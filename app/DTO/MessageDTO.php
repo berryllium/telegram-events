@@ -2,19 +2,22 @@
 
 namespace App\DTO;
 
-use App\Models\Message;
+use App\Models\MessageSchedule;
 
 class MessageDTO
 {
     public int $id;
     public string $text;
+    public string $date;
     public string $main_picture;
     public array $files;
 
-    public function __construct(Message $message)
+    public function __construct(MessageSchedule $messageSchedule)
     {
-        $this->id = $message->id;
+        $message = $messageSchedule->message;
+        $this->id = $messageSchedule->id;
         $this->text = $message->text;
+        $this->date = $messageSchedule->sending_date;
         $this->files = [];
         $this->processFiles($message);
     }

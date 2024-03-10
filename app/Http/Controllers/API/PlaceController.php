@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\DTO\MessageDTO;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
+use App\Models\MessageSchedule;
 use App\Models\Place;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,11 @@ class PlaceController extends Controller
 
     public function messages(Place $place, Request $request)
     {
-        $query = $place->messages();
+        $query = MessageSchedule::query()
+            ->where('status', 'success')
+            ->whereHas('message', fn($q) => $q->where('place_id', $place->id))
+        ;
+
         $limit = $request->get('limit') ?? 10;
         if($request->get('by') && $request->get('order')) {
             $query->orderBy($request->get('by'), $request->get('order'));
@@ -28,7 +33,8 @@ class PlaceController extends Controller
         }
 
         $query->offset($request->get('offset') ?? 0);
-        $query->with('message_files');
+        $query->with('message');
+        $query->with('message.message_files');
         $pagination = $query->paginate($limit);
 
         if(!$pagination->count()) {
@@ -44,12 +50,12 @@ class PlaceController extends Controller
         ]);
     }
 
-    public function message(Place $place, Message $message)
+    public function message(Place $place, MessageSchedule $messageSchedule)
     {
-        $message = $message->load('message_files');
+        $message = $messageSchedule->with('message')->with('message.message_files')->get();
         if(!$message) abort(404);
         return response()->json([
-            'message' => new MessageDTO($message)
+            'message' => new MessageDTO($messageSchedule)
         ]);
     }
 }
