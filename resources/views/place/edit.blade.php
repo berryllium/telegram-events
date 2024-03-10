@@ -1,9 +1,13 @@
 @extends('base')
 @section('title', __('webapp.places.edit'))
 @section('content')
-    @if($place->image)
-        <div class="image">
-            <img src="{{ $place->imageSrc }}" alt="{{ $place->name }}" class="mw-100">
+    @if($place->place_files)
+        <div class="row mb-4">
+            @foreach($place->place_files as $img)
+                <div class="col-2">
+                    <img src="{{ $img->src }}" alt="{{ $place->name }}" class="mw-100">
+                </div>
+            @endforeach
         </div>
     @endif
     <form method="post" action="{{ route('place.update', [$place]) }}" enctype="multipart/form-data">
@@ -106,7 +110,7 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">{{ __('webapp.image') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image">
+            <input class="form-control" type="file" id="formFile" name="image[]" multiple>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>

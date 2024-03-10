@@ -14,7 +14,7 @@ class PlaceController extends Controller
     public function info(Place $place)
     {
         return response()->json([
-            'place' => $place->toArray()
+            'place' => $place->load('place_files')->toArray()
         ]);
     }
 

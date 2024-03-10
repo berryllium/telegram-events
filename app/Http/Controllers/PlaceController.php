@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\MessageFile;
 use App\Models\Place;
+use App\Models\PlaceFile;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 
@@ -59,11 +59,14 @@ class PlaceController extends Controller
         $place->channels()->sync($channels);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            $files = $request->file('image');
+            foreach ($files as $file) {
+                if($file->getError()) {
+                    return back()->with('error',$file->getErrorMessage());
+                }
+                $path = $file->store('public/media');
+                $place->place_files()->save(new PlaceFile(['filename' => $path]));
             }
-            $place->update(['image' => $file->store('public/media')]);
         }
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
@@ -109,11 +112,14 @@ class PlaceController extends Controller
         $place->channels()->sync($request->input('channels') ?: []);
 
         if ($request->hasFile('image')) {
-            $file = $request->file('image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            $files = $request->file('image');
+            foreach ($files as $file) {
+                if($file->getError()) {
+                    return back()->with('error',$file->getErrorMessage());
+                }
+                $path = $file->store('public/media');
+                $place->place_files()->save(new PlaceFile(['filename' => $path]));
             }
-            $place->update(['image' => $file->store('public/media')]);
         }
 
         return back()->with('success', __('webapp.record_updated'));

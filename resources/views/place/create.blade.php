@@ -95,7 +95,7 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">{{ __('webapp.image') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image">
+            <input class="form-control" type="file" id="formFile" name="image[]">
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>

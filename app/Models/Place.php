@@ -70,4 +70,9 @@ class Place extends Model
             return $this->where('domain', $value)->firstOrFail();
         }
     }
+
+    public function place_files() : HasMany
+    {
+        return $this->hasMany(PlaceFile::class);
+    }
 }
