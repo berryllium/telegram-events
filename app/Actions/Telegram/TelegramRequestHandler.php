@@ -78,12 +78,14 @@ class TelegramRequestHandler
                     if(isset($message->data->all_channels) && $message->data->all_channels) {
                         $channels = $author->channels()->where('telegram_bot_id', $message->telegram_bot_id)->get();
                     } elseif(isset($message->data->channels) && $message->data->channels) {
-                        $channels = $message->data->channels;
+                        $channels = $bot->channels()->whereIn('id', $message->data->channels)->get();
                     }else {
                         $channels = $place->channels;
                     }
 
+                    $channels = $channels->filter(fn(Channel $ch) => $ch->telegram_bot_id == $bot->id);
                     if($channels) {
+                        Log::info('Assign channels to the message', ['msg' => $message->id, 'ch' => $channels->toArray()]);
                         $publish_dates = $this->preparePublishDates($message->data->schedule);
                         foreach ($publish_dates as $date) {
                             /** @var MessageSchedule $messageSchedule */

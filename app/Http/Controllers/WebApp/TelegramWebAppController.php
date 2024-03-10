@@ -29,11 +29,14 @@ class TelegramWebAppController extends Controller
             }
         }
 
+        $places = $places->count() ? $places : $telegramBot->places;
+        $places = $places->filter(fn(Place $place) => !!$place->active);
+
         return view('webapp.index', [
             'bot' => $telegramBot,
             'form' => $telegramBot->form,
-            'places' => $places->count() ? $places : $telegramBot->places,
-            'addresses' => $telegramBot->places()->select('id', 'address')->get(),
+            'places' => $places,
+            'addresses' => $telegramBot->places()->where('active', 1)->select('id', 'address')->get(),
             'can_select_channels' => $can_select_channels,
             'channels' => $channels,
         ]);

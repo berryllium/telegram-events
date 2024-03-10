@@ -94,6 +94,7 @@ class PlaceController extends Controller
     {
         $place->update($request->validate([
             'name' => 'required|min:2|max:255',
+            'active' => '',
             'address' => 'required|min:2|max:255',
             'address_link' => '',
             'description' => 'max:1000',
