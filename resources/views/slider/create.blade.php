@@ -6,7 +6,7 @@
         <input type="hidden" name="type" value="{{ $type }}">
         <h3>{{ __('webapp.slides') }} </h3>
         <div class="slides row">
-            <div class="col-12 mb-3 d-flex flex-column flex-lg-row border border-1" data-role="block">
+            <div class="col-12 mb-3 d-flex flex-column flex-lg-row" data-role="block">
                 <input type="text" name="name[]" class="form-control mb-1" placeholder="{{ __('webapp.title') }}" aria-label="Username">
                 <input type="text" name="link[]" class="form-control mb-1" placeholder="{{ __('webapp.link') }}" aria-label="Username">
                 <input type="file" name="files[]" class="form-control mb-1">
