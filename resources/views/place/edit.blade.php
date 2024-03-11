@@ -68,6 +68,48 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="phone" class="form-label">{{ __('webapp.phone') }}</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ $place->phone }}">
+            @error('phone')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_whatsapp" class="form-label">{{ __('webapp.link_whatsapp') }}</label>
+            <input type="text" class="form-control" id="link_whatsapp" name="link_whatsapp" value="{{ $place->link_whatsapp }}">
+            @error('link_whatsapp')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_tg" class="form-label">{{ __('webapp.link_tg') }}</label>
+            <input type="text" class="form-control" id="link_tg" name="link_tg" value="{{ $place->link_tg }}">
+            @error('link_tg')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_ok" class="form-label">{{ __('webapp.link_ok') }}</label>
+            <input type="text" class="form-control" id="link_ok" name="link_ok" value="{{ $place->link_ok }}">
+            @error('link_ok')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_vk" class="form-label">{{ __('webapp.link_vk') }}</label>
+            <input type="text" class="form-control" id="link_vk" name="link_vk" value="{{ $place->link_vk }}">
+            @error('link_vk')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_instagram" class="form-label">{{ __('webapp.link_instagram') }}</label>
+            <input type="text" class="form-control" id="link_instagram" name="link_instagram" value="{{ $place->link_instagram }}">
+            @error('link_instagram')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="additional_info" class="form-label">{{ __('webapp.additional_info') }}</label>
             <textarea class="form-control" id="additional_info" name="additional_info" rows="5">{{ $place->additional_info }}</textarea>
             @error('additional_info')
@@ -109,8 +151,8 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="formFile" class="form-label">{{ __('webapp.image') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image[]" multiple>
+            <a href="{{ route('slider.create', ['place' => $place, 'type' => 'horizontal']) }}">{{ __('webapp.slider_horizontal') }}</a>
+            <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>

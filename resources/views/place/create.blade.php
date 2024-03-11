@@ -53,6 +53,41 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="link_whatsapp" class="form-label">{{ __('webapp.link_whatsapp') }}</label>
+            <input type="text" class="form-control" id="link_whatsapp" name="link_whatsapp" value="{{ old('link_whatsapp') }}">
+            @error('link_whatsapp')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_tg" class="form-label">{{ __('webapp.link_tg') }}</label>
+            <input type="text" class="form-control" id="link_tg" name="link_tg" value="{{ old('link_tg') }}">
+            @error('link_tg')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_ok" class="form-label">{{ __('webapp.link_ok') }}</label>
+            <input type="text" class="form-control" id="link_ok" name="link_ok" value="{{ old('link_ok') }}">
+            @error('link_ok')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_vk" class="form-label">{{ __('webapp.link_vk') }}</label>
+            <input type="text" class="form-control" id="link_vk" name="link_vk" value="{{ old('link_vk') }}">
+            @error('link_vk')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_instagram" class="form-label">{{ __('webapp.link_instagram') }}</label>
+            <input type="text" class="form-control" id="link_instagram" name="link_instagram" value="{{ old('link_instagram') }}">
+            @error('link_instagram')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="additional_info" class="form-label">{{ __('webapp.additional_info') }}</label>
             <textarea class="form-control" id="additional_info" name="additional_info" rows="5">{{ old('additional_info') }}</textarea>
             @error('additional_info')

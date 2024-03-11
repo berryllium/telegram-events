@@ -28,6 +28,7 @@ Route::middleware('auth')->group(function(){
     Route::resource('/message_schedule', \App\Http\Controllers\MessageScheduleController::class)->except(['create', 'store', 'index'])->withTrashed(['edit']);
     Route::resource('/author', \App\Http\Controllers\AuthorController::class);
     Route::resource('/dictionary', \App\Http\Controllers\DictionaryController::class);
+    Route::resource('/place/{place}/{type}/slider', \App\Http\Controllers\SliderController::class);
 
     Route::post('/form/copy/{form}', '\App\Http\Controllers\FormController@copy')->name('form.copy');
     Route::post('/pin/{bot}',  '\App\Http\Controllers\TelegramBotController@pin')->name('pin');

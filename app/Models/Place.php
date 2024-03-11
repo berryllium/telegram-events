@@ -27,6 +27,11 @@ class Place extends Model
         'image',
         'phone',
         'email',
+        'link_whatsapp',
+        'link_tg',
+        'link_ok',
+        'link_vk',
+        'link_instagram',
     ];
 
     protected $appends = [
@@ -74,5 +79,10 @@ class Place extends Model
     public function place_files() : HasMany
     {
         return $this->hasMany(PlaceFile::class);
+    }
+
+    public function sliders() : HasMany
+    {
+        return $this->hasMany(Slider::class);
     }
 }

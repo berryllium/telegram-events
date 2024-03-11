@@ -49,8 +49,13 @@ class PlaceController extends Controller
             'additional_info' => '',
             'tag_set' => '',
             'domain' => 'nullable|unique:places,domain',
-            'email' => '',
-            'phone' => '',
+            'email' => 'max:255',
+            'phone' => 'max:255',
+            'link_whatsapp' => 'max:255',
+            'link_tg' => 'max:255',
+            'link_ok' => 'max:255',
+            'link_vk' => 'max:255',
+            'link_instagram' => 'max:255',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
@@ -107,6 +112,11 @@ class PlaceController extends Controller
             'domain' => 'nullable|max:255|unique:places,domain,' . $place->id,
             'email' => 'max:255',
             'phone' => 'max:255',
+            'link_whatsapp' => 'max:255',
+            'link_tg' => 'max:255',
+            'link_ok' => 'max:255',
+            'link_vk' => 'max:255',
+            'link_instagram' => 'max:255',
         ]));
 
         $place->channels()->sync($request->input('channels') ?: []);
