@@ -152,7 +152,7 @@
         </div>
         <div class="mb-3">
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'horizontal']) }}">{{ __('webapp.slider_horizontal') }}</a>
-{{--            <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>--}}
+            <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
