@@ -78,7 +78,7 @@ class SliderController extends Controller
     public function update(Place $place, string $type, Slider $slider, Request $request)
     {
         $data = $request->toArray();
-        $old_slides = $request->get('old_id');
+        $old_slides = $request->get('old_id') ?? [];
         foreach ($slider->slides as $slide) {
             /** @var Slide $slide */
             if(!in_array($slide->id, $old_slides)) {
