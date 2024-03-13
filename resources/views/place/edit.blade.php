@@ -1,15 +1,6 @@
 @extends('base')
 @section('title', __('webapp.places.edit'))
 @section('content')
-    @if($place->place_files)
-        <div class="row mb-4">
-            @foreach($place->place_files as $img)
-                <div class="col-2">
-                    <img src="{{ $img->src }}" alt="{{ $place->name }}" class="mw-100">
-                </div>
-            @endforeach
-        </div>
-    @endif
     <form method="post" action="{{ route('place.update', [$place]) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
