@@ -73,8 +73,8 @@ class VKService
         $upload_server = json_decode(file_get_contents("https://api.vk.com/method/photos.getWallUploadServer?" . http_build_query($request_params)), true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
-        if(isset($upload_server['error'])) {
-            throw new \Exception('VK error: ' . $upload_server['error']['error_code']);
+        if(isset($upload_server['error']['error_msg'])) {
+            throw new \Exception('VK error: ' . $upload_server['error']['error_msg']);
         }
 
         $upload_url = $upload_server['response']['upload_url'];
@@ -137,6 +137,11 @@ class VKService
 
         $upload_server = json_decode(file_get_contents("https://api.vk.com/method/video.save?" . http_build_query($request_params)), true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
+
+        if(isset($upload_server['error']['error_msg'])) {
+            throw new \Exception('VK error: ' . $upload_server['error']['error_msg']);
+        }
+
         $upload_url = $upload_server['response']['upload_url'];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $upload_url);
