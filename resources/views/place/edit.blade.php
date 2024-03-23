@@ -68,13 +68,6 @@
             @enderror
         </div>
         <div class="mb-3">
-            <label for="phone" class="form-label">{{ __('webapp.phone') }}</label>
-            <input type="text" class="form-control" id="phone" name="phone" value="{{ $place->phone }}">
-            @error('phone')
-            <div class="form-text text-danger">{{ $message }}</div>
-            @enderror
-        </div>
-        <div class="mb-3">
             <label for="link_whatsapp" class="form-label">{{ __('webapp.link_whatsapp') }}</label>
             <input type="text" class="form-control" id="link_whatsapp" name="link_whatsapp" value="{{ $place->link_whatsapp }}">
             @error('link_whatsapp')
