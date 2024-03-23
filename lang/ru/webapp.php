@@ -59,6 +59,7 @@ return [
     'has_posted' => 'разместил',
     'limit_error' => 'Допустимое кол-во символов превышено на :value !',
     'login' => 'Логин',
+    'logo' => 'Лого',
     'link' => 'Ссылка',
     'link_whatsapp' => 'Ссылка whatsapp',
     'link_tg' => 'Ссылка tg',

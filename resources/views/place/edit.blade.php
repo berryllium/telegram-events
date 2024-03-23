@@ -1,6 +1,11 @@
 @extends('base')
 @section('title', __('webapp.places.edit'))
 @section('content')
+    @if($place->image)
+        <div class="image">
+            <img src="{{ $place->imageSrc }}" alt="{{ $place->name }}" class="mw-100">
+        </div>
+    @endif
     <form method="post" action="{{ route('place.update', [$place]) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
@@ -8,6 +13,10 @@
             <input type="hidden" name="active" value="0">
             <input id="active" type="checkbox" class="form-check-input" name="active" value="1" {{ $place->active ? 'checked' : '' }}>
             <label class="form-check-label" for="active">{{ __('webapp.active') }}</label>
+        </div>
+        <div class="mb-3">
+            <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
+            <input class="form-control" type="file" id="formFile" name="image">
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
