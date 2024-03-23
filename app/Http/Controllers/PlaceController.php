@@ -64,14 +64,12 @@ class PlaceController extends Controller
         $place->channels()->sync($channels);
 
         if ($request->hasFile('image')) {
-            $files = $request->file('image');
-            foreach ($files as $file) {
-                if($file->getError()) {
-                    return back()->with('error',$file->getErrorMessage());
-                }
-                $path = $file->store('public/media');
-                $place->place_files()->save(new PlaceFile(['filename' => $path]));
+            $file = $request->file('image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
             }
+            $path = $file->store('public/media');
+            $place->update(['image' => $path]);
         }
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));

@@ -4,6 +4,10 @@
     <form method="post" action="{{ route('place.store') }}" enctype="multipart/form-data">
         @csrf
         <div class="mb-3">
+            <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
+            <input class="form-control" type="file" id="formFile" name="image">
+        </div>
+        <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
             @error('name')
@@ -127,10 +131,6 @@
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
-        </div>
-        <div class="mb-3">
-            <label for="formFile" class="form-label">{{ __('webapp.image') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image[]">
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>
