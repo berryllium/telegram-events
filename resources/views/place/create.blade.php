@@ -1,13 +1,24 @@
 @extends('base')
 @section('title', __('webapp.places.add'))
 @section('content')
-    <form method="post" action="{{ route('place.store') }}">
+    <form method="post" action="{{ route('place.store') }}" enctype="multipart/form-data">
         @csrf
+        <div class="mb-3">
+            <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
+            <input class="form-control" type="file" id="formFile" name="image">
+        </div>
         <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}">
             @error('name')
                 <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="domain" class="form-label">{{ __('webapp.places.domain') }}</label>
+            <input type="text" class="form-control" id="domain" name="domain" value="{{ old('domain') }}">
+            @error('domain')
+            <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
         <div class="mb-3">
@@ -28,6 +39,55 @@
             <label for="working_hours" class="form-label">{{ __('webapp.working_hours') }}</label>
             <input type="text" class="form-control" id="working_hours" name="working_hours" value="{{ old('working_hours') }}">
             @error('working_hours')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="email" class="form-label">{{ __('webapp.email') }}</label>
+            <input type="text" class="form-control" id="email" name="email" value="{{ old('email') }}">
+            @error('email')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="phone" class="form-label">{{ __('webapp.phone') }}</label>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone') }}">
+            @error('phone')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_whatsapp" class="form-label">{{ __('webapp.link_whatsapp') }}</label>
+            <input type="text" class="form-control" id="link_whatsapp" name="link_whatsapp" value="{{ old('link_whatsapp') }}">
+            @error('link_whatsapp')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_tg" class="form-label">{{ __('webapp.link_tg') }}</label>
+            <input type="text" class="form-control" id="link_tg" name="link_tg" value="{{ old('link_tg') }}">
+            @error('link_tg')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_ok" class="form-label">{{ __('webapp.link_ok') }}</label>
+            <input type="text" class="form-control" id="link_ok" name="link_ok" value="{{ old('link_ok') }}">
+            @error('link_ok')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_vk" class="form-label">{{ __('webapp.link_vk') }}</label>
+            <input type="text" class="form-control" id="link_vk" name="link_vk" value="{{ old('link_vk') }}">
+            @error('link_vk')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="link_instagram" class="form-label">{{ __('webapp.link_instagram') }}</label>
+            <input type="text" class="form-control" id="link_instagram" name="link_instagram" value="{{ old('link_instagram') }}">
+            @error('link_instagram')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

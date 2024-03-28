@@ -29,7 +29,7 @@ window.addEventListener('load', function(){
 
     function getPlaceTagSets(place) {
         $.ajax({
-            url: `${url}/api/place/${place}/tags`,
+            url: `${url}/api/tags/${place}`,
             method: 'post',
             success: function(response) {
                 $('[data-role="tags"]').find('textarea').val('')

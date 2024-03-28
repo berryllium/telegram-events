@@ -6,7 +6,9 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+use Illuminate\Support\Facades\Storage;
 
 class Place extends Model
 {
@@ -20,7 +22,20 @@ class Place extends Model
         'description',
         'working_hours',
         'additional_info',
-        'tag_set'
+        'tag_set',
+        'domain',
+        'image',
+        'phone',
+        'email',
+        'link_whatsapp',
+        'link_tg',
+        'link_ok',
+        'link_vk',
+        'link_instagram',
+    ];
+
+    protected $appends = [
+        'image_src'
     ];
 
     public function telegram_bot() : BelongsTo {
@@ -41,5 +56,33 @@ class Place extends Model
 
     public function tag() : HasOne {
         return $this->hasOne(Dictionary::class, 'id', 'tag_set');
+    }
+
+    public function messages() : HasMany
+    {
+        return $this->hasMany(Message::class);
+    }
+
+    public function getImageSrcAttribute()
+    {
+        return asset(Storage::url($this->image));
+    }
+
+    public function resolveRouteBinding($value, $field = null) {
+        if (is_numeric($value)) {
+            return parent::resolveRouteBinding($value, $field);
+        } else {
+            return $this->where('domain', $value)->firstOrFail();
+        }
+    }
+
+    public function place_files() : HasMany
+    {
+        return $this->hasMany(PlaceFile::class);
+    }
+
+    public function sliders() : HasMany
+    {
+        return $this->hasMany(Slider::class);
     }
 }

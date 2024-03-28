@@ -9,7 +9,11 @@ select2();
 window.addEventListener('load', function(){
     $('[data-select="2"]').select2()
     $('[data-role="copy-block"]').click(function(){
-        $(this).prev().after($(this).prev().clone())
+        const clone = $(this).prev().clone()
+        clone.find('input').each(function() {
+            $(this).val('')
+        })
+        $(this).prev().after(clone)
     })
 
     $(document).on('click', '[data-role="delete-block"]', function(){
