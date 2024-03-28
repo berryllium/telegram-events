@@ -15,7 +15,7 @@ class TokenAuth
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if($request->header('Bearer') !== getenv('API_TOKEN')) {
+        if($request->bearerToken() !== getenv('API_TOKEN')) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return $next($request);
