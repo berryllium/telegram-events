@@ -1,11 +1,6 @@
 @extends('base')
 @section('title', __('webapp.places.edit'))
 @section('content')
-    @if($place->image)
-        <div class="image">
-            <img src="{{ $place->imageSrc }}" alt="{{ $place->name }}" class="mw-100">
-        </div>
-    @endif
     <form method="post" action="{{ route('place.update', [$place]) }}" enctype="multipart/form-data">
         @csrf
         @method('put')
@@ -16,8 +11,13 @@
         </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image">
+            <input class="form-control" type="file" id="formFile" name="logo_image">
         </div>
+        @if($place->logo_image)
+            <div class="image col-lg-4 col-12">
+                <img src="{{ $place->logo_image_src }}" alt="{{ $place->name }}" class="mw-100">
+            </div>
+        @endif
         <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="name" name="name" value="{{ $place->name }}">
@@ -143,6 +143,31 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">{{ __('webapp.image') }}</label>
+            <input class="form-control" type="file" id="image" name="image">
+        </div>
+        @if($place->image)
+            <div class="image col-lg-4 col-12">
+                <img src="{{ $place->imageSrc }}" alt="{{ $place->name }}" class="mw-100">
+            </div>
+        @endif
+        <div class="mb-3">
+            <label for="appeal_text" class="form-label">{{ __('webapp.appeal_text') }}</label>
+            <textarea class="form-control" id="appeal_text" name="appeal_text" rows="5">{{ $place->appeal_text }}</textarea>
+            @error('appeal_text')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="appeal_image" class="form-label">{{ __('webapp.appeal_image') }}</label>
+            <input class="form-control" type="file" id="appeal_image" name="appeal_image">
+        </div>
+        @if($place->appeal_image)
+            <div class="image col-lg-4 col-12">
+                <img src="{{ $place->appealImageSrc }}" alt="{{ $place->name }}" class="mw-100">
+            </div>
+        @endif
         <div class="mb-3">
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'horizontal']) }}">{{ __('webapp.slider_horizontal') }}</a>
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>

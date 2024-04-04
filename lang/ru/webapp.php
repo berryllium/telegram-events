@@ -22,6 +22,8 @@ return [
     'address_link' => 'Ссылка для адреса',
     'age' => 'Возраст',
     'api_token' => 'API токен',
+    'appeal_text' => 'Текст обращения',
+    'appeal_image' => 'Картинка обращения',
     'attention' => 'Внимание!',
     'tag_set' => 'Набор тегов',
     'type' => 'Тип',

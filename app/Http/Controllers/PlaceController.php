@@ -45,6 +45,7 @@ class PlaceController extends Controller
             'address' => 'required|min:2|max:255',
             'address_link' => '',
             'description' => 'max:1000',
+            'appeal_text' => '',
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
@@ -70,6 +71,24 @@ class PlaceController extends Controller
             }
             $path = $file->store('public/media');
             $place->update(['image' => $path]);
+        }
+
+        if ($request->hasFile('logo_image')) {
+            $file = $request->file('logo_image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $path = $file->store('public/media');
+            $place->update(['logo_image' => $path]);
+        }
+
+        if ($request->hasFile('appeal_image')) {
+            $file = $request->file('appeal_image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $path = $file->store('public/media');
+            $place->update(['appeal_image' => $path]);
         }
 
         return redirect(route('place.index'))->with('success', __('webapp.record_added'));
@@ -104,6 +123,7 @@ class PlaceController extends Controller
             'address' => 'required|min:2|max:255',
             'address_link' => '',
             'description' => 'max:1000',
+            'appeal_text' => '',
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
@@ -130,6 +150,24 @@ class PlaceController extends Controller
             }
             $path = $file->store('public/media');
             $place->update(['image' => $path]);
+        }
+
+        if ($request->hasFile('logo_image')) {
+            $file = $request->file('logo_image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $path = $file->store('public/media');
+            $place->update(['logo_image' => $path]);
+        }
+
+        if ($request->hasFile('appeal_image')) {
+            $file = $request->file('appeal_image');
+            if($file->getError()) {
+                return back()->with('error',$file->getErrorMessage());
+            }
+            $path = $file->store('public/media');
+            $place->update(['appeal_image' => $path]);
         }
 
         return back()->with('success', __('webapp.record_updated'));

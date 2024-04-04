@@ -20,11 +20,14 @@ class Place extends Model
         'address',
         'address_link',
         'description',
+        'image',
+        'logo_image',
+        'appeal_text',
+        'appeal_image',
         'working_hours',
         'additional_info',
         'tag_set',
         'domain',
-        'image',
         'phone',
         'email',
         'link_whatsapp',
@@ -35,7 +38,9 @@ class Place extends Model
     ];
 
     protected $appends = [
-        'image_src'
+        'image_src',
+        'appeal_image_src',
+        'logo_image_src',
     ];
 
     public function telegram_bot() : BelongsTo {
@@ -66,6 +71,16 @@ class Place extends Model
     public function getImageSrcAttribute()
     {
         return asset(Storage::url($this->image));
+    }
+
+    public function getLogoImageSrcAttribute()
+    {
+        return asset(Storage::url($this->logo_image));
+    }
+
+    public function getAppealImageSrcAttribute()
+    {
+        return asset(Storage::url($this->appeal_image));
     }
 
     public function resolveRouteBinding($value, $field = null) {

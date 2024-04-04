@@ -5,7 +5,7 @@
         @csrf
         <div class="mb-3">
             <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
-            <input class="form-control" type="file" id="formFile" name="image">
+            <input class="form-control" type="file" id="formFile" name="logo_image">
         </div>
         <div class="mb-3">
             <label for="name" class="form-label">{{ __('webapp.title') }}</label>
@@ -131,6 +131,21 @@
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+        </div>
+        <div class="mb-3">
+            <label for="image" class="form-label">{{ __('webapp.image') }}</label>
+            <input class="form-control" type="file" id="image" name="image">
+        </div>
+        <div class="mb-3">
+            <label for="appeal_text" class="form-label">{{ __('webapp.appeal_text') }}</label>
+            <textarea class="form-control" id="appeal_text" name="appeal_text" rows="5">{{ old('appeal_text') }}</textarea>
+            @error('appeal_text')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="appeal_image" class="form-label">{{ __('webapp.appeal_image') }}</label>
+            <input class="form-control" type="file" id="appeal_image" name="appeal_image">
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>
