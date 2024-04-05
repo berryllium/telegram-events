@@ -15,9 +15,26 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="template" class="form-label">{{ __('webapp.title') }}</label>
+            <input type="text" class="form-control" id="template" name="template" value="{{ old('template') }}">
+            @error('template')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="domain" class="form-label">{{ __('webapp.places.domain') }}</label>
             <input type="text" class="form-control" id="domain" name="domain" value="{{ old('domain') }}">
             @error('domain')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="template" class="form-label">{{ __('webapp.template') }}</label>
+            <select class="form-select" id="template" name="template">
+                <option value="default" selected>По умолчанию (default)</option>
+                <option value="svetofor">Светофор (svetofor)</option>
+            </select>
+            @error('form')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>

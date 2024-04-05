@@ -38,6 +38,7 @@ return [
     'channel_in' => 'Инстаграм',
     'code' => 'Код',
     'comments_channel_id' => 'Телеграм канал для комментариев',
+    'template' => 'Шаблон сайта',
     'template_code' => 'Код для вставки в шаблон',
     'confirm_password' => 'Подтверждение пароля',
     'create' => 'Создать',

@@ -33,6 +33,16 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="template" class="form-label">{{ __('webapp.template') }}</label>
+            <select class="form-select" id="template" name="template">
+                <option value="default" {{ $place->template === 'default' ? 'selected' : '' }}>По умолчанию (default)</option>
+                <option value="svetofor" {{ $place->template === 'svetofor' ? 'selected' : '' }}>Светофор (svetofor)</option>
+            </select>
+            @error('form')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="address" class="form-label">{{ __('webapp.address') }}</label>
             <input type="text" class="form-control" id="address" name="address" value="{{ $place->address }}">
             @error('address')

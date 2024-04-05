@@ -15,6 +15,7 @@ return new class extends Migration
             $table->text('appeal_text')->nullable()->default(null);
             $table->string('appeal_image')->nullable()->default(null);
             $table->string('logo_image')->nullable()->default(null);
+            $table->string('template')->nullable()->default('default');
         });
     }
 
