@@ -10,6 +10,7 @@ class MessageDTO
     public string $text;
     public string $date;
     public string $main_picture;
+    public $data;
     public array $files;
 
     public function __construct(MessageSchedule $messageSchedule)
@@ -19,6 +20,7 @@ class MessageDTO
         $this->text = $message->text;
         $this->date = $messageSchedule->sending_date;
         $this->files = [];
+        $this->data = $message->data;
         $this->processFiles($message);
     }
 
