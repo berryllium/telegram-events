@@ -36,6 +36,8 @@ class Place extends Model
         'link_ok',
         'link_vk',
         'link_instagram',
+        'seo_title',
+        'seo_description',
     ];
 
     protected $appends = [

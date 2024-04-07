@@ -164,6 +164,20 @@
             <label for="appeal_image" class="form-label">{{ __('webapp.appeal_image') }}</label>
             <input class="form-control" type="file" id="appeal_image" name="appeal_image">
         </div>
+        <div class="mb-3">
+            <label for="seo_title" class="form-label">{{ __('webapp.seo_title') }}</label>
+            <input type="text" class="form-control" id="seo_title" name="seo_title" value="{{ old('seo_title') }}">
+            @error('seo_title')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="seo_description" class="form-label">{{ __('webapp.seo_description') }}</label>
+            <input type="text" class="form-control" id="seo_description" name="seo_description" value="{{ old('seo_description') }}">
+            @error('seo_description')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>
 @endsection

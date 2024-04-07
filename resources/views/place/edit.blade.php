@@ -182,6 +182,20 @@
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'horizontal']) }}">{{ __('webapp.slider_horizontal') }}</a>
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>
         </div>
+        <div class="mb-3">
+            <label for="seo_title" class="form-label">{{ __('webapp.seo_title') }}</label>
+            <input type="text" class="form-control" id="seo_title" name="seo_title" value="{{ $place->seo_title }}">
+            @error('seo_title')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
+            <label for="seo_description" class="form-label">{{ __('webapp.seo_description') }}</label>
+            <input type="text" class="form-control" id="seo_description" name="seo_description" value="{{ $place->seo_description }}">
+            @error('seo_description')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection
