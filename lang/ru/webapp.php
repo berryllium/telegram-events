@@ -104,6 +104,8 @@ return [
     'required' => 'Обязательное',
     'role' => 'Роль',
     'search' => 'Поиск',
+    'seo_title' => 'Seo title',
+    'seo_description' => 'Seo description',
     'sort' => 'Сортировка',
     'show_deleted' => 'Показывать удаленные',
     'show_links' => 'Показывать ссылки проекта',
