@@ -196,6 +196,13 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="header_script" class="form-label">{{ __('webapp.header_script') }}</label>
+            <textarea class="form-control" id="header_script" name="header_script" rows="5">{{ $place->header_script }}</textarea>
+            @error('header_script')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection

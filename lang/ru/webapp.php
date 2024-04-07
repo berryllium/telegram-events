@@ -106,6 +106,7 @@ return [
     'search' => 'Поиск',
     'seo_title' => 'Seo title',
     'seo_description' => 'Seo description',
+    'header_script' => 'Скрипты в header',
     'sort' => 'Сортировка',
     'show_deleted' => 'Показывать удаленные',
     'show_links' => 'Показывать ссылки проекта',

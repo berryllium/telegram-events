@@ -59,6 +59,7 @@ class PlaceController extends Controller
             'link_instagram' => 'max:255',
             'seo_title' => '',
             'seo_description' => '',
+            'header_script' => '',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
@@ -140,6 +141,7 @@ class PlaceController extends Controller
             'link_instagram' => 'max:255',
             'seo_title' => '',
             'seo_description' => '',
+            'header_script' => '',
         ]));
 
         $place->channels()->sync($request->input('channels') ?: []);

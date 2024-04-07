@@ -38,6 +38,7 @@ class Place extends Model
         'link_instagram',
         'seo_title',
         'seo_description',
+        'header_script',
     ];
 
     protected $appends = [
