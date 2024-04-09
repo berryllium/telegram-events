@@ -60,6 +60,7 @@ class PlaceController extends Controller
             'seo_title' => '',
             'seo_description' => '',
             'header_script' => '',
+            'show_chat_icon' => '',
         ]);
 
         $place = TelegramBot::find(session('bot'))->places()->create($data);
@@ -142,6 +143,7 @@ class PlaceController extends Controller
             'seo_title' => '',
             'seo_description' => '',
             'header_script' => '',
+            'show_chat_icon' => '',
         ]));
 
         $place->channels()->sync($request->input('channels') ?: []);

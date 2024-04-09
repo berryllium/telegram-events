@@ -113,6 +113,7 @@ return [
     'show_place' => 'Показывать место',
     'show_address' => 'Показывать адрес',
     'show_work_hours' => 'Показывать часы работы',
+    'show_chat_icon' => 'Показывать иконку чата',
     'status' => 'Статус',
     'success' => 'Успех',
     'slides' => 'Слайды',

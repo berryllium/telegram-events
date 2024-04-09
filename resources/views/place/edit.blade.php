@@ -9,6 +9,11 @@
             <input id="active" type="checkbox" class="form-check-input" name="active" value="1" {{ $place->active ? 'checked' : '' }}>
             <label class="form-check-label" for="active">{{ __('webapp.active') }}</label>
         </div>
+        <div class="mb-2">
+            <input type="hidden" name="show_chat_icon" value="0">
+            <input id="show_chat_icon" type="checkbox" class="form-check-input" name="show_chat_icon" value="1" {{ $place->show_chat_icon ? 'checked' : '' }}>
+            <label class="form-check-label" for="show_chat_icon">{{ __('webapp.show_chat_icon') }}</label>
+        </div>
         <div class="mb-3">
             <label for="formFile" class="form-label">{{ __('webapp.logo') }}</label>
             <input class="form-control" type="file" id="formFile" name="logo_image">

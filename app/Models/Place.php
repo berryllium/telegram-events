@@ -39,6 +39,7 @@ class Place extends Model
         'seo_title',
         'seo_description',
         'header_script',
+        'show_chat_icon',
     ];
 
     protected $appends = [
