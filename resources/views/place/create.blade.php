@@ -38,6 +38,7 @@
             <select class="form-select" id="template" name="template">
                 <option value="default" selected>По умолчанию (default)</option>
                 <option value="svetofor">Светофор (svetofor)</option>
+                <option value="development_center">Центр развития (development_center)</option>
             </select>
             @error('form')
             <div class="form-text text-danger">{{ $message }}</div>
