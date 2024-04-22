@@ -61,4 +61,11 @@ class PlaceController extends Controller
             'message' => new MessageDTO($messageSchedule)
         ]);
     }
+
+    public function services(Place $place)
+    {
+        return response()->json([
+            'services' => $place->services,
+        ]);
+    }
 }
