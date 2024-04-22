@@ -105,4 +105,9 @@ class Place extends Model
     {
         return $this->hasMany(Slider::class);
     }
+
+    public function services() : HasMany
+    {
+        return $this->hasMany(Service::class);
+    }
 }

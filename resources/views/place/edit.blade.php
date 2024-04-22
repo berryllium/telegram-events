@@ -187,6 +187,8 @@
         <div class="mb-3">
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'horizontal']) }}">{{ __('webapp.slider_horizontal') }}</a>
             <a href="{{ route('slider.create', ['place' => $place, 'type' => 'vertical']) }}">{{ __('webapp.slider_vertical') }}</a>
+            <br>
+            <a href="{{ route('services.index', ['place' => $place]) }}">{{ __('webapp.services') }}</a>
         </div>
         <div class="mb-3">
             <label for="seo_title" class="form-label">{{ __('webapp.seo_title') }}</label>

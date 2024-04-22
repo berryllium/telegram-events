@@ -39,6 +39,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/report', [\App\Http\Controllers\ReportController::class, 'index'])->name('report.index');
     Route::get('/report/process', [\App\Http\Controllers\ReportController::class, 'process'])->name('report.process')->withTrashed();
 
+    Route::get('/place/{place}/services', [\App\Http\Controllers\ServicesController::class, 'index'])->name('services.index');
+    Route::post('/place/{place}/services', [\App\Http\Controllers\ServicesController::class, 'save'])->name('services.save');
+
     Route::get('/test', \App\Http\Controllers\TestController::class);
 });
 
