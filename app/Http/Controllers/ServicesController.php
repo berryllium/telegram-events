@@ -27,6 +27,7 @@ class ServicesController extends Controller
         foreach ($place->services as $service) {
             /** @var Service $service */
             if(!in_array($service->id, $old_services)) {
+                Storage::delete($service->image);
                 $service->delete();
             } else {
                 $path = '';
