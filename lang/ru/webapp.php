@@ -106,6 +106,7 @@ return [
     'save' => 'Сохранить',
     'search' => 'Поиск',
     'services' => 'Услуги',
+    'service_title' => 'Название раздела услуг',
     'seo_title' => 'Seo title',
     'seo_description' => 'Seo description',
     'header_script' => 'Скрипты в header',

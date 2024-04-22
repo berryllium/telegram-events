@@ -191,6 +191,13 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <label for="service_title" class="form-label">{{ __('webapp.service_title') }}</label>
+            <input type="text" class="form-control" id="service_title" name="service_title" value="{{ old('service_title') }}">
+            @error('service_title')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.add') }}</button>
     </form>
 @endsection
