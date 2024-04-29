@@ -22,11 +22,12 @@ class WPService
         $this->token = $token;
     }
 
-    public function post($text, $data)
+    public function post($text, $data, $media)
     {
         $response = Http::withToken($this->token)->post($this->domain . '?rest_route=/api/v1/post', [
             'title' => @$data->product ?: Str::before($text, "\n"),
             'text' => $text,
+            'media' => $media
         ]);
 
         Log::info('ответ от WP', ['response' => $response->json()]);

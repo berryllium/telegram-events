@@ -139,19 +139,16 @@ class ProcessMessage implements ShouldQueue
     {
         $wp = new WPService($this->channel->tg_id, $this->channel->token);
         try {
+            $media = [];
             if($this->message->message_files->count()) {
                 foreach ($this->message->message_files as $file) {
                     /** @var MessageFile $file */
-                    if ($file->type == 'image') {
-                        $wp->addPhoto($file->path);
-                    } elseif ($file->type == 'video') {
-                        $wp->addVideo($file->path);
-                    }
+                    $media[$file->type][] = $file->src;
                 }
             }
 
             return strtr('<a href="LINK">TEXT</a>', [
-                'LINK' => $wp->post(strip_tags($this->preparedText), $this->message->data),
+                'LINK' => $wp->post(strip_tags($this->preparedText), $this->message->data, $media),
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
