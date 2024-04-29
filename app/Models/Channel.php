@@ -17,6 +17,7 @@ class Channel extends Model
         'tg',
         'vk',
         'ok',
+        'wp',
     ];
 
     protected $table = 'channels';
@@ -26,6 +27,7 @@ class Channel extends Model
         'name',
         'type',
         'token',
+        'domain',
         'description',
         'telegram_bot_id',
         'show_place',
@@ -55,6 +57,8 @@ class Channel extends Model
             return "https://ok.ru/group/$this->tg_id/";
         } elseif($this->type == 'vk') {
             return "https://vk.com/public{$this->tg_id}/";
+        } elseif($this->type == 'wp') {
+            return $this->domain . "?p={$this->tg_id}/";
         }
         return 'https://t.me/c/' . substr($this->tg_id, 4) . '/10000000';
     }

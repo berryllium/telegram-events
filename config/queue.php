@@ -18,6 +18,7 @@ return [
     'tg' => env('TG_CONNECTION', 'tg'),
     'ok' => env('OK_CONNECTION', 'ok'),
     'in' => env('IN_CONNECTION', 'in'),
+    'wp' => env('WP_CONNECTION', 'wp'),
 
     /*
     |--------------------------------------------------------------------------
@@ -69,6 +70,15 @@ return [
             'retry_after' => 90,
             'after_commit' => false,
         ],
+
+        'wp' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'wp',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
 
         'database' => [
             'driver' => 'database',

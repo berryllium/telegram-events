@@ -9,6 +9,7 @@ use App\Models\MessageFile;
 use App\Models\MessageSchedule;
 use App\Services\OKService;
 use App\Services\VKService;
+use App\Services\WPService;
 use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -18,7 +19,6 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
-use TelegramBot\Api\Exception;
 use TelegramBot\Api\HttpException;
 use TelegramBot\Api\InvalidArgumentException;
 
@@ -51,12 +51,14 @@ class ProcessMessage implements ShouldQueue
                 $link = $this->sendTG();
             } elseif($this->queue == 'ok') {
                 $link = $this->sendOK();
+            } elseif($this->queue == 'wp') {
+                $link = $this->sendWP();
             } else {
                 $link = '';
             }
             $this->updateMessageStatus(link: $link);
-        } catch (\Exception $exception) {
-            $this->updateMessageStatus(error: $exception->getMessage());
+        } catch (\Throwable $exception) {
+            $this->updateMessageStatus(error: $exception->getMessage() ?: 'error');
         }
         sleep(1);
     }
@@ -116,6 +118,40 @@ class ProcessMessage implements ShouldQueue
 
             return strtr('<a href="LINK">TEXT</a>', [
                 'LINK' => $ok->post(strip_tags($this->preparedText)),
+                'TEXT' => __('webapp.tg_link_text')
+            ]);
+        } catch (\Exception $exception) {
+            TechBotFacade::send(__('webapp.error_sending_vk', [
+                'id' => $this->message->id,
+                'channel' => $this->channel->name,
+                'bot' => $this->message->telegram_bot->name
+            ]));
+            throw($exception);
+        }
+
+    }
+
+    /**
+     * @return string link
+     * @throws \Exception
+     */
+    protected function sendWP(): string
+    {
+        $wp = new WPService($this->channel->tg_id, $this->channel->token);
+        try {
+            if($this->message->message_files->count()) {
+                foreach ($this->message->message_files as $file) {
+                    /** @var MessageFile $file */
+                    if ($file->type == 'image') {
+                        $wp->addPhoto($file->path);
+                    } elseif ($file->type == 'video') {
+                        $wp->addVideo($file->path);
+                    }
+                }
+            }
+
+            return strtr('<a href="LINK">TEXT</a>', [
+                'LINK' => $wp->post(strip_tags($this->preparedText), $this->message->data),
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {

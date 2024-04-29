@@ -24,7 +24,7 @@
         </div>
         <div class="mb-3">
             <label for="tg_id" class="form-label">{{ __('webapp.channel_id') }}</label>
-            <input type="number" class="form-control" id="tg_id" name="tg_id" value="{{ $channel->tg_id }}">
+            <input type="text" class="form-control" id="tg_id" name="tg_id" value="{{ $channel->tg_id }}">
             @error('tg_id')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror

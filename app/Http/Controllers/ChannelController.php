@@ -39,8 +39,8 @@ class ChannelController extends Controller
     {
         $data = $request->validate([
             'name' => 'required|min:2',
-            'tg_id' => 'required|int',
-            'type' => 'required|in:tg,vk,ok,in',
+            'tg_id' => 'required',
+            'type' => 'required|in:' . implode(',', Channel::$types),
             'token' => '',
             'description' => 'max:1000',
             'show_place' => 'int',
@@ -81,8 +81,8 @@ class ChannelController extends Controller
         $token = $channel->token;
         $channel->update($request->validate([
             'name' => 'required|min:2',
-            'tg_id' => 'required|int',
-            'type' => 'required|in:tg,vk,ok,in',
+            'tg_id' => 'required',
+            'type' => 'required|in:' . implode(',', Channel::$types),
             'token' => '',
             'description' => 'max:1000',
             'show_place' => 'required|int',
