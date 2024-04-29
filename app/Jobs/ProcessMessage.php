@@ -121,7 +121,7 @@ class ProcessMessage implements ShouldQueue
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
-            TechBotFacade::send(__('webapp.error_sending_vk', [
+            TechBotFacade::send(__('webapp.error_sending_ok', [
                 'id' => $this->message->id,
                 'channel' => $this->channel->name,
                 'bot' => $this->message->telegram_bot->name
@@ -152,7 +152,7 @@ class ProcessMessage implements ShouldQueue
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
-            TechBotFacade::send(__('webapp.error_sending_vk', [
+            TechBotFacade::send(__('webapp.error_sending_wp', [
                 'id' => $this->message->id,
                 'channel' => $this->channel->name,
                 'bot' => $this->message->telegram_bot->name

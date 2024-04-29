@@ -55,6 +55,8 @@ return [
     'error_max_files_size' => 'Максимальный общий размер всех файлов :limit Мб! Ваши файлы после сжатия весят :size Мб',
     'error_sending_tg' => "Не удалость отправить сообщение :id в ТГ канал :channel для бота :bot",
     'error_sending_vk' => "Не удалость отправить сообщение :id в ВК канал :channel для бота :bot",
+    'error_sending_ok' => "Не удалость отправить сообщение :id в ОК канал :channel для бота :bot",
+    'error_sending_wp' => "Не удалость отправить сообщение :id в WP канал :channel для бота :bot",
     'error_sending_moderation' => "Не удалость отправить сообщение :id в группу модерации :g_id для бота :bot",
     'image' => 'Изображение',
     'files' => 'Файлы',
