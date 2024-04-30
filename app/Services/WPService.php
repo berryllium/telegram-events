@@ -18,6 +18,9 @@ class WPService
 
     public function __construct($domain, $token)
     {
+        if(!str_starts_with($domain, 'http')) {
+            $domain = 'https://' . $domain;
+        }
         $this->domain = $domain;
         $this->token = $token;
     }
