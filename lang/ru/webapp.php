@@ -109,6 +109,7 @@ return [
     'role' => 'Роль',
     'save' => 'Сохранить',
     'search' => 'Поиск',
+    'select_all' => 'Выбрать все',
     'services' => 'Услуги',
     'service_title' => 'Название раздела услуг',
     'seo_title' => 'Seo title',

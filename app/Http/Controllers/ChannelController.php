@@ -16,11 +16,15 @@ class ChannelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-
+        $search = $request->get('search');
         return view('channel/index', [
-            'channels' => Channel::query()->where('telegram_bot_id', session('bot'))->paginate(20)->withQueryString()
+            'channels' => Channel::query()
+                ->where('telegram_bot_id', session('bot'))
+                ->when($search, fn($query) => $query->where('name', 'like', "%$search%"))
+                ->paginate(20)
+                ->withQueryString()
         ]);
     }
 

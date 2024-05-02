@@ -8,6 +8,13 @@ select2();
 
 window.addEventListener('load', function(){
     $('[data-select="2"]').select2()
+    $('[data-role="selectAll"]').click(function() {
+        const select = $(this).siblings('[data-select="2"]')
+        var allOptions = select.find('option').map(function() {
+            if($(this).val()) return $(this).val();
+        }).get();
+        select.val(allOptions).trigger('change');
+    })
     $('[data-role="copy-block"]').click(function(){
         const clone = $(this).prev().clone()
         clone.find('input').each(function() {

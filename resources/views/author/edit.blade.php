@@ -32,6 +32,7 @@
             @error('form')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+            <div class="btn btn-warning" data-role="selectAll">{{ __('webapp.select_all') }}</div>
         </div>
         <div class="mb-2">
             <input type="hidden" name="can_select_channels" value="0">
@@ -49,6 +50,7 @@
             @error('form')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
+            <div class="btn btn-warning" data-role="selectAll">{{ __('webapp.select_all') }}</div>
         </div>
         <div class="mb-3">
             <input type="hidden" name="trusted" value="0">
