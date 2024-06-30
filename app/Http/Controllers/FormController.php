@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Form;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class FormController extends Controller
 {
@@ -66,6 +67,14 @@ class FormController extends Controller
      */
     public function update(Request $request, Form $form)
     {
+        Log::warning('User has changed the form', [
+            'form' => $request->input('name'),
+            'bot' => session('bot'),
+            'user' => auth()->user()->email,
+            'template_old' => $form->template,
+            'template_new' => $request->input('template'),
+        ]);
+
         $form->update($request->validate([
             'name' => 'required|min:2',
             'template' => 'required|max:' . config('app.post_without_files_max_message', 1000),
