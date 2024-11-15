@@ -92,18 +92,7 @@
             @endswitch
         @endforeach
         @if($can_select_channels and $channels->count())
-            <div class="form-group mb-3">
-                <label for="channels" >{{ __('webapp.channels') }}</label>
-                <select class="form-control" id="channels" name="channels[]" data-select="2" data-live-search="true" multiple>
-                    @foreach($channels as $channel)
-                        <option value="{{ $channel->id }}">{{ $channel->name }} ({{ $channel->type }})</option>
-                    @endforeach
-                </select>
-            </div>
-            <div class="mb-3">
-                <input type="checkbox" name="all_channels" class="form-check-input" id="all_channels">
-                <label for="all_channels" class="form-check-label">{{ __('webapp.add_all_bot_channels') }}</label>
-            </div>
+            <x-channels :channels="$channels"></x-channels>
         @endif
 
         <div class="form-group mb-3" data-role="block">
