@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Channel;
+use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -82,6 +83,16 @@ class ChannelController extends Controller
      */
     public function update(Request $request, Channel $channel)
     {
+        $action = $request->input('action');
+
+        if($action == 'attach-places') {
+            $channel->places()->sync($channel->telegram_bot->places);
+            return back()->with('success', __('webapp.places.assign_all_done'));
+        } elseif($action == 'detach-places') {
+            $channel->places()->sync([]);
+            return back()->with('success', __('webapp.places.reassign_all_done'));
+        }
+
         $token = $channel->token;
         $channel->update($request->validate([
             'name' => 'required|min:2',

@@ -57,12 +57,16 @@
             <label class="form-check-label" for="show_links">{{ __('webapp.show_links') }}</label>
         </div>
         <div class="mb-3">
+            <button type="submit" name="action" value="attach-places" class="btn btn-primary">{{ __('webapp.places.assign_all') }}</button>
+            <button type="submit" name="action" value="detach-places" class="btn btn-primary">{{ __('webapp.places.reassign_all') }}</button>
+        </div>
+        <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
             <textarea class="form-control" id="description" name="description" rows="5">{{ $channel->description }}</textarea>
             @error('description')
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
+        <button type="submit" name="action" value="update" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection

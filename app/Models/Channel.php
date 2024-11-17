@@ -36,8 +36,8 @@ class Channel extends Model
         'show_links',
     ];
 
-    public function places() : HasMany {
-        return $this->hasMany(Place::class);
+    public function places() : BelongsToMany {
+        return $this->belongsToMany(Place::class);
     }
 
     public function authors() : BelongsToMany {
