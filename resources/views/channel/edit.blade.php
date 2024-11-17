@@ -57,8 +57,8 @@
             <label class="form-check-label" for="show_links">{{ __('webapp.show_links') }}</label>
         </div>
         <div class="mb-3">
-            <button type="submit" name="action" value="attach-places" class="btn btn-primary">{{ __('webapp.places.assign_all') }}</button>
-            <button type="submit" name="action" value="detach-places" class="btn btn-primary">{{ __('webapp.places.reassign_all') }}</button>
+            <button type="submit" name="action" value="attach-places" class="btn btn-success">{{ __('webapp.places.assign_all') }}</button>
+            <button type="submit" name="action" value="detach-places" class="btn btn-danger">{{ __('webapp.places.reassign_all') }}</button>
         </div>
         <div class="mb-3">
             <label for="description" class="form-label">{{ __('webapp.description') }}</label>
