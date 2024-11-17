@@ -19,6 +19,7 @@ class ChannelController extends Controller
      */
     public function index(Request $request)
     {
+        Log::info('Graylog работает с Laravel!', ['context' => 'тест']);
         $search = $request->get('search');
         return view('channel/index', [
             'channels' => Channel::query()
