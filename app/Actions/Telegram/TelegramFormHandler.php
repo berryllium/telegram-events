@@ -38,7 +38,9 @@ class TelegramFormHandler
                 $totalSize = 0;
                 foreach ($files as $file) {
                     $path = $file->store('public/media');
-                    ImageCompressorFacade::compress(Storage::path($path));
+                    if(str_starts_with($file->getMimeType(), 'image/')) {
+                        ImageCompressorFacade::compress(Storage::path($path));
+                    }                    
                     $totalSize += filesize(Storage::path($path));
                     $this->file_paths[] = $path;
                 }
