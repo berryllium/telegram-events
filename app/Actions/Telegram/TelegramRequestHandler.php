@@ -54,7 +54,7 @@ class TelegramRequestHandler
             if($text == '/start') {
                 $this->sendButton($chat_id, $bot, $author);
             } elseif($web_app_data) {
-                Log::info('$web_app_data', [$web_app_data]);
+                Log::info('$web_app_data', ['data' => $web_app_data]);
                 $web_app_data = json_decode($web_app_data, true);
                 $message = Message::query()->find($web_app_data['message_id']);
                 if(!$message) {
@@ -138,7 +138,7 @@ class TelegramRequestHandler
                 $this->handleComment($data);
             }
         } catch (\Exception $exception) {
-            Log::error($exception->getMessage(), $exception->getTrace());
+            Log::error($exception->getMessage(), ['trace' => $exception->getTrace()]);
             TechBotFacade::send(implode(', ', [$exception->getMessage() ,$exception->getFile(), $exception->getLine()]));
         }
 
