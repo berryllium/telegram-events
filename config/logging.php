@@ -138,8 +138,8 @@ return [
             ],
 
             'level' => 'debug',
-            'name' => 'telegram-events',
-            'transport' => 'udp',
+            'name' => env('GRAYLOG_NAME', 'telegram-events'),
+            'transport' => env('GRAYLOG_TRANSPORT', 'udp'),
             'host' => env('GRAYLOG_HOST', '127.0.0.1'),
             'port' => env('GRAYLOG_PORT', 12201),
             'chunk_size' => 1420,
