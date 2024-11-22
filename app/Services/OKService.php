@@ -70,7 +70,7 @@ class OKService
 
         $uploadParams = $this->call('video.getUploadUrl', $params);
 
-        Log::info('ссылка на загрузку видео ', ['request' => $params, 'response' => $uploadParams]);
+        Log::info('ссылка на загрузку видео в ОК ', ['request' => $params, 'response' => $uploadParams]);
 
         $info = Http::withHeaders([
             "Content-Type:multipart/form-data"
