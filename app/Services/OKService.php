@@ -78,7 +78,8 @@ class OKService
             ->attach($fileName, file_get_contents($path), $fileName)
             ->post($uploadParams->upload_url);
 
-        Log::info('загрузка видео в OK', ['status' => $info->status()]);
+        Log::info('загружаем видео в ОК');
+        // Log::info('загрузка видео в OK', ['status' => $info->status()]);
 
         return $uploadParams->video_id;
     }
