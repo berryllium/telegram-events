@@ -78,7 +78,7 @@ class OKService
             ->attach($fileName, file_get_contents($path), $fileName)
             ->post($uploadParams->upload_url);
 
-        Log::info('загрузка видео в OK', [$info->status()]);
+        Log::info('загрузка видео в OK', ['status' => $info->status()]);
 
         return $uploadParams->video_id;
     }
@@ -155,7 +155,7 @@ class OKService
         $response = Http::post("https://api.ok.ru/graph/me/subscribe?access_token=$token", [
             'url' => route('api.ok'),
         ]);
-        Log::info('subscribe OK group', $response->json());
+        Log::info('subscribe OK group', ['response' => $response->json()]);
     }
 
     public static function unsubscribe($token)
@@ -163,7 +163,7 @@ class OKService
         $response = Http::post("https://api.ok.ru/graph/me/unsubscribe?access_token=$token", [
             'url' => route('api.ok'),
         ]);
-        Log::info('unsubscribe OK group', $response->json());
+        Log::info('unsubscribe OK group', ['response' => $response->json()]);
     }
 
     public static function getGroupIdByChatID($chatId, $token = false)
