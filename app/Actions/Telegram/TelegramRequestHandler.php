@@ -23,7 +23,7 @@ class TelegramRequestHandler
         try {
             $data = $request->toArray();
             $token = $request->header('X-Telegram-Bot-Api-Secret-Token');
-            Log::info('Telegram message ', $data);
+            Log::info('Telegram message ', ['data' => $data]);
 
             $bot = TelegramBot::query()->where('code', '=', $token)->first();
             if(!isset($data['message'])) {
