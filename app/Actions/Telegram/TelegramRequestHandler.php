@@ -170,7 +170,7 @@ class TelegramRequestHandler
         foreach ($dates as $date) {
             if(!$last) {
                 $last = $date;
-            } elseif($date->diffInSeconds($last) < 300) {
+            } elseif(abs($date->diffInSeconds($last)) < 300) {
                 continue;
             }
             $result[] = $date;
