@@ -1,7 +1,7 @@
 <div data-role="channels">
     <div class="form-group mb-3">
-        <label for="channels" >{{ __('webapp.channels') }}</label>
-        <select class="form-control" id="channels" name="channels[]" multiple>
+        <label for="channels" >{{ $label }}</label>
+        <select class="form-control" id="channels" name="{{ $name }}[]" multiple>
             @foreach($channels as $channel)
                 <option value="{{ $channel->id }}">{{ $channel->name }} ({{ $channel->type }})</option>
             @endforeach

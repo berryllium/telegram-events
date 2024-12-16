@@ -11,12 +11,16 @@ use Illuminate\View\Component;
 class Channels extends Component
 {
     private $channels;
+    private $name;
+    private $label;
     /**
      * Create a new component instance.
      * @param Channel[] $channels
      */
-    public function __construct(Collection $channels) {
+    public function __construct(Collection $channels, ?string $name, ?string $label) {
         $this->channels = $channels;
+        $this->name = $name ?? 'channels';
+        $this->label = $label ?? __('webapp.channels');
     }
 
     /**
@@ -26,6 +30,8 @@ class Channels extends Component
     {
         return view('components.channels', [
             'channels' => $this->channels,
+            'name' => $this->name,
+            'label' => $this->label,
         ]);
     }
 }
