@@ -42,6 +42,9 @@ Route::middleware('auth')->group(function(){
     Route::get('/place/{place}/services', [\App\Http\Controllers\ServicesController::class, 'index'])->name('services.index');
     Route::post('/place/{place}/services', [\App\Http\Controllers\ServicesController::class, 'save'])->name('services.save');
 
+    Route::get('/moderator-places', [\App\Http\Controllers\ModeratorPlaceController::class, 'index']);
+
+
     Route::get('/test', \App\Http\Controllers\TestController::class);
 });
 
