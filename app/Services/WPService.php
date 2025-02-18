@@ -35,12 +35,12 @@ class WPService
 
         Log::info('ответ от WP', ['response' => $response->body()]);
 
-        $json = $response->body();
+        $json = $response->json();
 
         if(!$response) {
             throw new \Exception('WP сайт не отвечает ' . $this->domain );
         } elseif($response->status() != 200){
-            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . ($json?->error ?? ''));
+            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . ($json['error'] ?? ''));
         } elseif(!$json) {
             throw new \Exception('Некорректный ответ от WP ' . $this->domain );
         } elseif(!($id = $json['post_id'])) {
