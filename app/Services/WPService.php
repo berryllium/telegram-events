@@ -33,14 +33,14 @@ class WPService
             'media' => $media
         ]);
 
-        Log::info('ответ от WP', ['response' => $response->body()]);
-
         $json = $response->json();
+        Log::info('ответ от WP', ['response' => $json]);
+
 
         if(!$response) {
             throw new \Exception('WP сайт не отвечает ' . $this->domain );
         } elseif($response->status() != 200){
-            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . (print_r($json, true) ?? ''));
+            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . print_r($json, true));
         } elseif(!$json) {
             throw new \Exception('Некорректный ответ от WP ' . $this->domain );
         } elseif(!($id = $json['post_id'])) {
