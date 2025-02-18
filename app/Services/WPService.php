@@ -33,9 +33,9 @@ class WPService
             'media' => $media
         ]);
 
-        Log::info('ответ от WP', ['response' => $response->json()]);
+        Log::info('ответ от WP', ['response' => $response->body()]);
 
-        $json = $response->json();
+        $json = $response->body();
 
         if(!$response) {
             throw new \Exception('WP сайт не отвечает ' . $this->domain );
