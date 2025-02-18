@@ -5,8 +5,6 @@ namespace App\Console\Commands;
 use App\Jobs\ProcessMessage;
 use App\Models\MessageSchedule;
 use Illuminate\Console\Command;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Log;
 
 class SendMessages extends Command
 {
