@@ -40,7 +40,7 @@ class WPService
         if(!$response) {
             throw new \Exception('WP сайт не отвечает ' . $this->domain );
         } elseif($response->status() != 200){
-            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . ($json['error'] ?? ''));
+            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . (print_r($json, true) ?? ''));
         } elseif(!$json) {
             throw new \Exception('Некорректный ответ от WP ' . $this->domain );
         } elseif(!($id = $json['post_id'])) {
