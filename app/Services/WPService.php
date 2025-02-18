@@ -38,13 +38,13 @@ class WPService
         $json = $response->json();
 
         if(!$response) {
-            throw new \Exception('WP сайт не отвечает');
+            throw new \Exception('WP сайт не отвечает ' . $this->domain );
         } elseif($response->status() != 200){
-            throw new \Exception('Ошибка с кодом ' . $response->status() . ' ' . ($json['message'] ?? ''));
+            throw new \Exception('WP ' . $this->domain  . ' Ошибка с кодом ' . $response->status() . ' ' . ($json['message'] ?? ''));
         } elseif(!$json) {
-            throw new \Exception('Некорректный ответ от WP');
+            throw new \Exception('Некорректный ответ от WP ' . $this->domain );
         } elseif(!($id = $json['post_id'])) {
-            throw new \Exception('Нет id поста в ответе от WP');
+            throw new \Exception('Нет id поста в ответе от WP ' . $this->domain );
         }
 
         return  "{$this->domain}?p=$id";
