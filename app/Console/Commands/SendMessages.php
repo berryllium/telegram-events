@@ -6,6 +6,7 @@ use App\Jobs\ProcessMessage;
 use App\Models\MessageSchedule;
 use Illuminate\Console\Command;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class SendMessages extends Command
 {
@@ -28,24 +29,18 @@ class SendMessages extends Command
      */
     public function handle()
     {
-        $time = time();
-
-        while ($time + 290 > time()) {
-            $messageSchedules = MessageSchedule::query()
-                ->where('status', '=', 'wait')
-                ->where('sending_date', '<=', now())
-                ->whereHas('message', fn($q) => $q->where('allowed', true))
-                ->limit(100)
-                ->get();
+        $messageSchedules = MessageSchedule::query()
+            ->where('status', '=', 'wait')
+            ->where('sending_date', '<=', now())
+            ->whereHas('message', fn($q) => $q->where('allowed', true))
+            ->limit(100)
+            ->get();
 ;
-            foreach ($messageSchedules as $messageSchedule) {
-                foreach ($messageSchedule->channels as $channel) {
-                    ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
-                    $messageSchedule->update(['status' => 'process']);
-                }
+        foreach ($messageSchedules as $messageSchedule) {
+            foreach ($messageSchedule->channels as $channel) {
+                ProcessMessage::dispatch($messageSchedule, $channel)->onQueue($channel->type);
             }
-
-            sleep(3);
+            $messageSchedule->update(['status' => 'process']);
         }
     }
 }
