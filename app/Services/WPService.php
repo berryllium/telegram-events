@@ -27,7 +27,7 @@ class WPService
 
     public function post($text, $data, $media)
     {
-        $response = Http::withToken($this->token)->timeout(60)->post($this->domain . '?rest_route=/api/v1/post', [
+        $response = Http::withToken($this->token)->timeout(5)->post($this->domain . '?rest_route=/api/v1/post', [
             'title' => @$data->product ?: Str::before($text, "\n"),
             'text' => $text,
             'media' => $media
