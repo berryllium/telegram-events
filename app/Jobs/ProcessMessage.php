@@ -213,10 +213,10 @@ class ProcessMessage implements ShouldQueue
     {
         $text = $this->message->text;
         if(!$this->channel->show_place) {
-            $text = preg_replace("/^.*🏢.*[\r\n]+\s?/um", "", $text);
+            $text = preg_replace("/^🏢.*[\r\n]+\s?/um", "", $text);
         }
         if(!$this->channel->show_address) {
-            $text = preg_replace("/^*📍.*[\r\n]+\s?/um", "", $text);
+            $text = preg_replace("/^📍.*[\r\n]+\s?/um", "", $text);
         }
         if(!$this->channel->show_work_hours) {
             $text = preg_replace("/^🕒.*[\r\n]+\s?/um", "", $text);
