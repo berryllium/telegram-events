@@ -70,11 +70,8 @@ class MessageScheduleController extends Controller
         $data['sending_date'] = $data['sending_date'] ? Carbon::parse($data['sending_date']) : now();
         $messageSchedule->update($data);
 
-        if($request->input('all_channels')) {
-            $messageSchedule->channels()->sync($messageSchedule->message->telegram_bot->channels);
-        } elseif($new_channels = $request->input('new_channels')) {
-            $messageSchedule->channels()->attach($new_channels);
-        }
+        $new_channels = $request->input('new_channels');
+        $messageSchedule->channels()->attach($new_channels);
 
         if($actions = $request->get('act')) {
             foreach ($actions as $channel_id => $action) {
