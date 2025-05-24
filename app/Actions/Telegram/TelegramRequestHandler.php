@@ -113,6 +113,7 @@ class TelegramRequestHandler
                 );
 
                 try {
+                    $message->text = str_replace('#channel_links#', '', $message->text);
                     if ($message->message_files->count()) {
                         /** @var Message $message */
                         $mediaArr = TechBotFacade::createMedia($message);
