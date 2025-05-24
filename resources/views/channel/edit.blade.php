@@ -67,6 +67,9 @@
                 <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
+        <div class="mb-3">
+            <x-channel-links :channelLinks="$channel->links" />
+        </div>
         <button type="submit" name="action" value="update" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
 @endsection
