@@ -57,7 +57,22 @@ class ChannelController extends Controller
         ]);
         $data['telegram_bot_id'] = session('bot');
 
-        Channel::create($data);
+        $channel = Channel::create($data);
+
+        // assign links
+        try {
+            $new_links = $request->input('channel_links') ?? [];
+            foreach($new_links as $new_link) {
+                if(!$new_link['name'] || !$new_link['link']) {
+                    continue;
+                }
+                unset($new_link['id']);
+                $channel->links()->create($new_link);
+            }
+        } catch (\Exception $e) {
+            Log::error($e->getMessage(), ['channel_id' => $channel->id]);
+            return redirect(route('channel.index'))->with('error', __('webapp.channel_links_error_add'));
+        }
 
         return redirect(route('channel.index'))->with('success', __('webapp.record_added'));
     }
@@ -109,9 +124,12 @@ class ChannelController extends Controller
         ]));
 
         // assign links
-        $new_links = $request->input('channel_links');
+        $new_links = $request->input('channel_links') ?? [];
         $new_links_ids = [];
         foreach($new_links as $new_link) {
+            if(!$new_link['name'] || !$new_link['link']) {
+                continue;
+            }
             $id = $new_link['id'] ?? null;
             $new_link['channel_id'] = $channel->id;
             unset($new_link['id']);

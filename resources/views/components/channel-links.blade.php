@@ -10,22 +10,24 @@
             </tr>
         </thead>
         <tbody>
-            @foreach ($channelLinks as $i => $link)
-                <tr>
-                    <td>
-                        <input type="hidden" name="channel_links[{{ $i }}][id]" value="{{ $link->id }}">
-                        <input type="text" name="channel_links[{{ $i }}][name]" class="form-control" value="{{ $link->name }}">
-                    </td>
-                    <td>
-                        <input type="text" name="channel_links[{{ $i }}][link]" class="form-control" value="{{ $link->link }}">
-                    </td>
-                    <td class="text-center">
-                        <button type="button" class="btn btn-sm btn-outline-danger remove-row">
-                            &times;
-                        </button>
-                    </td>
-                </tr>
-            @endforeach
+            @if(isset($channelLinks) && $channelLinks)
+                @foreach ($channelLinks as $i => $link)
+                    <tr>
+                        <td>
+                            <input type="hidden" name="channel_links[{{ $i }}][id]" value="{{ $link->id }}">
+                            <input type="text" name="channel_links[{{ $i }}][name]" class="form-control" value="{{ $link->name }}">
+                        </td>
+                        <td>
+                            <input type="text" name="channel_links[{{ $i }}][link]" class="form-control" value="{{ $link->link }}">
+                        </td>
+                        <td class="text-center">
+                            <button type="button" class="btn btn-sm btn-outline-danger remove-row">
+                                &times;
+                            </button>
+                        </td>
+                    </tr>
+                @endforeach
+            @endif
         </tbody>
     </table>
 

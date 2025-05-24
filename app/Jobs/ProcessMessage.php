@@ -222,8 +222,28 @@ class ProcessMessage implements ShouldQueue
             $text = preg_replace("/^🕒.*[\r\n]+\s?/um", "", $text);
         }
         if($this->channel->show_links) {
-            Log::info('добавляю ссылки ' . $this->message->telegram_bot->links);
+            Log::info('добавляю ссылки места: ' . $this->message->telegram_bot->links);
             $text .= "\r\n\r\n" . $this->message->telegram_bot->links;
+        }
+        Log::debug('добавляю ссылки канала: ' .  $this->channel->name, ['links' => $this->channel->links]);
+        if($this->channel->links->count()) {
+            $linksBlock = '';
+            foreach($this->channel->links as $link) {
+                $link_text = $link->name;
+
+                if (preg_match('/#(.*?)#/', $link_text)) {
+                    $link_text = preg_replace_callback('/#(.*?)#/', function ($matches) use($link) {
+                        $label = $matches[1];
+                        return "<a href=\"{$link->link}\">$label</a>";
+                    }, $link_text);
+                } else {
+                    $link_text = "<a href=\"{$link->link}\">$link_text</a>";
+                }
+
+                $linksBlock .= $link_text . "\r\n\r\n";
+            }
+            $text = str_replace('#channel_links#', $linksBlock, $text);
+            Log::debug('добавляю ссылки канала: ' . $linksBlock);
         }
         $this->preparedText = $text;
     }
