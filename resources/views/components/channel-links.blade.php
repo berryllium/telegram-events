@@ -1,9 +1,11 @@
 <div>
+    <h3>{{ __('webapp.channel_link_header') }}</h3>
+    <div class="mb-2">{{ __('webapp.channel_link_description') }}</div>
     <table class="table table-bordered align-middle" id="channel-links-table">
         <thead>
             <tr>
-                <th>Name</th>
-                <th>Link</th>
+                <th>{{ __('webapp.channel_link_text') }}</th>
+                <th>{{ __('webapp.channel_link_url') }}</th>
                 <th style="width: 50px;"></th>
             </tr>
         </thead>
@@ -27,7 +29,7 @@
         </tbody>
     </table>
 
-    <button type="button" class="btn btn-primary" id="add-link">Добавить ссылку</button>
+    <button type="button" class="btn btn-primary" id="add-link">{{ __('webapp.channel_link_add') }}</button>
 </div>
 
 <script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Author;
 use App\Models\Channel;
+use App\Models\ChannelLink;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -106,6 +107,25 @@ class ChannelController extends Controller
             'show_work_hours' => 'required|int',
             'show_links' => 'required|int',
         ]));
+
+        // assign links
+        $new_links = $request->input('channel_links');
+        $new_links_ids = [];
+        foreach($new_links as $new_link) {
+            $id = $new_link['id'] ?? null;
+            $new_link['channel_id'] = $channel->id;
+            unset($new_link['id']);
+            if(!$id) {
+                $link_obj = $channel->links()->create($new_link);
+                $id = $link_obj->id;
+            } else {
+                $link_obj = ChannelLink::findOrFail($id);
+                $link_obj->update($new_link);
+            }
+            $new_links_ids[] = $id;
+        }
+
+        $channel->links()->whereNotIn('id', $new_links_ids)->delete();
 
         if($channel->token && $token != $channel->token) {
             try {
