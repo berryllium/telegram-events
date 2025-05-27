@@ -240,11 +240,14 @@ class ProcessMessage implements ShouldQueue
                 $link_text = "<a href=\"{$link->link}\">$link_text</a>";
             }
 
-            $linksBlock .= $link_text . "\r\n\r\n";
+            $linksBlock .= $link_text . "\r\n";
         }
+        $linksBlock = $linksBlock ? $linksBlock : "\r\n" . $linksBlock . "\r\n";
         $text = str_replace('#channel_links#', $linksBlock, $text);
         Log::debug('добавляю ссылки канала: ' . $linksBlock);
         
+        // пустых строк подряд должно быть не больше одной
+        $text = preg_replace("/(\r?\n){2,}/", "\r\n\r\n", $text);
         $this->preparedText = trim($text);
     }
 }
