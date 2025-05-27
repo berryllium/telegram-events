@@ -245,6 +245,6 @@ class ProcessMessage implements ShouldQueue
             $text = str_replace('#channel_links#', $linksBlock, $text);
             Log::debug('добавляю ссылки канала: ' . $linksBlock);
         }
-        $this->preparedText = $text;
+        $this->preparedText = trim($text);
     }
 }
