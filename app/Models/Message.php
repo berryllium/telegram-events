@@ -34,15 +34,11 @@ class Message extends Model
     protected static function boot()
     {
         parent::boot();
+
         static::saving(function ($model) {
-            $model->text = preg_replace(
-                ['/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'],
-                ['', "\r\n", "\r\n", '<b>', '</b>'],
-                $model->text
-            );
-            $model->text = trim($model->text, "&nbsp;\r\n");
-            $model->text = str_replace('&nbsp;', "\r\n", $model->text);
+            $model->text = Message::stripTextEditorTags($model->text);
         });
+
         static::deleting(function($model){
             foreach ($model->message_schedules as $schedule) {
                 $schedule->delete();
@@ -51,6 +47,17 @@ class Message extends Model
                 $file->delete();
             }
         });
+    }
+
+    public static function stripTextEditorTags($text) {
+        $text = preg_replace(
+            ['/<p>/', '/<\/p>/', '/<br>/i', '/<strong>/', '/<\/strong>/'],
+            ['', "\r\n", "\r\n", '<b>', '</b>'],
+            $text
+        );
+        $text = trim($text, "&nbsp;\r\n");
+        $text = str_replace('&nbsp;', "\r\n", $text);
+        return $text;
     }
 
     public function telegram_bot() : BelongsTo {
