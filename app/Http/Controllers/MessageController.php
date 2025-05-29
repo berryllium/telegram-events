@@ -31,7 +31,11 @@ class MessageController extends Controller
         ]);
         $filters['telegram_bot'] = session('bot');
 
-        $messages = Message::with('author', 'message_schedules')->filter($filters)->paginate(20)->withQueryString();
+        $messages = Message::with('author', 'message_schedules')
+            ->filter($filters)
+            ->whereNotNull('author_id')
+            ->paginate(20)
+            ->withQueryString();
         $places_map = [];
         $places = Place::query()->where('telegram_bot_id', session('bot'))->get();
         foreach ($places as $place) {
