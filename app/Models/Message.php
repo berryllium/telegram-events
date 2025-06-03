@@ -55,7 +55,8 @@ class Message extends Model
             ['', "\r\n", "\r\n", '<b>', '</b>'],
             $text
         );
-        $text = preg_replace('/(?:&nbsp;|\s)+$/u', '', $text);
+        // $text = preg_replace('/(?:&nbsp;|\s)+$/u', '', $text);
+        $text = trim(str_replace("&nbsp;", '', $text));
         return $text;
     }
 
