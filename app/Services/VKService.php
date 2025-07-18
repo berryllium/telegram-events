@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Facades\TechBotFacade;
 use CURLFile;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class VKService
 {
@@ -70,7 +71,8 @@ class VKService
 
         $this->sendlog("VK: Добавление фото: " . print_r($request_params,true));
 
-        $upload_server = json_decode(file_get_contents("https://api.vk.com/method/photos.getWallUploadServer?" . http_build_query($request_params)), true);
+        $upload_server = Http::asForm()->post('https://api.vk.com/method/photos.getWallUploadServer', $request_params);
+        $upload_server = json_decode($upload_server, true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
         if(isset($upload_server['error']['error_msg'])) {
@@ -107,8 +109,7 @@ class VKService
 
         $this->sendlog("VK: Параметры отправки фото на сервер: " . print_r($save_params,true));
 
-
-        $photo_save_response = file_get_contents("https://api.vk.com/method/photos.saveWallPhoto?" . http_build_query($save_params));
+        $photo_save_response = Http::asForm()->post('https://api.vk.com/method/photos.saveWallPhoto', $save_params);
 
         $photo_save_data = json_decode($photo_save_response, true);
 
@@ -135,7 +136,8 @@ class VKService
 
         $this->sendlog("VK: Добавление видео: " . print_r($request_params,true));
 
-        $upload_server = json_decode(file_get_contents("https://api.vk.com/method/video.save?" . http_build_query($request_params)), true);
+        $upload_server = Http::asForm()->post('https://api.vk.com/method/video.save', $request_params);
+        $upload_server = json_decode($upload_server, true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
         if(isset($upload_server['error']['error_msg'])) {
@@ -183,7 +185,7 @@ class VKService
                 'v' => '5.131'
             );
         $this->sendlog("VK: Публикация поста: " . print_r($post_params,true));
-        $json = file_get_contents("https://api.vk.com/method/wall.post?" . http_build_query($post_params));
+        $json = Http::asForm()->post('https://api.vk.com/method/wall.post', $post_params);
         $response = json_decode($json, true);
         $this->sendlog("Ответ от VK: " . print_r($json,true));
         if(isset($response['error']) || !isset($response['response']['post_id'])) {
