@@ -30,7 +30,7 @@
                             @endif
                         </td>
                         <td>{!! $channel->pivot->link !!}</td>
-                        <td>{{ $channel->pivot->error }}</td>
+                        <td class="text-break">{{ $channel->pivot->error }}</td>
                         <td>{{ $channel->pivot->tries }}</td>
                         @if(!$schedule->trashed())
                         <td>

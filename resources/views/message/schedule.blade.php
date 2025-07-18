@@ -20,7 +20,7 @@
                     <p>{{ $channel->name }}</p>
                 @endforeach
             </td>
-            <td class="text-wrap">{{ $schedule->error_text }}</td>
+            <td>{{ $schedule->error_text }}</td>
             <td class="align-middle text-nowrap">
                 <a href="{{ route('message_schedule.edit', $schedule) }}" class="btn btn-primary m-1">
                     <i class="bi bi-pen" role="button"></i>
