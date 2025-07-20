@@ -18,6 +18,7 @@ class TelegramWebAppController extends Controller
         $author = Author::find($request->get('author'));
         $places = new Collection();
         $can_select_channels = false;
+        $can_use_gigachat = false;
         $channels = [];
 
         if($author) {
@@ -26,6 +27,9 @@ class TelegramWebAppController extends Controller
             if($pivot->can_select_channels) {
                 $can_select_channels = true;
                 $channels = $author->channels()->where('telegram_bot_id', $telegramBot->id)->get();
+            }
+            if($pivot->can_use_gigachat) {
+                $can_use_gigachat = true;
             }
         }
 
@@ -38,6 +42,7 @@ class TelegramWebAppController extends Controller
             'places' => $places,
             'addresses' => $telegramBot->places()->where('active', 1)->select('id', 'address')->get(),
             'can_select_channels' => $can_select_channels,
+            'can_use_gigachat' => $can_use_gigachat,
             'channels' => $channels,
         ]);
     }

@@ -29,6 +29,7 @@ return [
     'type' => 'Тип',
     'tries' => 'Попытки',
     'can_select_channels' => 'Может выбирать каналы',
+    'can_use_gigachat' => 'Может использовать GigaChat',
     'channels' => 'Каналы',
     'channel_name' => 'Название канала',
     'channel_type' => 'Тип канала',

@@ -52,10 +52,15 @@
             @enderror
             <div class="btn btn-warning" data-role="selectAll">{{ __('webapp.select_all') }}</div>
         </div>
-        <div class="mb-3">
+        <div class="mb-2">
             <input type="hidden" name="trusted" value="0">
             <input id="trusted" type="checkbox" class="form-check-input" name="trusted" value="1" {{ $pivot->trusted ? 'checked' : '' }}>
             <label class="form-check-label" for="trusted">{{ __('webapp.trusted_author') }}</label>
+        </div>
+        <div class="my-3">
+            <input type="hidden" name="can_use_gigachat" value="0">
+            <input id="can_use_gigachat" type="checkbox" class="form-check-input" name="can_use_gigachat" value="1" {{ $pivot->can_use_gigachat ? 'checked' : '' }}>
+            <label class="form-check-label" for="can_use_gigachat">{{ __('webapp.can_use_gigachat') }}</label>
         </div>
         <button type="submit" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>

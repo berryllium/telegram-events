@@ -43,6 +43,11 @@
                             <label for="field-{{ $k }}">{{ $field->name }}</label>
                             <textarea class="form-control" id="field-{{ $k }}" rows="7" name="{{ $field->code }}"></textarea>
                         </div>
+                        @if($field->code == 'description' and $can_use_gigachat)
+                            <div class="mb-3">
+                                <x-giga-chat descriptionFieldId="field-{{ $k }}"></x-giga-chat>
+                            </div>
+                        @endif
                     @break
                 @case('date')
                         <div class="form-group mb-3">
