@@ -21,6 +21,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/telegram', [\App\Http\Controllers\API\TelegramController::class, 'index'])->name('api.telegram');
 Route::post('/tags/{place}', [\App\Http\Controllers\API\TagController::class, 'getPlaceTagSets'])->name('api.place_tags');
 Route::post('/gigachat/generate', [\App\Http\Controllers\API\GigaChatController::class, 'generate'])->name('api.giga');
+Route::post('/gigachat/refresh-image', [\App\Http\Controllers\API\GigaChatController::class, 'refreshImage'])->name('api.giga_refresh_image');
 
 Route::post('git', \App\Http\Controllers\API\GitController::class)->name('api.git');
 Route::post('vk', \App\Http\Controllers\API\VKController::class)->name('api.vk');

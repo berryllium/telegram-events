@@ -6,18 +6,13 @@ use Exception;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 final class GigaChatService
 {
-    public function generate(string $prompt): string
+    public function generate(string $prompt, bool $imageCheckbox = false): array
     {
-        $token = Cache::remember('gigachat_token', 1200, function() {
-            return $this->auth();
-        });
-
-        $uuid = (string) Str::uuid();
-
         $body = [
             'model' => config('app.gigachat.model'),
             'stream' => false,
@@ -28,10 +23,9 @@ final class GigaChatService
             ]
         ];
 
-
         $response = Http::asJson()
             ->accept('application/json')
-            ->withToken($token)
+            ->withToken($this->getToken())
             ->withHeader('X-Client-ID', config('app.gigachat.client_id'))
             ->withoutVerifying()
             ->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', $body)
@@ -40,32 +34,96 @@ final class GigaChatService
         $text = $response['choices'][0]['message']['content'] ?? null;
         if (!$text) {
             $message = 'Giga: ' . 'Generating failed';
-            Log::error($message, ['response' => $response, 'uuid' => $uuid]);
+            Log::error($message, ['response' => $response]);
             throw new Exception($message);
         }
 
-        Log::info('Gigachat generation', ['prompt' => $prompt, 'text' => $text]);
+        Log::info('Gigachat text generation', ['prompt' => $prompt, 'response' => $response]);
 
-        return $text;
+        if ($imageCheckbox) {
+            $image_path = asset(Storage::url($this->getImage($text)));
+        }
+
+        return ['text' => $text, 'image' => $image_path ?? null, 'image_id' => $image_id ?? null];
     }
 
-    private function auth()
+    public function generateImage($prompt)
     {
-        $uuid = (string) Str::uuid();
-        $response = Http::asForm()
-            ->withHeader('RqUID', $uuid)
-            ->withHeader('Authorization', 'Basic ' . config('app.gigachat.auth_key'))
-            ->acceptJson()
+        $body = [
+            'model' => config('app.gigachat.model'),
+            'stream' => false,
+            'update_interval' => 0,
+            'function_call' => 'auto',
+            'messages' => [
+                ['role' => 'system', 'content' => 'Ты художник, нарисуй картинку на основе текста'],
+                ['role' => 'user', 'content' => $prompt],
+            ]
+        ];
+
+        $response = Http::asJson()
+            ->withToken($this->getToken())
+            ->withHeader('X-Client-ID', config('app.gigachat.client_id'))
             ->withoutVerifying()
-            ->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', ['scope' => config('app.gigachat.scope')])
+            ->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', $body)
             ->json();
 
-        if (!isset($response['access_token'])) {
-            $message = 'Giga: ' . ($response['message'] ?? 'Token request failed');
-            Log::error($message, ['response' => $response, 'uuid' => $uuid]);
+        $text = $response['choices'][0]['message']['content'] ?? null;
+
+        if(!$text) {
+            $message = 'Giga: ' . 'Image generation failed';
+            Log::error($message, ['response' => $response, 'body' => $body]);
             throw new Exception($message);
         }
 
-        return $response['access_token'];
+        // extract image id from the response
+        preg_match('/<img[^>]+src="([^"]+)"/', $text, $matches);
+        $image_id = $matches[1];
+
+        if(!$image_id) {
+            $message = 'Giga: ' . 'Message ID is not extracted';
+            Log::error($message, ['response' => $response, 'body' => $body]);
+            throw new Exception($message);
+        }
+
+        Log::info('Gigachat image generation', ['prompt' => $prompt, 'response' => $response]);
+
+        return $image_id;
+    }
+
+    public function getImage($text)
+    {
+        $image_id = $this->generateImage($text);
+
+        $response = Http::asJson()
+            ->withToken($this->getToken())
+            ->withHeader('X-Client-ID', config('app.gigachat.client_id'))
+            ->withoutVerifying()
+            ->get("https://gigachat.devices.sberbank.ru/api/v1/files/{$image_id}/content");
+
+        $path = "public/media/gigachat/images/$image_id.jpg";
+        Storage::disk()->put($path, $response->body());
+        return $path;
+    }
+
+    private function getToken()
+    {
+        return Cache::remember('gigachat_token', 1200, function () {
+            $uuid = (string) Str::uuid();
+            $response = Http::asForm()
+                ->withHeader('RqUID', $uuid)
+                ->withHeader('Authorization', 'Basic ' . config('app.gigachat.auth_key'))
+                ->acceptJson()
+                ->withoutVerifying()
+                ->post('https://ngw.devices.sberbank.ru:9443/api/v2/oauth', ['scope' => config('app.gigachat.scope')])
+                ->json();
+
+            if (!isset($response['access_token'])) {
+                $message = 'Giga: ' . ($response['message'] ?? 'Token request failed');
+                Log::error($message, ['response' => $response, 'uuid' => $uuid]);
+                throw new Exception($message);
+            }
+
+            return $response['access_token'];
+        });
     }
 }

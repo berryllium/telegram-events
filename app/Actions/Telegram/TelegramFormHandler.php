@@ -21,6 +21,11 @@ class TelegramFormHandler
 
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
+
+            if($gigaChatImagePath = $request->input('gigachat-image')) {
+                $this->file_paths[] = $gigaChatImagePath;
+            }
+
             $has_files = false;
 
             if($request->hasFile('files')) {
