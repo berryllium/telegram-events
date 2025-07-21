@@ -44,7 +44,7 @@ final class GigaChatService
             $image_path = $this->getImage($text);
         }
 
-        return ['text' => $text, 'image' => ($image_path ? asset($image_path) : null), 'image_id' => $image_id ?? null, 'image_path' => $image_path];
+        return ['text' => $text, 'image' => ($image_path ? asset(Storage::url($image_path)) : null), 'image_id' => $image_id ?? null, 'image_path' => $image_path];
     }
 
     public function generateImage($prompt)
