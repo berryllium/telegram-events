@@ -23,7 +23,7 @@ final class GigaChatService
             'stream' => false,
             'update_interval' => 0,
             'messages' => [
-                ['role' => 'system', 'content' => 'Создая описание на основе запроса пользователя длинной не больше 30 символов'],
+                ['role' => 'system', 'content' => 'Создая описание на основе запроса пользователя длинной не больше 700 символов'],
                 ['role' => 'user', 'content' => $prompt],
             ]
         ];
