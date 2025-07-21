@@ -79,7 +79,7 @@ final class GigaChatService
 
         // extract image id from the response
         preg_match('/<img[^>]+src="([^"]+)"/', $text, $matches);
-        $image_id = $matches[1];
+        $image_id = $matches[1] ?? null;
 
         if(!$image_id) {
             $message = 'Giga: ' . 'Message ID is not extracted';
