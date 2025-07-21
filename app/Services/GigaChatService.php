@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Str;
@@ -11,7 +12,10 @@ final class GigaChatService
 {
     public function generate(string $prompt): string
     {
-        $token = $this->auth();
+        $token = Cache::remember('gigachat_token', 1200, function() {
+            return $this->auth();
+        });
+
         $uuid = (string) Str::uuid();
 
         $body = [
