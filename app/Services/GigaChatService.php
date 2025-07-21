@@ -75,6 +75,8 @@ final class GigaChatService
             throw new Exception($message);
         }
 
+        Log::info('Gigachat image generation', ['prompt' => $prompt, 'response' => $response]);
+
         // extract image id from the response
         preg_match('/<img[^>]+src="([^"]+)"/', $text, $matches);
         $image_id = $matches[1];
@@ -84,8 +86,6 @@ final class GigaChatService
             Log::error($message, ['response' => $response, 'body' => $body]);
             throw new Exception($message);
         }
-
-        Log::info('Gigachat image generation', ['prompt' => $prompt, 'response' => $response]);
 
         return $image_id;
     }
