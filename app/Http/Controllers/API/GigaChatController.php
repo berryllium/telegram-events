@@ -33,7 +33,7 @@ class GigachatController extends Controller
                 throw new Exception('Введите запрос!');
             }
             $image = $giga->getImage($prompt);
-            return response()->json(['success' => true, 'image' => asset($image), 'image_path' => $image ]);
+            return response()->json(['success' => true, 'image' => asset(Storage::url($image)), 'image_path' => $image ]);
         } catch (Throwable $e) {
             return response()->json(['error' => $e->getMessage()]);
         }
