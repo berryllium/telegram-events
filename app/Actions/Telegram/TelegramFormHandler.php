@@ -22,11 +22,12 @@ class TelegramFormHandler
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
 
+            $has_files = false;
+
             if($gigaChatImagePath = $request->input('gigachat-image')) {
                 $this->file_paths[] = $gigaChatImagePath;
+                $has_files = true;
             }
-
-            $has_files = false;
 
             if($request->hasFile('files')) {
                 $has_files = true;
