@@ -158,7 +158,7 @@ class TelegramFormHandler
                         ['text' => new MultibyteLength($max_length, $tmp_text)],
                     );
                     if ($validator->fails()) {
-                        Log::error('Message lenght limit', ['max' => $max_length, 'lenght' => strlen($tmp_text), 'text' => $tmp_text]);
+                        Log::error('Message lenght limit', ['max' => $max_length, 'lenght' => mb_strlen($tmp_text), 'text' => $tmp_text]);
                         return response()->json(['error' => $validator->errors()->first() . ' в канале ' . $channel->name ]);
                     }
                 }
