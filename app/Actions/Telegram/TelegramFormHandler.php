@@ -141,8 +141,8 @@ class TelegramFormHandler
             
             if(empty($channels)) {
                 $validator = Validator::make(
-                    ['text' => $text],
-                    ['text' => new MultibyteLength($max_length, $text . "\r\n\r\n" . $telegramBot->links)],
+                    ['text' => $text . "\r\n\r\n" . $telegramBot->links],
+                    ['text' => new MultibyteLength($max_length)],
                 );
                 if ($validator->fails()) {
                     return response()->json(['error' => $validator->errors()->first()]);
@@ -154,8 +154,8 @@ class TelegramFormHandler
                     $tmp_text = ProcessMessage::prepareText($text, $channel, $telegramBot->links);
 
                     $validator = Validator::make(
-                        ['text' => $text],
-                        ['text' => new MultibyteLength($max_length, $tmp_text)],
+                        ['text' => $tmp_text],
+                        ['text' => new MultibyteLength($max_length)],
                     );
                     if ($validator->fails()) {
                         Log::error('Message lenght limit', ['max' => $max_length, 'lenght' => mb_strlen($tmp_text), 'text' => $tmp_text]);
