@@ -103,7 +103,7 @@
         <div class="form-group mb-3" data-role="block">
             <label for="schedule" >{{ __('webapp.publish_date') }}</label>
             <div class="d-flex">
-                <input id="schedule" class="form-control" type="datetime-local" name="schedule[]">
+                <input id="schedule" class="form-control" type="datetime-local" name="schedule[]" value="{{ \Carbon\Carbon::now()->format('Y-m-d H:i') }}">
                 <i class="bi bi-trash p-2 ps-4" data-role="delete-block"></i>
             </div>
         </div>
