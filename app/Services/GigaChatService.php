@@ -56,7 +56,7 @@ final class GigaChatService
             'function_call' => 'auto',
             'messages' => [
                 ['role' => 'system', 'content' => 'Ты художник, нарисуй картинку на основе текста'],
-                ['role' => 'user', 'content' => $prompt],
+                ['role' => 'user', 'content' => 'Нарисуй иллюистрацию к тексту: ' . $prompt],
             ]
         ];
 
