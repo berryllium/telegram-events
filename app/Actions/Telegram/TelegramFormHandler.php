@@ -4,6 +4,9 @@ namespace App\Actions\Telegram;
 
 use App\Facades\ImageCompressorFacade;
 use App\Facades\TechBotFacade;
+use App\Jobs\ProcessMessage;
+use App\Models\Author;
+use App\Models\Channel;
 use App\Models\Field;
 use App\Models\MessageFile;
 use App\Models\Place;
@@ -12,6 +15,7 @@ use App\Rules\MultibyteLength;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Blade;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
@@ -21,7 +25,7 @@ class TelegramFormHandler
 
     public function handle(Request $request, TelegramBot $telegramBot) {
         try {
-
+            Log::debug($request->toArray());
             $has_files = false;
 
             if($gigaChatImagePath = $request->input('gigachat-image')) {
@@ -121,13 +125,46 @@ class TelegramFormHandler
             $text = Blade::render($telegramBot->form->template, $fields);
             $text = htmlspecialchars_decode($text);
             $max_length = $has_files ? config('app.post_max_message') : config('app.post_without_files_max_message');
-            $validator = Validator::make(
-                ['text' => $text],
-                ['text' => new MultibyteLength($max_length, "\r\n\r\n" . $telegramBot->links)],
-            );
-            if ($validator->fails()) {
-                return response()->json(['error' => $validator->errors()->first()]);
+
+            // выяснить ТГ каналы, в которые идет сообщение
+            $author = Author::findOrFail($request->input('author'));
+ 
+            if($request->input('all_channels')) {
+                $channels = $author->channels()->where('telegram_bot_id', $telegramBot->id)->get();
+            } elseif($request->input('channels')) {
+                $channels = $telegramBot->channels()->whereIn('id', $request->input('channels'))->get();
+            }else {
+                $channels = $place->channels;
             }
+
+            $channels = $channels->filter(fn(Channel $ch) => $ch->telegram_bot_id == $telegramBot->id && $ch->type == 'tg');
+            
+            if(empty($channels)) {
+                $validator = Validator::make(
+                    ['text' => $text],
+                    ['text' => new MultibyteLength($max_length, $text . "\r\n\r\n" . $telegramBot->links)],
+                );
+                if ($validator->fails()) {
+                    return response()->json(['error' => $validator->errors()->first()]);
+                }
+            } else {
+                foreach($channels as $channel) {
+    
+                    // для каждого канала генерируем сообщение, чтобы проверить длину
+                    $tmp_text = ProcessMessage::prepareText($text, $channel, $telegramBot->links);
+
+                    $validator = Validator::make(
+                        ['text' => $text],
+                        ['text' => new MultibyteLength($max_length, $tmp_text)],
+                    );
+                    if ($validator->fails()) {
+                        Log::error('Message lenght limit', ['max' => $max_length, 'lenght' => strlen($tmp_text), 'text' => $tmp_text]);
+                        return response()->json(['error' => $validator->errors()->first() . ' в канале ' . $channel->name ]);
+                    }
+                }
+            }
+
+
 
             $message = $telegramBot->messages()->create([
                 'data' => json_encode($data),

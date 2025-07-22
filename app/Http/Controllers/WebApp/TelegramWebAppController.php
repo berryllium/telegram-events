@@ -44,6 +44,7 @@ class TelegramWebAppController extends Controller
             'can_select_channels' => $can_select_channels,
             'can_use_gigachat' => $can_use_gigachat,
             'channels' => $channels,
+            'author' => $author
         ]);
     }
 

@@ -44,7 +44,7 @@ class ProcessMessage implements ShouldQueue
     {
         try {
             $this->message = $this->messageSchedule->message;
-            $this->prepareText();
+            $this->preparedText = self::prepareText($this->message->text, $this->channel, $this->message->telegram_bot->links);
             if($this->queue == 'vk') {
                 $link = $this->sendVK();
             } elseif($this->queue == 'tg') {
@@ -209,26 +209,25 @@ class ProcessMessage implements ShouldQueue
         $this->messageSchedule->updateStatus();
     }
 
-    private function prepareText(): void
+    public static function prepareText($text, $channel, $links): string
     {
-        $text = $this->message->text;
-        if(!$this->channel->show_place) {
+        if(!$channel->show_place) {
             $text = preg_replace("/^🏢.*[\r\n]+\s?/um", "", $text);
         }
-        if(!$this->channel->show_address) {
+        if(!$channel->show_address) {
             $text = preg_replace("/^📍.*[\r\n]+\s?/um", "", $text);
         }
-        if(!$this->channel->show_work_hours) {
+        if(!$channel->show_work_hours) {
             $text = preg_replace("/^🕒.*[\r\n]+\s?/um", "", $text);
         }
-        if($this->channel->show_links) {
-            Log::info('добавляю ссылки места: ' . $this->message->telegram_bot->links);
-            $text .= "\r\n\r\n" . $this->message->telegram_bot->links;
+        if($channel->show_links) {
+            Log::info('добавляю ссылки места: ' . $links);
+            $text .= "\r\n\r\n" . $links;
         }
         
-        Log::debug('добавляю ссылки канала: ' .  $this->channel->name, ['links' => $this->channel->links]);
+        Log::debug('добавляю ссылки канала: ' .  $channel->name, ['links' => $channel->links]);
         $linksBlock = '';
-        foreach($this->channel->links as $link) {
+        foreach($channel->links as $link) {
             $link_text = $link->name;
 
             if (preg_match('/#(.*?)#/', $link_text)) {
@@ -248,6 +247,6 @@ class ProcessMessage implements ShouldQueue
         
         // пустых строк подряд должно быть не больше одной
         $text = preg_replace("/(\r?\n){2,}/", "\r\n\r\n", $text);
-        $this->preparedText = trim($text);
+        return trim($text);
     }
 }
