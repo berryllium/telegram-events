@@ -40,11 +40,9 @@ final class GigaChatService
 
         Log::info('Gigachat text generation', ['prompt' => $prompt, 'response' => $response]);
 
-        if ($imageCheckbox) {
-            $image_path = $this->getImage($text);
-        }
+        $image_path = $imageCheckbox ? $this->getImage($text) : null;
 
-        return ['text' => $text, 'image' => ($image_path ? asset(Storage::url($image_path)) : null), 'image_id' => $image_id ?? null, 'image_path' => $image_path];
+        return ['text' => $text, 'image' => ($image_path ? asset(Storage::url($image_path)) : null), 'image_path' => $image_path];
     }
 
     public function generateImage($prompt)
