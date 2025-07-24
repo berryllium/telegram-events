@@ -6,14 +6,14 @@ use alxmsl\Odnoklassniki\API\Client;
 use alxmsl\Odnoklassniki\OAuth2\Response\Token;
 use App\Services\GigaChatService;
 use App\Services\OKService;
+use App\Services\OrdVkService;
 use Illuminate\Support\Facades\Http;
 
 
 class TestController extends Controller
 {
-    public function __invoke(GigaChatService $giga): void
+    public function __invoke(OrdVkService $ord): void
     {
-        $image = $giga->getImage('1f907459-def2-4c57-b2e0-ceaa8d592808');
-
+        $ord->getCreatives();
     }
 }
