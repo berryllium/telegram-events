@@ -49,7 +49,7 @@
         })
         $('#author').select2({
             placeholder: '',
-            allowClear: true,
+            allowClear: false,
             searchInputPlaceholder: '',
             width: '100%'
         });
