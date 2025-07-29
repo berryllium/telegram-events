@@ -2,6 +2,7 @@
 
 namespace App\Actions\Report;
 
+use App\Models\Author;
 use App\Models\MessageSchedule;
 use Illuminate\Support\Carbon;
 
@@ -9,7 +10,7 @@ class PerAuthorReport extends Report
 {
     public function handle($data)
     {
-        $authorName = 'Test';
+        $authorName = Author::findOrFail($data['author'])->name;
         $from = Carbon::parse($data['from'])->startOfDay();
         $to = Carbon::parse($data['to'])->endOfDay();
 
