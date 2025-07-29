@@ -26,8 +26,6 @@ class PerAuthorReport extends Report
         ->orderBy('sending_date', 'asc')
         );
 
-        dd($messageSchedules->toRawSql());
-
         foreach($messageSchedules as $messageSchedule) {
             foreach($messageSchedule->channels as $channel) {
                 $posts[] = [
