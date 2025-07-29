@@ -19,11 +19,14 @@ class PerAuthorReport extends Report
 
         $messageSchedules = MessageSchedule::query()
         ->whereBetween('created_at', [$from, $to])
-        ->with('channels')->whereHas(
+        ->with('channels')
+        ->whereHas(
             'message',
-            fn($q) => $q->where('author_id', $data['author'])
-            ->orderBy('sending_date', 'asc')
-        )->get();
+            fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))
+        ->orderBy('sending_date', 'asc')
+        );
+
+        dd($messageSchedules->toRawSql());
 
         foreach($messageSchedules as $messageSchedule) {
             foreach($messageSchedule->channels as $channel) {
