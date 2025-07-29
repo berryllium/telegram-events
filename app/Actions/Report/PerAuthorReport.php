@@ -22,7 +22,7 @@ class PerAuthorReport extends Report
         ->with('channels')
         ->whereHas(
             'message',
-            fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))
+            fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))->withTrashed()
         ->orderBy('sending_date', 'asc')
         )->get();
 
