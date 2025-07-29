@@ -18,16 +18,15 @@ class PerAuthorReport extends Report
         $statistics = [];
 
         $messageSchedules = MessageSchedule::query()
-        ->whereBetween('created_at', [$from, $to])
-        ->with('channels')
-        ->whereHas(
-            'message',
-            fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))->withTrashed()
-        ->orderBy('sending_date', 'asc')
-        )->get();
+            ->whereBetween('created_at', [$from, $to])
+            ->with('channels')
+            ->whereHas(
+                'message',
+                fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))
+            )->withTrashed()->orderBy('sending_date', 'asc')->get();
 
-        foreach($messageSchedules as $messageSchedule) {
-            foreach($messageSchedule->channels as $channel) {
+        foreach ($messageSchedules as $messageSchedule) {
+            foreach ($messageSchedule->channels as $channel) {
                 $posts[] = [
                     'channelName' => $channel->name,
                     'channelLink' => "/channel/{$channel->id}/edit",
@@ -42,9 +41,9 @@ class PerAuthorReport extends Report
         }
 
         $total = [];
-        foreach($statistics as $channel) {
-            foreach($channel as $k => $v)
-            $total[$k] = ($total[$k] ?? 0) + $v;
+        foreach ($statistics as $channel) {
+            foreach ($channel as $k => $v)
+                $total[$k] = ($total[$k] ?? 0) + $v;
         }
 
 
