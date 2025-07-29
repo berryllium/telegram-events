@@ -31,7 +31,7 @@ class PerAuthorReport extends Report
                 $posts[] = [
                     'channelName' => $channel->name,
                     'channelLink' => "/channel/{$channel->id}/edit",
-                    'messageLink' => "/message/{$messageSchedule->message_id}",
+                    'messageLink' => "/message/{$messageSchedule->message_id}/edit",
                     'postLink' => $channel->pivot->link,
                     'date' => $messageSchedule->sending_date,
                 ];
