@@ -24,7 +24,7 @@ class PerAuthorReport extends Report
             'message',
             fn($q) => $q->where('author_id', $data['author'])->where('telegram_bot_id', session('bot'))
         ->orderBy('sending_date', 'asc')
-        );
+        )->get();
 
         foreach($messageSchedules as $messageSchedule) {
             foreach($messageSchedule->channels as $channel) {
