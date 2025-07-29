@@ -17,7 +17,7 @@
     </div>
     <div class="mb-3">
         <div class="input-group per-author-block mb-2" style="display: none;">
-            <select name="author" id="author" class="form-select">
+            <select name="author" id="author" class="form-select w-100">
                 @foreach($authors as $author)
                 <option value="{{ $author->id }}">{{ $author->name }}</option>
                 @endforeach
@@ -39,7 +39,6 @@
 
 <script>
     window.addEventListener('load', function() {
-        console.log('ready')
         $('#type').on('change', function(e) {
             if(e.target.value === 'perAuthor') {
                 $('.per-author-block').show()
@@ -48,6 +47,12 @@
                 $('.per-author-block').hide()
             }
         })
+        $('#author').select2({
+            placeholder: '',
+            allowClear: true,
+            searchInputPlaceholder: '',
+            width: '100%'
+        });
     })
 </script>
 
