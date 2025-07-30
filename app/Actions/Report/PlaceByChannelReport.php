@@ -41,7 +41,7 @@ class PlaceByChannelReport extends Report
             $channels[$k]['total_sending'  ] =  '<a target="_blank" href="' . route('report.process', [...$params]) . '">' . $channels[$k]['total_sending'] . '</a>';
             $channels[$k]['success_sending'] =  '<a target="_blank" href="' . route('report.process', [...$params, 'sent' => 1, 'error' => 0]) . '">' . $channels[$k]['success_sending'] . '</a>';
             $channels[$k]['wait_sending'] =     '<a target="_blank" href="' . route('report.process', [...$params, 'sent' => 0, 'error' => 0]) . '">' . $channels[$k]['wait_sending'] . '</a>';
-            $channels[$k]['error_sending'] =    '<a target="_blank" href="' . route('report.process', [...$params, 'sent' => 0, 'error' => 1]) . '">' . $channels[$k]['error_sending'] . '</a>';
+            $channels[$k]['error_sending'] =    '<a target="_blank" href="' . route('report.process', [...$params, 'error' => 1]) . '">' . $channels[$k]['error_sending'] . '</a>';
         }
 
         $headers = [
