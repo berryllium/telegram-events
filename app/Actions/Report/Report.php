@@ -9,7 +9,7 @@ abstract class Report
 {
     protected Collection $messages;
 
-    protected function getMessagesForPeriod($from, $to, $place_id = null) {
+    protected function getMessagesForPeriod($from, $to, $place_id = null, $withChannels = false) {
         return Message::query()
             ->where('created_at', '>=', $from)
             ->where('created_at', '<=', $to)
@@ -18,6 +18,7 @@ abstract class Report
             ->filter(['deleted' => true])
             ->select('id', 'author_id', 'place_id')
             ->with('message_schedules')
+            ->with('message_schedules.channels')
             ->with('author')
             ->get();
     }

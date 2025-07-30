@@ -11,7 +11,7 @@ class DetailedTable extends Component
     /**
      * Create a new component instance.
      */
-    public function __construct(protected $url, protected $payload)
+    public function __construct(protected $url, protected $payload, protected $text)
     {
         //
     }
@@ -21,6 +21,6 @@ class DetailedTable extends Component
      */
     public function render(): View|Closure|string
     {
-        return view('components.detailed-table', ['url' => $this->url, 'payload' => $this->payload]);
+        return view('components.detailed-table', ['url' => $this->url, 'payload' => $this->payload, 'text' => $this->text]);
     }
 }

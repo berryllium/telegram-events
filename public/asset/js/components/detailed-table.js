@@ -7,7 +7,7 @@ window.addEventListener('load', () => {
         // если список уже раскрыт - удаляем строку
         if (button.hasClass('active')) {
             currentRow.next('.detailed-row').remove()
-            button.removeClass('active').text('Подробнее')
+            button.removeClass('active').text(button.data('text'))
             return
         }
 
