@@ -25,7 +25,7 @@ class PostLinksReport extends Report
                 fn($q) => $q->where('channel_message_schedule.sent', (int) $data['sent'])
             )->when(
                 $data['error'] ?? null,
-                fn($q) => $q->whereNotNull('channel_message_schedule.error', (int) $data['error'])
+                fn($q) => $q->whereNotNull('channel_message_schedule.error')
             );
         };
 
