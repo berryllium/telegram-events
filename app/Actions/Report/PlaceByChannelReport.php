@@ -25,9 +25,9 @@ class PlaceByChannelReport extends Report
                     $channels[$channel->id]['link'] = $channels[$channel->id]['link'] ?? '<a href="' . route('channel.edit', $channel->id) . '" >' . $channel->name . '</a>';
                     $channels[$channel->id]['total_messages' ][] = $schedule->message_id;
                     $channels[$channel->id]['total_sending'  ] = ($channels[$channel->id]['total_sending'   ] ?? 0) + 1;
-                    $channels[$channel->id]['success_sending'] = ($channels[$channel->id]['success_sending' ] ?? 0) + ($channel->pivot_sent ? 1 : 0);
-                    $channels[$channel->id]['wait_sending'   ] = ($channels[$channel->id]['wait_sending'    ] ?? 0) + (!$channel->pivot_sent && !$channel->pivot_error ? 1 : 0);
-                    $channels[$channel->id]['error_sending'  ] = ($channels[$channel->id]['error_sending' ] ?? 0) + ($channel->pivot_error ? 1 : 0);
+                    $channels[$channel->id]['success_sending'] = ($channels[$channel->id]['success_sending' ] ?? 0) + ($channel->pivot->sent ? 1 : 0);
+                    $channels[$channel->id]['wait_sending'   ] = ($channels[$channel->id]['wait_sending'    ] ?? 0) + (!$channel->pivot->sent && !$channel->pivot->error ? 1 : 0);
+                    $channels[$channel->id]['error_sending'  ] = ($channels[$channel->id]['error_sending' ] ?? 0) + ($channel->pivot->error ? 1 : 0);
                 }
             }
         }
