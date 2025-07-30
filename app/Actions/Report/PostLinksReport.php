@@ -20,7 +20,7 @@ class PostLinksReport extends Report
             $data['channel'] ?? null,
             fn($q) => $q->whereHas(
                 'channels',
-                fn($q) => $q->where('channel_message_schedule.id', $data['channel'])
+                fn($q) => $q->where('channel_message_schedule.channel_id', $data['channel'])
                     ->when(
                         $data['sent'] ?? null,
                         fn($q) => $q->where('channel_message_schedule.sent', $data['sent'])
