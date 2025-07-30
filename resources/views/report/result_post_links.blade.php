@@ -19,7 +19,7 @@
                 <td><a href="{{ $post['messageLink'] }}">сообщение</a></td>
                 <td> @if($post['postLink']) <a href="{{ $post['postLink'] }}">пост</a> @endif</td>
                 <td>{{ $post['error'] }}</td>
-                <td>{{ $post['sent'] > 0 ? 'Да' : 'Нет' }}</td>
+                <td>{{ $post['sent'] ? 'Да' : 'Нет' }}</td>
                 <td>{{ $post['date'] }}</td>
             </tr>
         @endforeach
