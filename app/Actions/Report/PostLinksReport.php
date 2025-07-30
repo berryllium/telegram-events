@@ -16,37 +16,25 @@ class PostLinksReport extends Report
 
         $query->when($data['place']   ?? null, fn($q) => $q->whereHas('message', fn($q) => $q->where('place_id', $data['place'])));
 
+        $channelFilter = function ($q) use ($data) {
+            $q->when(
+                $data['channel'] ?? null,
+                fn($q) => $q->where('channel_message_schedule.channel_id', (int) $data['channel'])
+            )->when(
+                $data['sent'] ?? null,
+                fn($q) => $q->where('channel_message_schedule.sent', (int) $data['sent'])
+            )->when(
+                $data['error'] ?? null,
+                fn($q) => $q->where('channel_message_schedule.error', (int) $data['error'])
+            );
+        };
+
         $query->when(
-            $data['channel'] ?? null,
-            fn($q) => $q->whereHas(
-                'channels',
-                fn($q) => $q->where('channel_message_schedule.channel_id', $data['channel'])
-                    ->when(
-                        $data['sent'] ?? null,
-                        fn($q) => $q->where('channel_message_schedule.sent', $data['sent'])
-                    )
-                    ->when(
-                        $data['error'] ?? null,
-                        fn($q) => $q->where('channel_message_schedule.error', (int) $data['error'])
-                    )
-            )
+            $data['channel'] ?? $data['sent'] ?? $data['error'] ?? null,
+            fn($q) => $q->whereHas('channels', $channelFilter)
         );
 
-        $query->with([
-            'channels' => fn($q) => $q
-                ->when(
-                    $data['channel'] ?? null,
-                    fn($q) => $q->where('channel_message_schedule.channel_id', $data['channel'])
-                )
-                ->when(
-                    $data['sent'] ?? null,
-                    fn($q) => $q->where('channel_message_schedule.sent', $data['sent'])
-                )
-                ->when(
-                    $data['error'] ?? null,
-                    fn($q) => $q->where('channel_message_schedule.error', (int) $data['error'])
-                ),
-        ]);
+        $query->with(['channels' => $channelFilter,]);
 
         $result = $query->get();
 
