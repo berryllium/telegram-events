@@ -2,10 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Actions\Report\AuthorReport;
-use App\Actions\Report\PlaceReport;
 use App\Models\TelegramBot;
-use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class ReportController extends Controller
@@ -31,6 +28,10 @@ class ReportController extends Controller
         $class = "\\App\\Actions\\Report\\{$report}Report";
         if (class_exists($class)) {
             return (new $class)->handle($data);
+        }
+
+        if($request->wantsJson()) {
+            return response()->json(['error' => "class $class not found"], 500);
         }
 
         return back()->with('error', __('webapp.error'));

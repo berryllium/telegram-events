@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\DTO\MessageDTO;
 use App\Http\Controllers\Controller;
+use App\Models\Author;
 use App\Models\Message;
 use App\Models\MessageSchedule;
 use App\Models\Place;

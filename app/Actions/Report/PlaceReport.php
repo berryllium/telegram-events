@@ -27,6 +27,7 @@ class PlaceReport extends Report
             if(!$message->place_id) continue;
             if(!isset($places[$message->place_id])) {
                 $places[$message->place_id] = [
+                    'id' => $message->place->id,
                     'name' => $message->place->name,
                     'link' => route('place.edit', $message->place),
                     'total_messages' => 0,
@@ -49,7 +50,8 @@ class PlaceReport extends Report
         return view('report.result_place', [
             'places' => $places,
             'title' => __('webapp.report') . ' - ' . __('webapp.places.place'),
-            'period' => "$from - $to",
+            'from' => $from,
+            'to' => $to,
             'total' => $total
         ]);
     }

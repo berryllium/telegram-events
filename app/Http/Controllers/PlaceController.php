@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Author;
 use App\Models\Place;
 use App\Models\PlaceFile;
 use App\Models\TelegramBot;
@@ -9,7 +10,8 @@ use Illuminate\Http\Request;
 
 class PlaceController extends Controller
 {
-    public function __construct() {
+    public function __construct()
+    {
         $this->authorizeResource(Place::class, 'place');
     }
 
@@ -71,8 +73,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['image' => $path]);
@@ -80,8 +82,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('logo_image')) {
             $file = $request->file('logo_image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['logo_image' => $path]);
@@ -89,8 +91,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('appeal_image')) {
             $file = $request->file('appeal_image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['appeal_image' => $path]);
@@ -156,8 +158,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('image')) {
             $file = $request->file('image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['image' => $path]);
@@ -165,8 +167,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('logo_image')) {
             $file = $request->file('logo_image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['logo_image' => $path]);
@@ -174,8 +176,8 @@ class PlaceController extends Controller
 
         if ($request->hasFile('appeal_image')) {
             $file = $request->file('appeal_image');
-            if($file->getError()) {
-                return back()->with('error',$file->getErrorMessage());
+            if ($file->getError()) {
+                return back()->with('error', $file->getErrorMessage());
             }
             $path = $file->store('public/media');
             $place->update(['appeal_image' => $path]);
@@ -193,8 +195,9 @@ class PlaceController extends Controller
         return redirect(route('place.index'))->with('success', __('webapp.record_deleted'));
     }
 
-    public function getPlaceTagSets(Place $place) {
-        if($place->tag) {
+    public function getPlaceTagSets(Place $place)
+    {
+        if ($place->tag) {
             foreach ($place->tag->dictionary_values as $tag) {
                 $set = explode(':', $tag->value, 2);
                 $tag_sets[trim($set[1])] = [
