@@ -26,6 +26,7 @@ class ReportController extends Controller
 
         $report = ucfirst($data['type']);
         $class = "\\App\\Actions\\Report\\{$report}Report";
+
         if (class_exists($class)) {
             return (new $class)->handle($data);
         }
@@ -33,7 +34,6 @@ class ReportController extends Controller
         if($request->wantsJson()) {
             return response()->json(['error' => "class $class not found"], 500);
         }
-
         return back()->with('error', __('webapp.error'));
     }
 }

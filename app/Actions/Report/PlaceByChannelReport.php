@@ -22,6 +22,7 @@ class PlaceByChannelReport extends Report
         foreach ($messages as $message) {
             foreach ($message->message_schedules as $schedule) {
                 foreach($schedule->channels as $channel) {
+                    $channels[$channel->id]['id'] = $channel->id;
                     $channels[$channel->id]['link'] = $channels[$channel->id]['link'] ?? '<a href="' . route('channel.edit', $channel->id) . '" >' . $channel->name . '</a>';
                     $channels[$channel->id]['total_messages' ][] = $schedule->message_id;
                     $channels[$channel->id]['total_sending'  ] = ($channels[$channel->id]['total_sending'   ] ?? 0) + 1;
@@ -33,7 +34,8 @@ class PlaceByChannelReport extends Report
         }
 
         foreach($channels as $k => $arr) {
-            $channels[$k]['total_messages'] = count(array_unique($arr['total_messages']));
+            $total = count(array_unique($arr['total_messages']));
+            $channels[$k]['total_messages'] = '<a target="_blank" href="' . route('report.process', ['from' => $data['from'], 'to' => $data['to'], 'type' => 'PostLinks', 'place' => $data['place'], 'channel' => $arr['id']]) . '">' . $total . '</a>';
         }
 
         $headers = [

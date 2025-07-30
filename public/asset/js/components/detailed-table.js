@@ -34,7 +34,7 @@ window.addEventListener('load', () => {
                 table.append(headers);
                 response.rows.forEach(row => {
                     const $tr = $("<tr>");
-                    $.each(row, (_, val) => $tr.append($("<td>").html(val)));
+                    $.each(row, (_, val) => _ == 'id' ? null : $tr.append($("<td>").html(val)));
                     table.append($tr);
                 });
                 currentRow.after(detailedRow)
