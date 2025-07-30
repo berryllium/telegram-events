@@ -32,12 +32,28 @@ class PostLinksReport extends Report
             )
         );
 
+        $query->with([
+            'channels' => fn($q) => $q
+                ->when(
+                    $data['channel'] ?? null,
+                    fn($q) => $q->where('channel_message_schedule.channel_id', $data['channel'])
+                )
+                ->when(
+                    $data['sent'] ?? null,
+                    fn($q) => $q->where('channel_message_schedule.sent', $data['sent'])
+                )
+                ->when(
+                    $data['error'] ?? null,
+                    fn($q) => $q->where('channel_message_schedule.error', (int) $data['error'])
+                ),
+        ]);
+
         $result = $query->get();
 
         $posts = [];
 
-        foreach($result as $messageSchedule) {
-            foreach($messageSchedule->channels as $channel) {
+        foreach ($result as $messageSchedule) {
+            foreach ($messageSchedule->channels as $channel) {
                 $posts[] = [
                     'channelName' => $channel->name,
                     'channelLink' => "/channel/{$channel->id}/edit",
