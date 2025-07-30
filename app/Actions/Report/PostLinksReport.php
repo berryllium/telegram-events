@@ -35,7 +35,7 @@ class PostLinksReport extends Report
         );
 
         $query->with(['channels' => $channelFilter,]);
-die($query->toRawSql());
+
         $result = $query->get();
 
         $posts = [];
