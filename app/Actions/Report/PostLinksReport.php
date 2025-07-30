@@ -12,7 +12,7 @@ class PostLinksReport extends Report
     {
         $query = MessageSchedule::query()->withTrashed()->with('channels');
 
-        $query->where('created_at', '>', $data['from'])->where('created_at', '<', $data['to']);
+        $query->where('created_at', '>', Carbon::parse($data['from']))->where('created_at', '<', Carbon::parse($data['to']));
 
         $query->when($data['place']   ?? null, fn($q) => $q->whereHas('message', fn($q) => $q->where('place_id', $data['place'])));
 
@@ -35,7 +35,7 @@ class PostLinksReport extends Report
         );
 
         $query->with(['channels' => $channelFilter,]);
-
+die($query->toRawSql());
         $result = $query->get();
 
         $posts = [];
