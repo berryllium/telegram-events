@@ -21,11 +21,11 @@ class PostLinksReport extends Report
                 $data['channel'] ?? null,
                 fn($q) => $q->where('channel_message_schedule.channel_id', (int) $data['channel'])
             )->when(
-                $data['sent'] ?? null,
+                isset($data['sent']),
                 fn($q) => $q->where('channel_message_schedule.sent', (int) $data['sent'])
             )->when(
                 $data['error'] ?? null,
-                fn($q) => $q->where('channel_message_schedule.error', (int) $data['error'])
+                fn($q) => $q->whereNotNull('channel_message_schedule.error', (int) $data['error'])
             );
         };
 
@@ -47,6 +47,8 @@ class PostLinksReport extends Report
                     'channelLink' => "/channel/{$channel->id}/edit",
                     'messageLink' => "/message/{$messageSchedule->message_id}/edit",
                     'postLink' => $channel->pivot->link,
+                    'sent' => $channel->pivot->sent,
+                    'error' => $channel->pivot->error,
                     'date' => $messageSchedule->sending_date,
                 ];
             }

@@ -8,6 +8,8 @@
             <th>Канал</th>
             <th>Ссылка на сообщение</th>
             <th>Ссылка на пост</th>
+            <th>Ошибка</th>
+            <th>Отправлено</th>
             <th>Дата</th>
         </tr>
         @foreach ($posts as $i => $post)
@@ -16,6 +18,8 @@
                 <td><a href="{{ $post['channelLink'] }}">{{ $post['channelName'] }}</a></td>
                 <td><a href="{{ $post['messageLink'] }}">сообщение</a></td>
                 <td> @if($post['postLink']) <a href="{{ $post['postLink'] }}">пост</a> @endif</td>
+                <td>{{ $post['error'] }}</td>
+                <td>{{ $post['sent'] > 0 ? 'Да' : 'Нет' }}</td>
                 <td>{{ $post['date'] }}</td>
             </tr>
         @endforeach
