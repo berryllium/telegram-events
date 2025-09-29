@@ -249,6 +249,7 @@ return [
     |
     */
     'sent_messages_storage_period' => env('SENT_MESSAGES_STORAGE_PERIOD', 7),
+    'failed_messages_storage_period' => env('FAILED_MESSAGES_STORAGE_PERIOD', 14),
     'messages_storage_period' => env('MESSAGES_STORAGE_PERIOD', 60),
 
 ];
