@@ -6,6 +6,7 @@ use App\Models\Message;
 use Illuminate\Console\Command;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Log;
 
 class DeleteFailedMessages extends Command
 {
@@ -48,6 +49,7 @@ class DeleteFailedMessages extends Command
                     $file->delete();
                 }
                 $message->delete();
+                Log::info('Message with failed sendings has been deleted', ['message_id' => $message->id]);
             } else {
                 break;
             }
