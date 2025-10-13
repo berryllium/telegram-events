@@ -161,7 +161,7 @@ class PlaceController extends Controller
             if ($file->getError()) {
                 return back()->with('error', $file->getErrorMessage());
             }
-            $path = $file->store('public/media');
+            $path = $file->store("public/media/places/{$place->id}");
             $place->update(['image' => $path]);
         }
 
@@ -170,7 +170,7 @@ class PlaceController extends Controller
             if ($file->getError()) {
                 return back()->with('error', $file->getErrorMessage());
             }
-            $path = $file->store('public/media');
+            $path = $file->store("public/media/places/{$place->id}");
             $place->update(['logo_image' => $path]);
         }
 
@@ -179,7 +179,7 @@ class PlaceController extends Controller
             if ($file->getError()) {
                 return back()->with('error', $file->getErrorMessage());
             }
-            $path = $file->store('public/media');
+            $path = $file->store("public/media/places/{$place->id}");
             $place->update(['appeal_image' => $path]);
         }
 
