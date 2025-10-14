@@ -29,7 +29,10 @@ class MoveFiles extends Command
     public function handle()
     {
         // move place images
-        Place::query()->whereNotNull('logo_image')->orWhereNotNull('image')->chunkById(5, function ($chunk) {
+        Place::query()->where(function ($q) {
+            $q->whereNotNull('logo_image')
+                ->orWhereNotNull('image');
+        })->chunkById(5, function ($chunk) {
             foreach ($chunk as $place) {
                 if ($place->image) {
                     $basename = basename($place->image);
