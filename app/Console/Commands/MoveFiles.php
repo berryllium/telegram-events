@@ -31,7 +31,8 @@ class MoveFiles extends Command
         // move place images
         Place::query()->where(function ($q) {
             $q->whereNotNull('logo_image')
-                ->orWhereNotNull('image');
+                ->orWhereNotNull('image')
+                ->orWhereNotNull('appeal_image');
         })->chunkById(5, function ($chunk) {
             foreach ($chunk as $place) {
                 if ($place->image) {
