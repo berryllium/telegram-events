@@ -69,9 +69,12 @@ class TelegramFormHandler
             foreach ($data['schedule'] as $date) {
                 $now = Carbon::now();
                 $date = $date ? Carbon::parse($date) : $now;
+
+                // check if the publication date in the past
                 if($date->lt($now)) {
-                    $date = $now;
+                    return response()->json(['error' => __('webapp.error_past')]);
                 }
+                
                 $diff = $date->diffInDays($now);
                 if($diff >= config('app.messages_storage_period')) {
                     return response()->json(['error' => __('webapp.error_max_days', [
