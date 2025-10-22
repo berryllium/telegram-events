@@ -71,7 +71,7 @@ class TelegramFormHandler
                 $date = $date ? Carbon::parse($date) : $now;
 
                 // check if the publication date in the past
-                if($date->lt($now)) {
+                if($date->lt($now->subDay())) {
                     return response()->json(['error' => __('webapp.error_past')]);
                 }
                 
