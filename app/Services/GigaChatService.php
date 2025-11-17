@@ -62,6 +62,7 @@ final class GigaChatService
             ->withToken($this->getToken())
             ->withHeader('X-Client-ID', config('app.gigachat.client_id'))
             ->withoutVerifying()
+            ->timeout(120)
             ->post('https://gigachat.devices.sberbank.ru/api/v1/chat/completions', $body)
             ->json();
 
