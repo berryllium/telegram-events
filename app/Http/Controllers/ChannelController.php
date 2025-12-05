@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Author;
 use App\Models\Channel;
 use App\Models\ChannelLink;
+use App\Models\Place;
 use App\Models\TelegramBot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -36,7 +37,12 @@ class ChannelController extends Controller
      */
     public function create()
     {
-        return view('channel/create');
+        $places = Place::where('telegram_bot_id', session('bot'))
+            ->where('is_channel', 1)
+            ->get();
+        return view('channel/create', [
+            'places' => $places,
+        ]);
     }
 
     /**
@@ -90,8 +96,12 @@ class ChannelController extends Controller
      */
     public function edit(Channel $channel)
     {
+        $places = Place::where('telegram_bot_id', session('bot'))
+            ->where('is_channel', 1)
+            ->get();
         return view('channel/edit', [
-            'channel' => $channel
+            'channel' => $channel,
+            'places' => $places,
         ]);
     }
 

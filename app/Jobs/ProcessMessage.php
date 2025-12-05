@@ -53,6 +53,8 @@ class ProcessMessage implements ShouldQueue
                 $link = $this->sendOK();
             } elseif($this->queue == 'wp') {
                 $link = $this->sendWP();
+            } elseif($this->queue == 'site') {
+                $link = $this->sendSite();
             } else {
                 $link = '';
             }
@@ -207,6 +209,33 @@ class ProcessMessage implements ShouldQueue
             'updated_at' => Carbon::now()
         ]);
         $this->messageSchedule->updateStatus();
+    }
+
+    /**
+     * @return string link
+     * @throws \Exception
+     */
+    protected function sendSite(): string
+    {
+        try {
+            // Get the place by its ID (stored in tg_id for site type channels)
+            $place = \App\Models\Place::find($this->channel->tg_id);
+            if (!$place || !$place->domain) {
+                throw new \Exception('Place not found or domain not set for site channel');
+            }
+
+            return strtr('<a href="LINK">TEXT</a>', [
+                'LINK' => $place->domain . '/detail/' . $this->message->id,
+                'TEXT' => __('webapp.tg_link_text')
+            ]);
+        } catch (\Exception $exception) {
+            TechBotFacade::send(__('webapp.error_sending_site', [
+                'id' => $this->message->id,
+                'channel' => $this->channel->name,
+                'bot' => $this->message->telegram_bot->name
+            ]));
+            throw($exception);
+        }
     }
 
     public static function prepareText($text, $channel, $links): string

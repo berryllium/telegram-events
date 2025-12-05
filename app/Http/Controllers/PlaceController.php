@@ -51,6 +51,7 @@ class PlaceController extends Controller
             'working_hours' => '',
             'additional_info' => '',
             'tag_set' => '',
+            'is_channel' => 'boolean',
             'domain' => 'nullable|unique:places,domain',
             'email' => 'max:255',
             'phone' => 'max:255',
@@ -127,6 +128,7 @@ class PlaceController extends Controller
         $place->update($request->validate([
             'name' => 'required|min:2|max:255',
             'active' => '',
+            'is_channel' => 'boolean',
             'template' => '',
             'address' => 'required|min:2|max:255',
             'address_link' => '',

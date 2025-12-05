@@ -22,9 +22,22 @@
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
-        <div class="mb-3">
+        <div class="mb-3" id="tg_id_text_wrap">
             <label for="tg_id" class="form-label">{{ __('webapp.channel_id') }}</label>
             <input type="text" class="form-control" id="tg_id" name="tg_id" value="{{ $channel->tg_id }}">
+            @error('tg_id')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+
+        <div class="mb-3" id="tg_id_place_wrap" style="display: none; width: 100%;">
+            <label for="tg_id_place" class="form-label d-block">{{ __('webapp.channel_site_id') }}</label>
+            <select id="tg_id_place" name="tg_id" class="form-select w-100" data-select="2" style="width: 100%;">
+                <option value=""></option>
+                @foreach($places as $place)
+                    <option value="{{ $place->id }}" {{ $channel->tg_id == $place->id ? 'selected' : '' }}>{{ $place->name }}</option>
+                @endforeach
+            </select>
             @error('tg_id')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
@@ -72,4 +85,33 @@
         </div>
         <button type="submit" name="action" value="update" class="btn btn-primary">{{ __('webapp.update') }}</button>
     </form>
+    <script>
+        (function(){
+            const typeEl = document.getElementById('type');
+            const textWrap = document.getElementById('tg_id_text_wrap');
+            const placeWrap = document.getElementById('tg_id_place_wrap');
+            const placeSelect = document.getElementById('tg_id_place');
+            function toggleTgId() {
+                if(!typeEl) return;
+                if(typeEl.value === 'site') {
+                    textWrap.style.display = 'none';
+                    placeWrap.style.display = '';
+                    setTimeout(() => {
+                        if (window.$ && jQuery(placeSelect).data('select2')) {
+                            jQuery(placeSelect).select2({
+                                width: '100%',
+                                allowClear: true
+                            });
+                        }
+                    }, 100);
+                } else {
+                    textWrap.style.display = '';
+                    placeWrap.style.display = 'none';
+                }
+            }
+            typeEl && typeEl.addEventListener('change', toggleTgId);
+            document.addEventListener('DOMContentLoaded', toggleTgId);
+            toggleTgId();
+        })();
+    </script>
 @endsection

@@ -19,6 +19,11 @@
             <input id="show_chat_icon" type="checkbox" class="form-check-input" name="show_chat_icon" value="1" {{ old('show_chat_icon') ? 'checked' : '' }}>
             <label class="form-check-label" for="show_chat_icon">{{ __('webapp.show_chat_icon') }}</label>
         </div>
+        <div class="mb-2">
+            <input type="hidden" name="is_channel" value="0">
+            <input id="is_channel" type="checkbox" class="form-check-input" name="is_channel" value="1" {{ old('is_channel') ? 'checked' : '' }}>
+            <label class="form-check-label" for="is_channel">{{ __('webapp.places.is_channel') }}</label>
+        </div>
         <div class="mb-3">
             <label for="template" class="form-label">{{ __('webapp.title') }}</label>
             <input type="text" class="form-control" id="template" name="template" value="{{ old('template') }}">

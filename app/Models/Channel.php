@@ -18,6 +18,7 @@ class Channel extends Model
         'vk',
         'ok',
         'wp',
+        'site',
     ];
 
     protected $table = 'channels';

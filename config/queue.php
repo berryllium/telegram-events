@@ -79,6 +79,14 @@ return [
             'after_commit' => false,
         ],
 
+        'site' => [
+            'driver' => 'database',
+            'table' => 'jobs',
+            'queue' => 'site',
+            'retry_after' => 90,
+            'after_commit' => false,
+        ],
+
 
         'database' => [
             'driver' => 'database',

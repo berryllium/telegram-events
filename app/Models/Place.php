@@ -17,6 +17,7 @@ class Place extends Model
     protected $fillable = [
         'name',
         'active',
+        'is_channel',
         'template',
         'address',
         'address_link',
@@ -41,6 +42,10 @@ class Place extends Model
         'header_script',
         'show_chat_icon',
         'service_title'
+    ];
+
+    protected $casts = [
+        'is_channel' => 'boolean',
     ];
 
     protected $appends = [
