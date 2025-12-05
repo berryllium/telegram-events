@@ -225,7 +225,7 @@ class ProcessMessage implements ShouldQueue
             }
 
             return strtr('<a href="LINK">TEXT</a>', [
-                'LINK' => $place->domain . '/detail/' . $this->message->id,
+                'LINK' => 'https://' . $place->domain . '/detail/' . $this->message->id,
                 'TEXT' => __('webapp.tg_link_text')
             ]);
         } catch (\Exception $exception) {
