@@ -50,9 +50,12 @@ class ChannelController extends Controller
      */
     public function store(Request $request)
     {
+        $type = $request->input('type');
+
         $data = $request->validate([
             'name' => 'required|min:2',
-            'tg_id' => 'required',
+            'tg_id' => $type == 'site' ? 'nullable' : 'required',
+            'tg_id_place' => $type == 'site' ? 'required' : 'nullable',
             'type' => 'required|in:' . implode(',', Channel::$types),
             'token' => '',
             'description' => 'max:1000',
@@ -111,6 +114,7 @@ class ChannelController extends Controller
     public function update(Request $request, Channel $channel)
     {
         $action = $request->input('action');
+        $type = $request->input('type');
 
         if($action == 'attach-places') {
             $channel->places()->sync($channel->telegram_bot->places);
@@ -123,7 +127,8 @@ class ChannelController extends Controller
         $token = $channel->token;
         $channel->update($request->validate([
             'name' => 'required|min:2',
-            'tg_id' => 'required',
+            'tg_id' => $type == 'site' ? 'nullable' : 'required',
+            'tg_id_place' => $type == 'site' ? 'required' : 'nullable',
             'type' => 'required|in:' . implode(',', Channel::$types),
             'token' => '',
             'description' => 'max:1000',

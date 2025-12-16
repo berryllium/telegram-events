@@ -32,13 +32,13 @@
 
         <div class="mb-3" id="tg_id_place_wrap" style="display: none; width: 100%;">
             <label for="tg_id_place" class="form-label d-block">{{ __('webapp.channel_site_id') }}</label>
-            <select id="tg_id_place" name="tg_id" class="form-select w-100" data-select="2" style="width: 100%;">
+            <select id="tg_id_place" name="tg_id_place" class="form-select w-100" data-select="2" style="width: 100%;">
                 <option value=""></option>
                 @foreach($places as $place)
                     <option value="{{ $place->id }}" {{ $channel->tg_id == $place->id ? 'selected' : '' }}>{{ $place->name }}</option>
                 @endforeach
             </select>
-            @error('tg_id')
+            @error('tg_id_place')
             <div class="form-text text-danger">{{ $message }}</div>
             @enderror
         </div>
