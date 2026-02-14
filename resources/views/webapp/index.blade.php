@@ -109,10 +109,17 @@
             </div>
         </div>
         <div class="btn btn-primary mt-2 mb-5" data-role="copy-block"> {{ __('webapp.add_date') }}</div>
-            <div class="d-flex d-none justify-content-center align-items-center position-fixed vw-100 vh-100 top-0 bg-light" data-role="spinner">
-                <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
-                    <span class="sr-only"></span>
-                </div>
+        <div class="d-flex d-none justify-content-center align-items-center position-fixed vw-100 vh-100 top-0 bg-light" data-role="spinner">
+            <div class="spinner-border text-primary" role="status" style="width: 3rem; height: 3rem;">
+                <span class="sr-only"></span>
             </div>
+        </div>
+
+        @if(auth()->check())
+        <div class="d-flex mb-4 col-12 row">
+            <button id="webform-send-button" class="btn btn-primary fullWidth" type="button">{{ __('webapp.submit') }}</button>
+        </div>    
+        @endif
+
     </form>
 @endsection

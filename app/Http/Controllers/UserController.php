@@ -58,6 +58,22 @@ class UserController extends Controller
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('telegram_bots'));
 
+        // create author for the user and assign bots to it
+        $author = $user->author()->create([
+            'name' => $user->name,
+            'username' => $user->email,
+        ]);
+        
+        $author_bots = collect($request->input('bots'))->mapWithKeys(function ($botId) use ($user) {
+            return [
+                $botId => [
+                    'title' => $user->name,
+                ]
+            ];
+        })->toArray();
+        
+        $author->telegram_bots()->sync($author_bots);
+
         return back()->with('success', __('webapp.record_added'));
     }
 
@@ -108,6 +124,23 @@ class UserController extends Controller
         $user->update($valid_data->getData());
         $user->roles()->sync($request->input('roles'));
         $user->telegram_bots()->sync($request->input('bots'));
+        
+        $author_bots = collect($request->input('bots'))->mapWithKeys(function ($botId) use ($user) {
+            return [
+                $botId => [
+                    'title' => $user->name,
+                ]
+            ];
+        })->toArray();
+
+        if(!$user->author) {
+            $user->author = $user->author()->create([
+                'name' => $user->name,
+                'username' => $user->email,
+            ]);
+        }
+        
+        $user->author->telegram_bots()->sync($author_bots);
 
         return back()->with('success', __('webapp.record_updated'));
     }

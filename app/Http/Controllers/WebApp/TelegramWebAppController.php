@@ -15,7 +15,18 @@ class TelegramWebAppController extends Controller
 {
     public function index(Request $request, TelegramBot $telegramBot)
     {
-        $author = Author::find($request->get('author'));
+        if($author_id = $request->get('author')) {
+            $author = Author::find($author_id);
+        } elseif($user = $request->user()) {
+            $author = $user->author;
+        } else {
+            return redirect('login');
+        }
+
+        if(!$author) {
+            return response('Author not found', 404);
+        }
+
         $places = new Collection();
         $can_select_channels = false;
         $can_use_gigachat = false;
@@ -44,7 +55,8 @@ class TelegramWebAppController extends Controller
             'can_select_channels' => $can_select_channels,
             'can_use_gigachat' => $can_use_gigachat,
             'channels' => $channels,
-            'author' => $author
+            'author' => $author,
+            'web_user' => $user ?? null,
         ]);
     }
 

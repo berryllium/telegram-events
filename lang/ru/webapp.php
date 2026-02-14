@@ -138,6 +138,7 @@ return [
     'slider' => 'Слайдер',
     'slider_horizontal' => 'Горизонтальный слайдер',
     'slider_vertical' => 'Вертикальный слайдер',
+    'submit' => 'Отправить',
     'channel_id' => 'ID Канала / сайт',
     'choose_bot' => 'Выберите бота',
     'choose_channel' => 'Выберите канал',

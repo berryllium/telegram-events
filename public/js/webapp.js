@@ -1,13 +1,22 @@
 window.addEventListener('load', () => {
-    const webApp =  window.Telegram.WebApp
+
+    let ajaxObj = false
     const form = $('#webapp-form')
     const spinner = $('[data-role="spinner"]')
-    let ajaxObj = false
-    webApp.expand()
-    webApp.MainButton.text = "Send";
-    webApp.MainButton.show()
 
-    Telegram.WebApp.onEvent("mainButtonClicked", async function(){
+    if(window.Telegram) {
+        const webApp =  window.Telegram.WebApp
+        webApp.expand()
+        webApp.MainButton.text = "Send";
+        webApp.MainButton.show()
+        Telegram.WebApp.onEvent("mainButtonClicked", onSubmit);
+    } else {
+        const sendButton = $('#webform-send-button')
+        sendButton.on('click', onSubmit)
+    }
+
+    async function onSubmit() {
+
         if(ajaxObj) return
 
         if(!validateForm()) {
@@ -29,7 +38,12 @@ window.addEventListener('load', () => {
             data: formData,
             success: function (response) {
                 if(response.message_id) {
-                    webApp.sendData(JSON.stringify(response))
+                    if(typeof webApp != 'undefined') {
+                        webApp.sendData(JSON.stringify(response))
+                    } else {
+                        alert('Cooбщение успешно зарегистрировано!')
+                        location.reload()
+                    }
                 } else if(response.error) {
                     alert(response.error)
                 }
@@ -45,7 +59,7 @@ window.addEventListener('load', () => {
             contentType: false,
             processData: false
         });
-    });
+    }
 
     $('[name="place"]').change(function (){
         $('[name="address"]').val($(this).val()).trigger('change')

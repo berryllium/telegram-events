@@ -181,7 +181,15 @@ class TelegramFormHandler
                     $message->message_files()->save(new MessageFile(['filename' => $path]));
                 }
             }
+        
+            // if the message is sent from browser we can process it at once
+            $user = $request->user();
+            if($user) {
+                (new TelegramRequestHandler)->processMessage($message, $user->author);
+            }
 
+            return response()->json(['message_id' => $message->id]);
+            
         } catch (\Exception $exception) {
             foreach ($this->file_paths as $path) {
                 Storage::delete($path);
@@ -189,8 +197,6 @@ class TelegramFormHandler
             TechBotFacade::send($exception->getMessage());
             return response()->json(['error' => $exception->getMessage()]);
         }
-
-        return response()->json(['message_id' => $message->id]);
     }
 
     private function prepareField(Field $field, string $value)

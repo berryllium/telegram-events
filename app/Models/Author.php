@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Author extends Model
@@ -33,5 +34,9 @@ class Author extends Model
 
     public function telegram_bots() : BelongsToMany {
         return $this->belongsToMany(TelegramBot::class)->withPivot(['trusted', 'title', 'description', 'can_select_channels', 'can_use_gigachat']);
+    }
+
+    public function user() : BelongsTo {
+        return $this->belongsTo(User::class);
     }
 }
