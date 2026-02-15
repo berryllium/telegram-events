@@ -24,7 +24,11 @@ class TelegramWebAppController extends Controller
         }
 
         if(!$author) {
-            return response('Author not found', 404);
+            return response('Автор не найден', 404);
+        }
+
+        if(!$author->telegram_bots()->whereKey($telegramBot->id)->exists()) {
+            return response('Данный бот не привязан к текущему пользователю. Обратитесь к администратору.', 404);
         }
 
         $places = new Collection();
