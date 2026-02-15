@@ -41,7 +41,7 @@ window.addEventListener('load', () => {
                     if(webApp) {
                         webApp.sendData(JSON.stringify(response))
                     } else {
-                        alert('Сообщение отправлено как веб форма')
+                        alert('Сообщение успешно зарегистрировано!')
                         location.reload()
                     }
                 } else if(response.error) {
