@@ -9,6 +9,7 @@ use App\Models\Message;
 use App\Models\MessageSchedule;
 use App\Models\Place;
 use App\Models\TelegramBot;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Collection;
@@ -170,7 +171,14 @@ class TelegramRequestHandler
         }
 
         $botApi = new BotApi($bot->api_token);
-        $pivot = $author->telegram_bots()->wherePivot('telegram_bot_id', $bot->id)->first()->pivot;
+        $pivot_obj = $author->telegram_bots()->wherePivot('telegram_bot_id', $bot->id)->first();
+
+
+        if(!$pivot_obj) {
+            throw new Exception('Автор не имеет доступа к данному боту');
+        }
+
+        $pivot = $pivot_obj->pivot;
         $admin_text = str_replace(
             ['#author_type#', '#author_link#', '#message_link#', '#publish_date#'],
             [

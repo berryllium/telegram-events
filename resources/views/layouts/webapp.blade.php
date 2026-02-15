@@ -16,7 +16,7 @@
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
     <link rel="stylesheet" href="/css/webapp.css">
-    @if(Route::current()->getName() == 'webapp')
+    @if(!$web_user)
         <script src="https://telegram.org/js/telegram-web-app.js"></script>
     @endif
     <script src="/js/webapp.js?ver={{ rand(1, 100) }}"></script>

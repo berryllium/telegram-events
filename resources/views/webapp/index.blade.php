@@ -1,7 +1,7 @@
 @extends('layouts.webapp')
 @section('content')
     @php /** @var \App\Models\Field $field */ @endphp
-    <h1 class="pt-2 text-center">{{ $form->name }}{{ Route::current()->getName() == 'webapp' ? '' : ' (web)' }}</h1>
+    <h1 class="pt-2 text-center">{{ $form->name }}{{ $web_user ? ' (web)' : '' }}</h1>
     <form id="webapp-form" enctype="multipart/form-data" type="post" action="{{ route('webapp', $bot) }}">
         <input type="hidden" name="author" value="{{ $author->id }}">
         @foreach($form->fields()->orderBy('sort', 'asc')->get() as $k => $field)
@@ -115,7 +115,7 @@
             </div>
         </div>
 
-        @if(auth()->check())
+        @if($web_user)
         <div class="d-flex mb-4 col-12 row">
             <button id="webform-send-button" class="btn btn-primary fullWidth" type="button">{{ __('webapp.submit') }}</button>
         </div>    
