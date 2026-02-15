@@ -134,6 +134,7 @@ return [
     'show_chat_icon' => 'Показывать иконку чата',
     'status' => 'Статус',
     'success' => 'Успех',
+    'slug' => 'Slug (для адресной строки)',
     'slides' => 'Слайды',
     'slider' => 'Слайдер',
     'slider_horizontal' => 'Горизонтальный слайдер',

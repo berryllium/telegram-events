@@ -16,6 +16,7 @@ class TelegramBot extends Model
 
     protected $fillable = [
         'name',
+        'slug',
         'code',
         'api_token',
         'moderation_group',
@@ -81,6 +82,13 @@ class TelegramBot extends Model
             Log::error($exception->getMessage(), ['bot' => $this->id, 'url' => route('api.telegram')]);
             return false;
         }
+    }
+
+    public function resolveRouteBinding($value, $field = null)
+    {
+        return $this->where('id', $value)
+            ->orWhere('slug', $value)
+            ->firstOrFail();
     }
 
 }

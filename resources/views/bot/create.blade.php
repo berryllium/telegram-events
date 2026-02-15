@@ -22,6 +22,13 @@
             @enderror
         </div>
         <div class="mb-3">
+            <label for="slug" class="form-label">{{ __('webapp.slug') }}</label>
+            <input type="text" class="form-control" id="slug" name="slug" value="">
+            @error('slug')
+            <div class="form-text text-danger">{{ $message }}</div>
+            @enderror
+        </div>
+        <div class="mb-3">
             <label for="api_token" class="form-label">{{ __('webapp.api_token') }}</label>
             <input type="text" class="form-control" id="api_token" name="api_token" value="{{ old('api_token') }}">
             @error('api_token')

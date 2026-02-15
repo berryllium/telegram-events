@@ -46,6 +46,7 @@ class TelegramBotController extends Controller
         $bot = TelegramBot::create($request->validate([
             'name' => 'required|min:2',
             'code' => 'required|unique:telegram_bots|alpha_dash:ascii',
+            'slug' => 'required|unique:telegram_bots|alpha_dash:ascii',
             'api_token' => 'required',
             'description' => 'required|max:1000',
             'links' => 'max:1000',
@@ -96,6 +97,7 @@ class TelegramBotController extends Controller
         $bot->update($request->validate([
             'name' => 'required|min:2',
             'code' => 'required|alpha_dash:ascii|unique:telegram_bots,code,'.$bot->id,
+            'slug' => 'required|alpha_dash:ascii|unique:telegram_bots,slug,'.$bot->id,
             'api_token' => 'required',
             'moderation_group' => 'int',
             'comments_channel_id' => '',
