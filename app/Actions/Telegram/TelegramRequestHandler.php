@@ -12,7 +12,6 @@ use App\Models\TelegramBot;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Carbon;
-use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Log;
 use TelegramBot\Api\BotApi;
 use TelegramBot\Api\HttpException;

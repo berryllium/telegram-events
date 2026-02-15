@@ -3,15 +3,15 @@ window.addEventListener('load', () => {
     let ajaxObj = false
     const form = $('#webapp-form')
     const spinner = $('[data-role="spinner"]')
+    const webApp =  window?.Telegram?.WebApp
+    const sendButton = $('#webform-send-button')
 
-    if(window.Telegram) {
-        const webApp =  window.Telegram.WebApp
+    if(webApp) {
         webApp.expand()
         webApp.MainButton.text = "Send";
         webApp.MainButton.show()
         Telegram.WebApp.onEvent("mainButtonClicked", onSubmit);
     } else {
-        const sendButton = $('#webform-send-button')
         sendButton.on('click', onSubmit)
     }
 
@@ -38,10 +38,10 @@ window.addEventListener('load', () => {
             data: formData,
             success: function (response) {
                 if(response.message_id) {
-                    if(typeof webApp != 'undefined') {
+                    if(webApp) {
                         webApp.sendData(JSON.stringify(response))
                     } else {
-                        alert('Cooбщение успешно зарегистрировано!')
+                        alert('Сообщение отправлено как веб форма')
                         location.reload()
                     }
                 } else if(response.error) {
