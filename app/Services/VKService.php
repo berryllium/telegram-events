@@ -118,7 +118,7 @@ class VKService
 
         $photo_save_data = json_decode($photo_save_response, true);
 
-        if(!is_array($photo_save_data)) {
+        if(!is_array($photo_save_data) or !isset($photo_save_data['response'])) {
             throw new Exception('Add photo failed - ' . strip_tags($photo_save_response));
         }
 
