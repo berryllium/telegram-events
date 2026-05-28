@@ -149,6 +149,10 @@ class VKService
             throw new \Exception('VK error: ' . $upload_server['error']['error_msg']);
         }
 
+        if(!is_array($upload_server)) {
+            throw new \Exception('VK error: ' . strip_tags($upload_server));
+        }
+
         $upload_url = $upload_server['response']['upload_url'];
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $upload_url);
