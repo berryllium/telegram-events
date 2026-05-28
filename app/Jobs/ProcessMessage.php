@@ -60,7 +60,7 @@ class ProcessMessage implements ShouldQueue
             }
             $this->updateMessageStatus(link: $link);
         } catch (\Throwable $exception) {
-            $this->updateMessageStatus(error: $exception->getMessage() ? $exception->getMessage() . ' class: ' . $exception->getTraceAsString() : 'error');
+            $this->updateMessageStatus(error: $exception->getMessage() ? $exception->getMessage() . ' line: ' . $exception->getLine() : 'error');
             Log::error($exception->getMessage(), ['exception' => $exception]);
         }
         sleep(1);
