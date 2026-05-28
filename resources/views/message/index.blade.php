@@ -19,7 +19,10 @@
                 <td>{{ $message->id }}</td>
                 <td>
                     @if($message->author)
-                        <a href="{{ route('author.edit', $message->author) }}">{{ $message->author?->telegram_bots?->first()?->pivot?->title }}</a> ({{ $message->author?->name }})
+                        <a href="{{ route('author.edit', $message->author) }}">{{ $message->author?->telegram_bots?->first()?->pivot?->title }}</a>
+                        @if($message->author?->telegram_bots?->first()?->pivot?->title != $message->author?->name)
+                            ({{ $message->author?->name }})
+                        @endif
                     @endif
                 </td>
                 <td>
