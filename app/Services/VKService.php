@@ -96,7 +96,7 @@ class VKService
         $photo_data = json_decode($upload_response, true);
 
         if(!is_array($photo_data)) {
-            throw new Exception('Ошибка во время загрузки фото - ' . strip_tags($upload_response));
+            throw new Exception('Ошибка во время загрузки видео - ' . strip_tags($upload_response));
         }
 
         $server = $photo_data['server'];
@@ -167,6 +167,11 @@ class VKService
         $upload_response = curl_exec($ch);
         curl_close($ch);
         $video_data = json_decode($upload_response, true);
+
+        if(!is_array($video_data)) {
+            throw new \Exception('VK error: ' . strip_tags($upload_response));
+        }
+
         $this->sendlog("VK: Ответ сервера: " . print_r($upload_response,true));
         $video_id = $video_data['video_id'];
         $owner_id = $video_data['owner_id'];
