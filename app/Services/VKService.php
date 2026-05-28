@@ -118,6 +118,10 @@ class VKService
 
         $photo_save_data = json_decode($photo_save_response, true);
 
+        if(!is_array($photo_save_data)) {
+            throw new Exception('Add photo failed - ' . strip_tags($photo_save_response));
+        }
+
         $photo_id = $photo_save_data['response'][0]['id'];
         $owner_id = $photo_save_data['response'][0]['owner_id'];
         if ($this->attach == '')
