@@ -16,7 +16,7 @@
                 <td>{{ $i + 1 }}</td>
                 <td><a href="{{ $post['channelLink'] }}">{{ $post['channelName'] }}</a></td>
                 <td><a href="{{ $post['messageLink'] }}">сообщение</a></td>
-                <td> @if($post['postLink']) <a href="{{ $post['postLink'] }}">пост</a> @endif</td>
+                <td> @if($post['postLink']) {{ $post['postLink'] }} @endif</td>
                 <td>{{ $post['error'] }}</td>
                 <td>{{ $post['date'] }}</td>
             </tr>
