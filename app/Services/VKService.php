@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Facades\TechBotFacade;
 use CURLFile;
+use Exception;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Log;
 
@@ -93,6 +94,10 @@ class VKService
         $this->sendlog("VK: Ответ сервера: " . print_r($upload_response,true));
 
         $photo_data = json_decode($upload_response, true);
+
+        if(!is_array($photo_data)) {
+            throw new Exception('Ошибка во время загрузки фото - ' . strip_tags($upload_response));
+        }
 
         $server = $photo_data['server'];
         $photo = $photo_data['photo'];
