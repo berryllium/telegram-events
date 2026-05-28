@@ -87,7 +87,12 @@ class Message extends Model
                 $filters['search'] ?? false,
                 fn ($query, $value) => $query->where(
                     fn($q) => $q->where('text', 'like', "%$value%")->orWhereHas('author',
-                    fn($q) => $q->where('name', 'like', "%$value%")
+                        fn($q) => $q->where('name', 'like', "%$value%")->orWhereHas(
+                                'telegram_bots',
+                                fn ($q) => $q
+                                    ->where('author_telegram_bot.telegram_bot_id', $filters['telegram_bot'] ?? null)
+                                    ->where('author_telegram_bot.title', 'like', "%{$value}%")
+                            )
                 ))
             )
             ->when(

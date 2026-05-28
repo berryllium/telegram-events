@@ -31,7 +31,13 @@ class MessageController extends Controller
         ]);
         $filters['telegram_bot'] = session('bot');
 
-        $messages = Message::with('author', 'message_schedules')
+        $messages = Message::with(['author' => function ($query) {
+            $query->with([
+                'telegram_bots' => function ($q) {
+                    $q->where('telegram_bots.id', session('bot'));
+                }
+            ]);
+        }, 'message_schedules'])
             ->filter($filters)
             ->whereNotNull('author_id')
             ->paginate(20)
