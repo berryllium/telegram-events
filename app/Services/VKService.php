@@ -72,7 +72,7 @@ class VKService
 
         $this->sendlog("VK: Добавление фото: " . print_r($request_params,true));
 
-        $upload_server = Http::asForm()->post('https://api.vk.com/method/photos.getWallUploadServer', $request_params);
+        $upload_server = Http::asForm()->post('https://api.vk.ru/method/photos.getWallUploadServer', $request_params);
         $upload_server = json_decode($upload_server, true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
@@ -114,7 +114,7 @@ class VKService
 
         $this->sendlog("VK: Параметры отправки фото на сервер: " . print_r($save_params,true));
 
-        $photo_save_response = Http::asForm()->post('https://api.vk.com/method/photos.saveWallPhoto', $save_params);
+        $photo_save_response = Http::asForm()->post('https://api.vk.ru/method/photos.saveWallPhoto', $save_params);
 
         $photo_save_data = json_decode($photo_save_response, true);
 
@@ -145,7 +145,7 @@ class VKService
 
         $this->sendlog("VK: Добавление видео: " . print_r($request_params,true));
 
-        $upload_server = Http::asForm()->post('https://api.vk.com/method/video.save', $request_params);
+        $upload_server = Http::asForm()->post('https://api.vk.ru/method/video.save', $request_params);
         $upload_server = json_decode($upload_server, true);
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
@@ -203,7 +203,7 @@ class VKService
                 'v' => '5.131'
             );
         $this->sendlog("VK: Публикация поста: " . print_r($post_params,true));
-        $json = Http::asForm()->post('https://api.vk.com/method/wall.post', $post_params);
+        $json = Http::asForm()->post('https://api.vk.ru/method/wall.post', $post_params);
         $response = json_decode($json, true);
         $this->sendlog("Ответ от VK: " . print_r($json,true));
         if(isset($response['error']) || !isset($response['response']['post_id'])) {
@@ -217,14 +217,14 @@ class VKService
         $gr_id = $this->group_id;
         $post_id  = $response['response']['post_id'];
         $this->sendlog("VK: Итоговые переменные gr_id: " . $gr_id . " post_id: " . $post_id);
-        $this->sendlog("Запись успешно опубликована! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.com/wall-{$gr_id}_{$post_id}'>Посмотреть</a>");
-        return "https://vk.com/wall-{$gr_id}_{$post_id}";
+        $this->sendlog("Запись успешно опубликована! Кликните по ссылке, чтобы просмотреть:<a href='https://vk.ru/wall-{$gr_id}_{$post_id}'>Посмотреть</a>");
+        return "https://vk.ru/wall-{$gr_id}_{$post_id}";
 
     }
 
     public function getGroupConfirmationString()
     {
-        $response = Http::get("https://api.vk.com/method/groups.getCallbackConfirmationCode", [
+        $response = Http::get("https://api.vk.ru/method/groups.getCallbackConfirmationCode", [
             'group_id' => $this->group_id,
             'access_token' => $this->token,
             'v' => '5.199',
