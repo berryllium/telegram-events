@@ -1,6 +1,6 @@
 window.addEventListener('load', () => {
 
-    let ajaxObj = false
+    let isSending = false
     const form = $('#webapp-form')
     const spinner = $('[data-role="spinner"]')
     const webApp =  window?.Telegram?.WebApp
@@ -17,7 +17,8 @@ window.addEventListener('load', () => {
 
     async function onSubmit() {
 
-        if(ajaxObj) return
+        if(isSending) return
+        isSending = true
 
         if(!validateForm()) {
             alert(form.data('error-message') ? form.data('error-message') : 'Заполните обязательные поля!')
@@ -32,7 +33,7 @@ window.addEventListener('load', () => {
             }
         }
 
-        ajaxObj = $.ajax({
+        $.ajax({
             url: form.attr("action"),
             type: 'POST',
             data: formData,
@@ -52,7 +53,7 @@ window.addEventListener('load', () => {
                 alert('Unexpected error')
             },
             complete: function() {
-                ajaxObj = false
+                isSending = false
                 spinner.addClass('d-none')
             },
             cache: false,
