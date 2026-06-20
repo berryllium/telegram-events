@@ -22,6 +22,7 @@ window.addEventListener('load', () => {
 
         if(!validateForm()) {
             alert(form.data('error-message') ? form.data('error-message') : 'Заполните обязательные поля!')
+            isSending = false
             return
         }
 
