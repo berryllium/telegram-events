@@ -119,7 +119,7 @@ class VKService
         $photo_save_data = json_decode($photo_save_response, true);
 
         if(!is_array($photo_save_data) or !isset($photo_save_data['response'])) {
-            throw new Exception('Add photo failed - ' . strip_tags($photo_save_response));
+            throw new Exception('Add photo failed ' . $file_name . ' - ' . strip_tags($photo_save_response));
         }
 
         $photo_id = $photo_save_data['response'][0]['id'];
@@ -150,11 +150,11 @@ class VKService
         $this->sendlog("VK: Данные сервере загрузки: " . print_r($upload_server,true));
 
         if(isset($upload_server['error']['error_msg'])) {
-            throw new \Exception('VK error: ' . $upload_server['error']['error_msg']);
+            throw new \Exception('VK error on file ' . $file_name . ': ' . $upload_server['error']['error_msg']);
         }
 
         if(!is_array($upload_server)) {
-            throw new \Exception('VK error: ' . strip_tags($upload_server));
+            throw new \Exception('VK error on file ' . $file_name . ': ' . strip_tags($upload_server));
         }
 
         $upload_url = $upload_server['response']['upload_url'];

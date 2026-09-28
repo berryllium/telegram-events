@@ -32,7 +32,7 @@ class RetryMessages extends Command
             ->whereHas('channels',
                 fn ($query) => $query
                     ->whereNotNull('channel_message_schedule.error')
-                    ->where('channel_message_schedule.tries', '<', 5)
+                    ->where('channel_message_schedule.tries', '<', 10)
                     ->where('channel_message_schedule.updated_at', '<', Carbon::now()->subMinutes(5))
                     ->where('channel_message_schedule.updated_at', '>', Carbon::now()->subDay())
             )
