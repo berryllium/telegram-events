@@ -93,15 +93,26 @@ class VKService
 
         $this->sendlog("VK: Ответ сервера: " . print_r($upload_response,true));
 
-        $photo_data = json_decode($upload_response, true);
+        $photo = null;
+        $photo_counter = 5;
 
-        if(!is_array($photo_data)) {
-            throw new Exception('Ошибка во время загрузки видео - ' . strip_tags($upload_response));
+        // VK returns an empty value for the field photo
+        while($photo_counter > 0 && !$photo) {
+            $photo_data = json_decode($upload_response, true);
+            if(!is_array($photo_data)) continue;
+            $server = $photo_data['server'] ?? null;
+            $photo = $photo_data['photo'] ?? null;
+            $hash = $photo_data['hash'] ?? null;
+            if(!$photo) {
+                sleep(2);
+            }
+            $photo_counter--;
         }
 
-        $server = $photo_data['server'];
-        $photo = $photo_data['photo'];
-        $hash = $photo_data['hash'];
+        if(!$photo) {
+            throw new Exception('Ошибка во время загрузки фоточки - ' . strip_tags($upload_response));
+        }
+
 
         $save_params = array(
             'access_token' => $this->token,
