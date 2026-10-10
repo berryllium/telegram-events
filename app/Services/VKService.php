@@ -98,15 +98,14 @@ class VKService
 
         // VK returns an empty value for the field photo
         while($photo_counter > 0 && !$photo) {
+            $photo_counter--;
             $photo_data = json_decode($upload_response, true);
-            if(!is_array($photo_data)) continue;
             $server = $photo_data['server'] ?? null;
             $photo = $photo_data['photo'] ?? null;
             $hash = $photo_data['hash'] ?? null;
             if(!$photo) {
                 sleep(2);
             }
-            $photo_counter--;
         }
 
         if(!$photo) {
