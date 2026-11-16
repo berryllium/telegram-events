@@ -138,7 +138,7 @@ class OKService
     private function call($method, $params) {
         $response = $this->client->call($method, $params);
         if($response instanceof Error) {
-            throw new \Exception($response->getMessage());
+            throw new \Exception($response->getMessage() . ' method: ' . $method . ' params: ' . json_encode($params));
         } elseif(!$response) {
             throw new \Exception('OK: Can not run method ' . $method);
         }

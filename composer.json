@@ -11,7 +11,7 @@
         "ext-fileinfo": "*",
         "ext-gd": "*",
         "ext-libxml": "*",
-        "alxmsl/odnoklassnikiclient": "*",
+        "alxmsl/odnoklassnikiclient": "dev-master",
         "guzzlehttp/guzzle": "^7.2",
         "hedii/laravel-gelf-logger": "^10.0",
         "intervention/image": "^2.7",

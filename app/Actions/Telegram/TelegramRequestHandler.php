@@ -47,7 +47,9 @@ class TelegramRequestHandler
                 $author->save();
             }
 
-            if(!$author->telegram_bots()->get()->contains($bot->id)) {
+            $author_bots = $author->telegram_bots()->get();
+
+            if(!$author_bots || !$author_bots->contains($bot->id)) {
                 $author->telegram_bots()->attach($bot, ['title' => $author_name]);
             }
 
