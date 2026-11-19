@@ -35,7 +35,7 @@
 
 Установить supervisor, скопировать конфигурацию из папки supervisor
 
-Установить лимиты в файле php.ini на загрузку файлов (upload_max_size, post_max_size) например 500M
+Установить лимиты в файле php.ini на загрузку файлов (upload_max_filesize, post_max_size) например 500M
 
 
 ## Telegram bots project description
