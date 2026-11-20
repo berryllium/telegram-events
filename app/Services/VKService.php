@@ -86,7 +86,7 @@ class VKService
         curl_setopt($ch, CURLOPT_URL, $upload_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, array('photo' => new CURLFile($file_name)));
         $upload_response = curl_exec($ch);
         curl_close($ch);
@@ -172,7 +172,7 @@ class VKService
         curl_setopt($ch, CURLOPT_URL, $upload_url);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
         curl_setopt($ch, CURLOPT_POST, true);
-        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
+        // curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type: multipart/form-data'));
         curl_setopt($ch, CURLOPT_POSTFIELDS, array('video_file' => new CURLFile($file_name)));
         $upload_response = curl_exec($ch);
         curl_close($ch);
