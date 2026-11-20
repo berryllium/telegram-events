@@ -29,6 +29,10 @@ class TechBotService
         $needCaption = true;
         $attachments = [];
         foreach ($message->message_files as $file) {
+
+            if(!file_exists($file->path)) {
+                throw new \Exception('File not found: ' . $file->path);
+            }
             /** @var MessageFile $file */
             $attachments[$file->filename] = new \CURLFile($file->path);
 
