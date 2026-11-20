@@ -31,11 +31,17 @@
 ## Deploy
 Установить nginx и скопировать конфигурацию сайтов из папки nginx /etc/nginx/sites-available и создать ссылку в sites-enabled. Сертификат возможно потребуется сгенерировать для другого домена (с помощью letsencrypt например)
 
-Разместить сайт в папку сервера /var/www/html/cross_posting
+Разместить сайт в папку сервера /var/www/html/cross_posting и сделать владельцем www-data
 
 Установить supervisor, скопировать конфигурацию из папки supervisor
 
+Для пользователя www-data создать cron записи для запуска основных задач:
+* * * * * cd /var/www/html/cross_posting && /usr/bin/php artisan app:send-messages >> /dev/null 2>&1
+*/10 * * * * cd /var/www/html/cross_posting && /usr/bin/timeout 1800 /usr/bin/php artisan app:retry-messages >> /dev/null 2>&1
+
 Установить лимиты в файле php.ini на загрузку файлов (upload_max_filesize, post_max_size) например 500M
+
+Создать символическую ссылку чтобы сделать доступными изображения `php artisan storage:link`
 
 
 ## Telegram bots project description
